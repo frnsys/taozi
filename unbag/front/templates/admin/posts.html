@@ -1,0 +1,12 @@
+{% from "_macros.html" import pagination %}
+{% extends 'admin/layout.html' %}
+
+{% block content %}
+<h1>Posts</h1>
+<ul>
+    {% for post in posts %}
+        <li><a href="{{ url_for('admin.post', id=post.id) }}">{{ post.title }}</a></li>
+    {% endfor %}
+</ul>
+{{ pagination(paginator, 'admin.posts') }}
+{% endblock %}

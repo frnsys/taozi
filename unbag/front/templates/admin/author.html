@@ -1,0 +1,17 @@
+{% from "_macros.html" import render_field_with_errors, render_field %}
+{% extends 'admin/layout.html' %}
+
+{% block content %}
+<h1>Author</h1>
+<form method="POST" action="{{ url_for('admin.authors') }}">
+  {% include "_messages.html" %}
+  {{ form.hidden_tag() }}
+  {{ render_field_with_errors(form.name) }}
+  {{ render_field_with_errors(form.twitter) }}
+  <div class="actions">
+    <input type="submit" value="Save">
+  </div>
+</form>
+{% endblock %}
+
+

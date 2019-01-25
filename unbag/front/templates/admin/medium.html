@@ -1,0 +1,22 @@
+{% from "_macros.html" import render_field_with_errors, render_field %}
+{% extends 'admin/layout.html' %}
+
+{% block content %}
+<h1>Media</h1>
+{% if media %}
+<figure>
+    <img src="{{ url_for('main.uploaded_file', filename=media.filename) }}"
+         title="{{ media.desc }}"
+         alt="{{ media.desc }}" />
+</figure>
+{% endif %}
+<form method="POST" action="{{ url_for('admin.media') }}" enctype="multipart/form-data">
+  {% include "_messages.html" %}
+  {{ form.hidden_tag() }}
+  {{ render_field_with_errors(form.file) }}
+  {{ render_field_with_errors(form.desc) }}
+  <div class="actions">
+    <input type="submit" value="Save">
+  </div>
+</form>
+{% endblock %}

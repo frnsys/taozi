@@ -1,0 +1,57 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+main {
+  width: 720px;
+  margin: 2em auto;
+}
+
+.flashes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.flashes li {
+  padding: 0.5em;
+  margin: 0.5em;
+  background: blue;
+  color: #fff;
+  border-radius: 0.2em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 25%);
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.grid li {
+  grid-row: span 1;
+  grid-column: span 1;
+  padding: 0.8em;
+}
+.grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+figure {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  height: 480px;
+  display: block;
+}
+figure img {
+  max-width: 100%;
+  max-height: 100%;
+}
