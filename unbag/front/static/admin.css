@@ -202,6 +202,9 @@ input[type=checkbox]:checked + label {
   font-size: 0.6em;
 }
 
+.media-preview {
+  margin-bottom: 2em;
+}
 
 .pagination {
   padding: 1em;
