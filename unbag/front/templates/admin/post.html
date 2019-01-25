@@ -2,11 +2,21 @@
 {% extends 'admin/layout.html' %}
 
 {% block content %}
-<h1>Post</h1>
-<form method="POST" action="{{ url_for('admin.posts') }}">
+<header>
+    <h1>Post</h1>
+    <div>
+        {% if post %}
+            <div><a href="{{ url_for("main.post", slug=post.slug) }}">
+                {% if post.published %}View{% else %}Preview{% endif %}
+            </a></div>
+        {% endif %}
+    </div>
+</header>
+<form method="POST" action="{{ action }}">
   {% include "_messages.html" %}
   {{ form.hidden_tag() }}
   {{ render_field_with_errors(form.title) }}
+  {{ render_field_with_errors(form.authors) }}
   {{ render_field_with_errors(form.body) }}
   {{ render_field_with_errors(form.tags) }}
   {{ render_field_with_errors(form.published) }}

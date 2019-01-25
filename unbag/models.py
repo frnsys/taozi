@@ -36,7 +36,7 @@ class Post(db.Model):
         'order_by': 'created_at DESC'
     }
     id                      = db.Column(db.Integer(), primary_key=True)
-    slug                    = db.Column(db.Unicode())
+    slug                    = db.Column(db.Unicode(), unique=True)
     body                    = db.Column(db.Unicode())
     html                    = db.Column(db.Unicode())
     title                   = db.Column(db.Unicode())
@@ -47,8 +47,7 @@ class Post(db.Model):
     published_at            = db.Column(db.DateTime(), default=datetime.utcnow)
     authors                 = db.relationship('Author',
                                               secondary=posts_authors,
-                                              backref='posts',
-                                              lazy='dynamic')
+                                              backref='posts')
 
     issue_id                = db.Column(db.Integer, db.ForeignKey('issue.id'))
     issue                   = db.relationship('Issue',
@@ -57,6 +56,11 @@ class Post(db.Model):
                                                                  lazy='dynamic',
                                                                  order_by='desc(Post.created_at)'))
 
+    @property
+    def byline(self):
+        if not self.authors:
+            return 'Anonymous'
+        return ', '.join(a.name for a in self.authors)
 
 
 class Media(db.Model):
@@ -65,15 +69,15 @@ class Media(db.Model):
     }
     id                      = db.Column(db.Integer(), primary_key=True)
     desc                    = db.Column(db.Unicode())
-    filename                = db.Column(db.Unicode())
+    filename                = db.Column(db.Unicode(), unique=True)
     created_at              = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_at              = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
 
 
 class Author(db.Model):
     id                      = db.Column(db.Integer(), primary_key=True)
+    slug                    = db.Column(db.Unicode(), unique=True)
     name                    = db.Column(db.Unicode())
-    slug                    = db.Column(db.Unicode())
     twitter                 = db.Column(db.Unicode())
 
 

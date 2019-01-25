@@ -2,12 +2,28 @@
 {% extends 'admin/layout.html' %}
 
 {% block content %}
-<h1>Authors</h1>
-<ul>
-    {% for author in authors %}
-        <li><a href="{{ url_for('admin.author', id=author.id) }}">{{ author.name }}</a></li>
-    {% endfor %}
-</ul>
-{{ pagination(paginator, 'admin.authors') }}
+<header>
+    <h1>Authors</h1>
+    <div>
+        <a href="{{ url_for('admin.new_author') }}">+ Author</a>
+    </div>
+</header>
+{% if not authors %}
+    <h2>No authors</h2>
+{% else %}
+    <ul class="listing">
+        {% for author in authors %}
+            <li>
+                <h2><a href="{{ url_for('admin.author', id=author.id) }}">{{ author.name }}</a></h2>
+                <div class="meta">
+                    {% if author.posts %}
+                        <div>Most recent: <em><a href="{{ url_for('main.post', slug=author.posts[0].slug) }}">{{ author.posts[0].title }}</a></em></div>
+                    {% endif %}
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    {{ pagination(paginator, 'admin.authors') }}
+{% endif %}
 {% endblock %}
 

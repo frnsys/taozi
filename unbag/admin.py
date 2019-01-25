@@ -30,7 +30,7 @@ def posts():
     page = int(data.get('page', 1))
 
     form = forms.PostForm()
-    if form.validate_on_submit() and request.method == 'POST':
+    if form.validate_on_submit():
         post = Post()
         form.populate_obj(post)
         post.slug = slugify(post.title)
@@ -47,16 +47,17 @@ def posts():
 @roles_required('admin')
 def new_post():
     form = forms.PostForm()
-    return render_template('admin/post.html', form=form)
+    return render_template('admin/post.html', form=form,
+                           action=url_for('admin.posts'))
 
 
-@bp.route('/posts/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+@bp.route('/posts/<int:id>', methods=['GET', 'POST', 'DELETE'])
 @roles_required('admin')
 def post(id):
     post = Post.query.get_or_404(id)
 
     form = forms.PostForm(obj=post)
-    if form.validate_on_submit() and request.method == 'PUT':
+    if form.validate_on_submit():
         form.populate_obj(post)
         post.slug = slugify(post.title)
         post.html = compile_markdown(post.body)
@@ -69,7 +70,8 @@ def post(id):
         flash('Post deleted.')
         return redirect(url_for('admin.posts'))
 
-    return render_template('admin/post.html', form=form)
+    return render_template('admin/post.html', post=post, form=form,
+                           action=url_for('admin.post', id=post.id))
 
 
 @bp.route('/authors', methods=['GET', 'POST'])
@@ -79,7 +81,7 @@ def authors():
     page = int(data.get('page', 1))
 
     form = forms.AuthorForm()
-    if form.validate_on_submit() and request.method == 'POST':
+    if form.validate_on_submit():
         author = Author()
         form.populate_obj(author)
         author.slug = slugify(author.name)
@@ -95,16 +97,17 @@ def authors():
 @roles_required('admin')
 def new_author():
     form = forms.AuthorForm()
-    return render_template('admin/author.html', form=form)
+    return render_template('admin/author.html',
+                           form=form, action=url_for('admin.authors'))
 
 
-@bp.route('/authors/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+@bp.route('/authors/<int:id>', methods=['GET', 'POST', 'DELETE'])
 @roles_required('admin')
 def author(id):
     author = Author.query.get_or_404(id)
 
     form = forms.AuthorForm(obj=author)
-    if form.validate_on_submit() and request.method == 'PUT':
+    if form.validate_on_submit():
         form.populate_obj(author)
         author.slug = slugify(author.name)
         db.session.add(author)
@@ -116,7 +119,8 @@ def author(id):
         flash('Author deleted.')
         return redirect(url_for('admin.authors'))
 
-    return render_template('admin/author.html', form=form)
+    return render_template('admin/author.html',
+                           form=form, action=url_for('admin.author', id=author.id))
 
 
 @bp.route('/media', methods=['GET', 'POST'])
@@ -125,8 +129,8 @@ def media():
     data = request.args
     page = int(data.get('page', 1))
 
-    form = forms.MediaForm()
-    if form.validate_on_submit() and request.method == 'POST':
+    form = forms.UploadMediaForm()
+    if form.validate_on_submit():
         file = request.files[form.file.name]
         if file.filename == '':
             flash('No selected file.')
@@ -148,16 +152,17 @@ def media():
 @bp.route('/media/new')
 @roles_required('admin')
 def new_medium():
-    form = forms.MediaForm()
-    return render_template('admin/medium.html', form=form)
+    form = forms.UploadMediaForm()
+    return render_template('admin/medium.html',
+                           form=form, action=url_for('admin.media'))
 
-@bp.route('/media/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+@bp.route('/media/<int:id>', methods=['GET', 'POST', 'DELETE'])
 @roles_required('admin')
 def medium(id):
     media = Media.query.get_or_404(id)
 
     form = forms.MediaForm(obj=media)
-    if form.validate_on_submit() and request.method == 'PUT':
+    if form.validate_on_submit():
         form.populate_obj(media)
         db.session.add(media)
         db.session.commit()
@@ -168,4 +173,5 @@ def medium(id):
         flash('Media deleted.')
         return redirect(url_for('admin.media'))
 
-    return render_template('admin/medium.html', media=media, form=form)
+    return render_template('admin/medium.html', media=media,
+                           form=form, action=url_for('admin.medium', id=media.id))

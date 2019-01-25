@@ -10,8 +10,15 @@
 
 <body>
     {% include "_messages.html" %}
-    <header>
-    </header>
+    {% if current_user.is_authenticated %}
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('admin.posts') }}">Posts</a></li>
+                <li><a href="{{ url_for('admin.authors') }}">Authors</a></li>
+                <li><a href="{{ url_for('admin.media') }}">Media</a></li>
+            </ul>
+        </nav>
+    {% endif %}
     <main>
         {% block content %}
         {% endblock %}

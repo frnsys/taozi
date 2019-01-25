@@ -2,11 +2,29 @@
 {% extends 'admin/layout.html' %}
 
 {% block content %}
-<h1>Posts</h1>
-<ul>
-    {% for post in posts %}
-        <li><a href="{{ url_for('admin.post', id=post.id) }}">{{ post.title }}</a></li>
-    {% endfor %}
-</ul>
-{{ pagination(paginator, 'admin.posts') }}
+<header>
+    <h1>Posts</h1>
+    <div>
+        <a href="{{ url_for('admin.new_post') }}">+ Post</a>
+    </div>
+</header>
+{% if not posts %}
+    <h2>No posts</h2>
+{% else %}
+    <ul class="listing">
+        {% for post in posts %}
+            <li>
+                {% if post.published %}<div class="tag">Published</div>{% endif %}
+                <h2><a href="{{ url_for('admin.post', id=post.id) }}">{{ post.title }}</a></h2>
+                <div class="meta">
+                    <div>{{ post.byline }}</div>
+                    <div><a href="{{ url_for("main.post", slug=post.slug) }}">
+                        {% if post.published %}View{% else %}Preview{% endif %}
+                    </a></div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    {{ pagination(paginator, 'admin.posts') }}
+{% endif %}
 {% endblock %}

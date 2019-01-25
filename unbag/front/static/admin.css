@@ -1,7 +1,61 @@
+@import url('https://fonts.googleapis.com/css?family=Arimo:400,400i,700,700i');
+
+* {
+  box-sizing: border-box;
+}
+
 body, html {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Arimo', sans-serif;
+  background: #ffe4d7;
+}
+
+nav {
+  padding: 0.5em 1em;
+  background: #fed3d3;
+  border: 4px solid #0000001a;
+  position: fixed;
+  left: 1em;
+  top: 1em;
+  border-radius: 0.2em;
+}
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+nav li {
+  margin: 0.5em 0;
+}
+nav a {
+  text-decoration: none;
+  color: #000;
+}
+nav a:hover {
+  text-decoration: underline;
+}
+
+header a {
+  border-radius: 0.2em;
+  padding: 0.2em 0.5em;
+  color: #fff;
+  text-decoration: none;
+  background: #585acf;
+}
+header a:hover {
+  background: #3e40cc;
+}
+header {
+  display: flex;
+  margin: 0 0 2em 0;
+}
+header > div {
+  margin: 0.6em 0;
+}
+header h1 {
+  flex: 1;
+  margin: 0;
 }
 
 main {
@@ -16,6 +70,7 @@ main {
   margin: 0;
   padding: 0;
   list-style-type: none;
+  z-index: 1;
 }
 .flashes li {
   padding: 0.5em;
@@ -35,7 +90,6 @@ main {
 .grid li {
   grid-row: span 1;
   grid-column: span 1;
-  padding: 0.8em;
 }
 .grid img {
   width: 100%;
@@ -43,15 +97,130 @@ main {
   object-fit: cover;
   object-position: center center;
 }
+.grid img:hover {
+  opacity: 0.8;
+}
 
 figure {
   margin: 0;
   padding: 0;
   text-align: center;
-  height: 480px;
+  max-height: 480px;
   display: block;
 }
 figure img {
   max-width: 100%;
-  max-height: 100%;
+  max-height: 480px;
+  height: auto;
+  width:auto;
+}
+
+input, textarea, select {
+  font-family: 'Arimo', sans-serif;
+  margin: 0 0 1em 0;
+}
+input[type=text], input[type=password] {
+  display: block;
+  width: 100%;
+  padding: 0.2em 0.5em;
+  font-size: 1.2em;
+  border: 2px solid #ff5959;
+  border-radius: 0 0.2em 0.2em 0.2em;
+}
+input[type=file] {
+  display: block;
+  border: 2px solid #ff5959;
+  background: #ff5959;
+  border-radius: 0 0.2em 0.2em 0.2em;
+  color: #fff;
+}
+textarea {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-height: 420px;
+  padding: 0.5em;
+  border: 2px solid #ff5959;
+  border-radius: 0 0.2em 0.2em 0.2em;
+}
+select {
+  display: block;
+  border: 2px solid #ff5959;
+  border-radius: 0 0.2em 0.2em 0.2em;
+}
+select option:checked {
+  background: #ff5959;
+}
+label {
+  background: #ff5959;
+  border-radius: 0.2em 0.2em 0 0;
+  padding: 0.1em 0.3em;
+  display: inline-block;
+  color: #fff;
+  font-size: 0.8em;
+}
+
+input[type=checkbox] + label {
+  border-radius: 0.2em;
+  cursor: pointer;
+  background: #999;
+}
+input[type=checkbox]:checked + label {
+  background: #ff5959;
+}
+
+.listing {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.listing li {
+  margin: 0 0 2em 0;
+}
+.listing a {
+  color: #000;
+  text-decoration: none;
+}
+.listing a:hover {
+  background: #fecec1;
+}
+.listing h2 {
+  margin: 0;
+}
+.listing .meta {
+  font-size: 0.8em;
+}
+.listing .meta a {
+  text-decoration: underline;
+}
+.tag {
+  background: #ff5959;
+  border-radius: 0.2em;
+  padding: 0.1em 0.3em;
+  display: inline-block;
+  color: #fff;
+  font-size: 0.6em;
+}
+
+
+.pagination {
+  padding: 1em;
+  margin: 1em;
+  text-align: center;
+}
+.pagination .current {
+  text-decoration: underline;
+}
+
+@media only screen and (max-width: 1000px) {
+  nav {
+    position: static;
+    text-align: center;
+    border: none;
+    padding: 0.5em;
+  }
+  nav li {
+    display: inline-block;
+    margin: 0 1em;
+  }
 }
