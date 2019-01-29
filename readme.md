@@ -11,3 +11,5 @@ To create a user and make them an admin:
     flask roles add <EMAIL> admin
 
 The login at `/login`.
+
+![](shot.png)
