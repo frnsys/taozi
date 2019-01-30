@@ -38,6 +38,7 @@ class Post(db.Model):
     id                      = db.Column(db.Integer(), primary_key=True)
     slug                    = db.Column(db.Unicode(), unique=True)
     body                    = db.Column(db.Unicode())
+    desc                    = db.Column(db.Unicode())
     html                    = db.Column(db.Unicode())
     title                   = db.Column(db.Unicode())
     tags                    = db.Column(db.Unicode())
@@ -48,6 +49,13 @@ class Post(db.Model):
     authors                 = db.relationship('Author',
                                               secondary=posts_authors,
                                               backref='posts')
+
+    image_id                = db.Column(db.Integer, db.ForeignKey('media.id'))
+    image                   = db.relationship('Media',
+                                              uselist=False,
+                                              backref=db.backref('posts',
+                                                                 lazy='dynamic',
+                                                                 order_by='desc(Post.created_at)'))
 
     issue_id                = db.Column(db.Integer, db.ForeignKey('issue.id'))
     issue                   = db.relationship('Issue',
@@ -84,3 +92,4 @@ class Author(db.Model):
 class Issue(db.Model):
     id                      = db.Column(db.Integer(), primary_key=True)
     name                    = db.Column(db.Unicode())
+    slug                    = db.Column(db.Unicode(), unique=True)

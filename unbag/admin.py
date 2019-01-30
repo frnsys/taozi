@@ -4,7 +4,7 @@ from . import forms
 from .datastore import db
 from slugify import slugify
 from .compile import compile_markdown
-from .models import Post, Author, Media
+from .models import Post, Author, Media, Issue
 from flask_security.decorators import roles_required
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from werkzeug.utils import secure_filename
@@ -175,3 +175,52 @@ def medium(id):
 
     return render_template('admin/medium.html', media=media,
                            form=form, action=url_for('admin.medium', id=media.id))
+
+
+@bp.route('/issues', methods=['GET', 'POST'])
+@roles_required('admin')
+def issues():
+    data = request.args
+    page = int(data.get('page', 1))
+
+    form = forms.IssueForm()
+    if form.validate_on_submit():
+        issue = Issue()
+        form.populate_obj(issue)
+        issue.slug = slugify(issue.title)
+        db.session.add(issue)
+        db.session.commit()
+        flash('Issue created.')
+
+    paginator = Issue.query.paginate(page, per_page=20)
+    return render_template('admin/issues.html', issues=paginator.items, paginator=paginator)
+
+
+@bp.route('/issues/new')
+@roles_required('admin')
+def new_issue():
+    form = forms.IssueForm()
+    return render_template('admin/issue.html', form=form,
+                           action=url_for('admin.issues'))
+
+
+@bp.route('/issues/<int:id>', methods=['GET', 'POST', 'DELETE'])
+@roles_required('admin')
+def issue(id):
+    issue = Issue.query.get_or_404(id)
+
+    form = forms.IssueForm(obj=issue)
+    if form.validate_on_submit():
+        form.populate_obj(issue)
+        issue.slug = slugify(issue.title)
+        db.session.add(issue)
+        db.session.commit()
+        flash('Issue updated.')
+
+    elif request.method == 'DELETE':
+        db.session.delete(issue)
+        flash('Issue deleted.')
+        return redirect(url_for('admin.issues'))
+
+    return render_template('admin/issue.html', issue=issue, form=form,
+                           action=url_for('admin.issue', id=issue.id))
