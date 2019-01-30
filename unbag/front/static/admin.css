@@ -171,7 +171,7 @@ input[type=checkbox]:checked + label {
   background: #ff5959;
 }
 
-form.column-2 {
+form .column-2 {
   display: flex;
   justify-content: space-between;
 }

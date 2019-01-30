@@ -36,8 +36,11 @@ class Post(db.Model):
     __mapper_args__         = {
         'order_by': 'created_at DESC'
     }
+    __table_args__          = (
+        db.UniqueConstraint('slug', 'issue_id', name='_slug_issue_uc'),
+    )
     id                      = db.Column(db.Integer(), primary_key=True)
-    slug                    = db.Column(db.Unicode(), unique=True)
+    slug                    = db.Column(db.Unicode())
     body                    = db.Column(db.Unicode())
     desc                    = db.Column(db.Unicode())
     html                    = db.Column(db.Unicode())
