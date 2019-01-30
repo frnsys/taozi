@@ -1,4 +1,4 @@
-from .models import Issue, Author
+from .models import Issue, Media, Author
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms.validators import InputRequired
@@ -33,3 +33,5 @@ class PostForm(FlaskForm):
                                        get_label='name')
     issue = QuerySelectField('Issue', query_factory=lambda: Issue.query.all(),
                              get_label='name')
+    image = QuerySelectField('Image', query_factory=lambda: Media.query.all(),
+                             get_label='desc')

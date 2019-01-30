@@ -171,12 +171,48 @@ input[type=checkbox]:checked + label {
   background: #ff5959;
 }
 
-form .column-2 {
+form.column-2 {
   display: flex;
   justify-content: space-between;
 }
 form .column-2 > div {
   flex: 0 0 48%;
+}
+
+img.thumb {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 0.2em;
+}
+
+.listing .post {
+  display: flex;
+}
+.listing .post .tag {
+  vertical-align: top;
+}
+.listing .post .thumb {
+  width: 112px;
+  height: 142px;
+  margin-right: 1em;
+}
+
+
+.item a.blanket {
+  display:block;
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  z-index:0;
+}
+
+.justify-vertical {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .listing {
@@ -192,13 +228,39 @@ form .column-2 > div {
   text-decoration: none;
 }
 .listing a:hover {
-  background: #fecec1;
+  text-decoration: underline;
 }
+.listing .item {
+  position: relative;
+  border-radius: 0.2em;
+  padding: 0.2em;
+}
+.listing .item:hover {
+  background: #fed3d3;
+}
+.listing .item:hover img {
+  box-shadow: 0 5px 5px rgba(0,0,0,0.2);
+}
+.listing .item .view {
+  position: relative;
+  z-index: 1;
+  background: #585acf;
+  padding: 0.1em 0.3em;
+  border-radius: 0.2em;
+  color: #fff;
+  font-size: 0.8em;
+  line-height: 1.5;
+}
+.listing .item .view:hover {
+  background: #3e40cc;
+}
+
 .listing h2 {
   margin: 0;
 }
 .listing .meta {
   font-size: 0.8em;
+  margin: 0.5em 0;
 }
 .listing .meta a {
   text-decoration: underline;
@@ -210,6 +272,7 @@ form .column-2 > div {
   display: inline-block;
   color: #fff;
   font-size: 0.6em;
+  line-height: 1.5;
 }
 
 .media-preview {

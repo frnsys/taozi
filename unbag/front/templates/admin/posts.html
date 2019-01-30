@@ -13,16 +13,24 @@
 {% else %}
     <ul class="listing">
         {% for post in posts %}
-            <li>
-                {% if post.published %}<div class="tag">Published</div>{% endif %}
-                <h2><a href="{{ url_for('admin.post', id=post.id) }}">{{ post.title }}</a></h2>
-                <div class="meta">
-                    <div>{{ post.desc }}</div>
-                    <div>by <em>{{ post.byline }}</em></div>
-                    <div>in <em>{{ post.issue.name }}</em></div>
-                    <div><a href="{{ url_for("main.post", slug=post.slug) }}">
-                        {% if post.published %}View{% else %}Preview{% endif %}
-                    </a></div>
+            <li class="post item">
+                <a href="{{ url_for('admin.post', id=post.id) }}" class="blanket"></a>
+                <img src="{{ post.image.path }}" class="thumb" />
+                <div class="justify-vertical">
+                    <div>
+                        {% if post.published %}<div class="tag">Published</div>{% endif %}
+                        <h2>{{ post.title }}</h2>
+                        <div class="meta">
+                            <div>{{ post.desc }}</div>
+                            <div>by <em>{{ post.byline }}</em></div>
+                            <div>in <em>{{ post.issue.name }}</em></div>
+                        </div>
+                    </div>
+                    <div>
+                        <a href="{{ url_for("main.post", slug=post.slug) }}" class="view">
+                            {% if post.published %}View{% else %}Preview{% endif %}
+                        </a>
+                    </div>
                 </div>
             </li>
         {% endfor %}

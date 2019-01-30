@@ -1,4 +1,5 @@
 from .datastore import db
+from flask import url_for
 from datetime import datetime
 from flask_security import UserMixin, RoleMixin
 
@@ -80,6 +81,10 @@ class Media(db.Model):
     filename                = db.Column(db.Unicode(), unique=True)
     created_at              = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_at              = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    @property
+    def path(self):
+        return url_for('main.uploads', filename=self.filename)
 
 
 class Author(db.Model):

@@ -24,10 +24,11 @@
       </div>
       <div>
         {{ render_field_with_errors(form.issue) }}
-        {{ render_field_with_errors(form.published) }}
+        {{ render_field_with_errors(form.image) }}
       </div>
   </div>
   {{ render_field_with_errors(form.tags) }}
+  {{ render_field_with_errors(form.published) }}
   <div class="actions">
     <input type="submit" value="Save">
   </div>

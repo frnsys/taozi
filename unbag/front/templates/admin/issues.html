@@ -13,8 +13,9 @@
 {% else %}
     <ul class="listing">
         {% for issue in issues %}
-            <li>
-                <h2><a href="{{ url_for('admin.issue', id=issue.id) }}">{{ issue.name }}</a></h2>
+            <li class="item">
+                <a href="{{ url_for('admin.issue', id=issue.id) }}" class="blanket"></a>
+                <h2>{{ issue.name }}</h2>
                 <div class="meta">
                     {{ issue.posts.count() }} posts
                 </div>

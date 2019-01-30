@@ -13,11 +13,12 @@
 {% else %}
     <ul class="listing">
         {% for author in authors %}
-            <li>
-                <h2><a href="{{ url_for('admin.author', id=author.id) }}">{{ author.name }}</a></h2>
+            <li class="item">
+                <a href="{{ url_for('admin.author', id=author.id) }}" class="blanket"></a>
+                <h2>{{ author.name }}</h2>
                 <div class="meta">
                     {% if author.posts %}
-                        <div>Most recent: <em><a href="{{ url_for('main.post', slug=author.posts[0].slug) }}">{{ author.posts[0].title }}</a></em></div>
+                        <div>Most recent: <em><a href="{{ url_for('main.post', slug=author.posts[0].slug) }}" class="view">{{ author.posts[0].title }}</a></em></div>
                     {% endif %}
                 </div>
             </li>

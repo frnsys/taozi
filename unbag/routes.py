@@ -14,7 +14,7 @@ def index():
     return render_template('index.html')
 
 @bp.route('/uploads/<filename>')
-def uploaded_file(filename):
+def uploads(filename):
     return send_from_directory(config.UPLOAD_FOLDER, filename)
 
 @bp.route('/<slug>')
