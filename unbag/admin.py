@@ -187,7 +187,7 @@ def issues():
     if form.validate_on_submit():
         issue = Issue()
         form.populate_obj(issue)
-        issue.slug = slugify(issue.title)
+        issue.slug = slugify(issue.name)
         db.session.add(issue)
         db.session.commit()
         flash('Issue created.')
@@ -212,7 +212,7 @@ def issue(id):
     form = forms.IssueForm(obj=issue)
     if form.validate_on_submit():
         form.populate_obj(issue)
-        issue.slug = slugify(issue.title)
+        issue.slug = slugify(issue.name)
         db.session.add(issue)
         db.session.commit()
         flash('Issue updated.')

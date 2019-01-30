@@ -16,10 +16,18 @@
   {% include "_messages.html" %}
   {{ form.hidden_tag() }}
   {{ render_field_with_errors(form.title) }}
-  {{ render_field_with_errors(form.authors) }}
+  {{ render_field_with_errors(form.desc) }}
   {{ render_field_with_errors(form.body) }}
-  {{ render_field_with_errors(form.tags) }}
-  {{ render_field_with_errors(form.published) }}
+  <div class="column-2">
+      <div>
+        {{ render_field_with_errors(form.authors) }}
+        {{ render_field_with_errors(form.published) }}
+      </div>
+      <div>
+        {{ render_field_with_errors(form.issue) }}
+        {{ render_field_with_errors(form.tags) }}
+      </div>
+  </div>
   <div class="actions">
     <input type="submit" value="Save">
   </div>

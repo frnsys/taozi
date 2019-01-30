@@ -148,6 +148,7 @@ select {
   display: block;
   border: 2px solid #ff5959;
   border-radius: 0 0.2em 0.2em 0.2em;
+  width: 100%;
 }
 select option:checked {
   background: #ff5959;
@@ -168,6 +169,14 @@ input[type=checkbox] + label {
 }
 input[type=checkbox]:checked + label {
   background: #ff5959;
+}
+
+form .column-2 {
+  display: flex;
+  justify-content: space-between;
+}
+form .column-2 > div {
+  flex: 0 0 48%;
 }
 
 .listing {
@@ -226,7 +235,7 @@ input[type=checkbox]:checked + label {
   }
   nav li {
     display: inline-block;
-    margin: 0 1em;
+    margin: 0 0.5em;
   }
 }
 @media only screen and (max-width: 720px) {
@@ -237,5 +246,8 @@ input[type=checkbox]:checked + label {
 @media only screen and (max-width: 480px) {
   .grid {
     grid-template-columns: repeat(auto-fit, 50%);
+  }
+  form .column-2 {
+    display: block;
   }
 }

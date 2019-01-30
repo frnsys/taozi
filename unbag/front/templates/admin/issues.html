@@ -16,7 +16,7 @@
             <li>
                 <h2><a href="{{ url_for('admin.issue', id=issue.id) }}">{{ issue.name }}</a></h2>
                 <div class="meta">
-                    {{ issue.posts|length }}
+                    {{ issue.posts.count() }} posts
                 </div>
             </li>
         {% endfor %}

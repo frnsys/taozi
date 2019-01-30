@@ -25,11 +25,11 @@ class MediaForm(FlaskForm):
 
 class PostForm(FlaskForm):
     title = TextField('Title', [InputRequired()])
+    desc = TextField('Description', [InputRequired()])
     body = TextAreaField('Body', [InputRequired()])
-    desc = TextAreaField('Description', [InputRequired()])
     tags = TextField('Tags', [InputRequired()])
     published = BooleanField('Published')
     authors = QuerySelectMultipleField('Authors', query_factory=lambda: Author.query.all(),
                                        get_label='name')
-    issue = QuerySelectMultipleField('Issue', query_factory=lambda: Issue.query.all(),
-                                       get_label='name')
+    issue = QuerySelectField('Issue', query_factory=lambda: Issue.query.all(),
+                             get_label='name')
