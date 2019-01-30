@@ -17,7 +17,9 @@
                 {% if post.published %}<div class="tag">Published</div>{% endif %}
                 <h2><a href="{{ url_for('admin.post', id=post.id) }}">{{ post.title }}</a></h2>
                 <div class="meta">
-                    <div>{{ post.byline }}</div>
+                    <div>{{ post.desc }}</div>
+                    <div>by <em>{{ post.byline }}</em></div>
+                    <div>in <em>{{ post.issue.name }}</em></div>
                     <div><a href="{{ url_for("main.post", slug=post.slug) }}">
                         {% if post.published %}View{% else %}Preview{% endif %}
                     </a></div>
