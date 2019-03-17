@@ -1,8 +1,8 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<div class="issue-focused">
-    <a class="issue-link" href="{{ url_for('main.issue', slug=current_issue.slug) }}">{{ current_issue.name }}</a>
+<div class="issue issue-focused">
+    <a href="{{ url_for('main.issue', slug=current_issue.slug) }}"><h2 class="section-title">{{ current_issue.name }}</h2></a>
     {% for post in current_issue.posts %}
         <a href="{{ url_for('main.post', slug=post.slug) }}">{{ post.title }}</a>
     {% endfor %}
@@ -10,7 +10,7 @@
 {% for issue in issues %}
     {% if issue != current_issue %}
         <div class="issue">
-            <a class="issue-link issue-{{ issue.id }}" href="{{ url_for('main.issue', slug=issue.slug) }}">{{ issue.name }}</a>
+            <a href="{{ url_for('main.issue', slug=issue.slug) }}"><h2 class="section-title issue-{{ issue.id }}">{{ issue.name }}</h2></a>
         </div>
     {% endif %}
 {% endfor %}

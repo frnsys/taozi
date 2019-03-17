@@ -66,20 +66,25 @@ nav li {
   margin: 0 0 1em 0;
 }
 
-.issue-link {
+.section-title {
   width: 100%;
   padding: 1em;
   display: block;
   color: black;
-  text-decoration: none;
   text-transform: uppercase;
   text-align: center;
   font-weight: bold;
   font-size: 1.2em;
   letter-spacing: 0.1em;
+  color: black;
+  margin: 0;
 }
 .issue {
   border-top: 1px solid black;
+}
+.issue a {
+  color: black;
+  text-decoration: none;
 }
 .issue:first-of-type {
   border-top: none;
