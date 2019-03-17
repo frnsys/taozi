@@ -10,6 +10,10 @@ html, body {
   font-family: 'PT Serif', serif;
 }
 
+img, iframe {
+  max-width: 100%;
+}
+
 ul, li {
   margin: 0;
   padding: 0;
@@ -123,7 +127,6 @@ nav li {
   padding-bottom: 1em;
 }
 .issue--post img {
-  max-width: 100%;
   min-width: 20px;
   border: 1px solid black;
 }
@@ -138,8 +141,7 @@ nav li {
 }
 
 .post {
-  margin-top: 6em;
-  margin-bottom: 6em;
+  padding: 6em 1em;
 }
 .post h1 {
   font-size: 2.5em;
@@ -156,7 +158,6 @@ nav li {
   margin: 2em 0 0 0;
 }
 .post--body img {
-  max-width: 100%;
   border: 1px solid black;
   margin: 1em auto;
   display: block;
@@ -170,4 +171,9 @@ nav li {
   border: none;
   height: 1px;
   background: black;
+}
+
+.post-tag-video {
+  color: #fff;
+  background: #222;
 }

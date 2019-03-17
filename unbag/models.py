@@ -74,6 +74,10 @@ class Post(db.Model):
             return 'Anonymous'
         return ', '.join(a.name for a in self.authors)
 
+    @property
+    def tags_list(self):
+        return [t.strip() for t in self.tags.split(',')]
+
 
 class Media(db.Model):
     __mapper_args__         = {
