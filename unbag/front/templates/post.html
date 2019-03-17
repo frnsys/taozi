@@ -1,8 +1,27 @@
+{% from "_macros.html" import post_item %}
 {% extends 'layout.html' %}
 
 {% block content %}
-    {{ post.html|safe }}
+    <div class="post content">
+        <h1>{{ current_post.title }}</h1>
+        <h2>{{ current_post.authors|join(', ', 'name') }}</h2>
+        <div class="post--body">
+            {{ current_post.html|safe }}
+        </div>
+    </div>
+    <div class="issue issue-focused" style="background-color:{{ current_issue.color }}">
+        <a href="{{ url_for('main.issue', slug=current_issue.slug) }}"><h2 class="section-title">{{ current_issue.name }}</h2></a>
+        <div class="content">
+            {% for post in current_issue.posts %}
+                {{ post_item(post) }}
+            {% endfor %}
+        </div>
+    </div>
+    {% for issue in issues %}
+        {% if issue != current_issue %}
+            <div class="issue" style="background-color:{{ current_issue.color }}">
+                <a href="{{ url_for('main.issue', slug=issue.slug) }}"><h2 class="section-title issue-{{ issue.id }}">{{ issue.name }}</h2></a>
+            </div>
+        {% endif %}
+    {% endfor %}
 {% endblock %}
-
-
-

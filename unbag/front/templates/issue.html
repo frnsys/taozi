@@ -2,7 +2,7 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<div class="issue issue-focused">
+<div class="issue issue-focused" style="background-color:{{ current_issue.color }}">
     <a href="{{ url_for('main.issue', slug=current_issue.slug) }}"><h2 class="section-title">{{ current_issue.name }}</h2></a>
     <div class="content">
         {% for post in current_issue.posts %}
@@ -12,7 +12,7 @@
 </div>
 {% for issue in issues %}
     {% if issue != current_issue %}
-        <div class="issue">
+        <div class="issue" style="background-color:{{ current_issue.color }}">
             <a href="{{ url_for('main.issue', slug=issue.slug) }}"><h2 class="section-title issue-{{ issue.id }}">{{ issue.name }}</h2></a>
         </div>
     {% endif %}

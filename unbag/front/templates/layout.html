@@ -15,7 +15,7 @@
   </style>
 </head>
 
-<body style="background-color:{{ current_issue.color }}">
+<body>
     {% include "_messages.html" %}
     <header>
         <div class="header--meta">
@@ -41,8 +41,8 @@
     <main>
         {% block content %}
         {% endblock %}
-        <div name="about" class="about">
-            <h2 class="section-title">About</h2>
+        <div class="about">
+            <a name="about"><h2 class="section-title">About</h2></a>
             <div class="content">
                 <p>unbag is a semi-annual magazine that promotes critical engagement with contemporary art and politics. Commissioning artists, writers, and thinkers who work outside of mainstream discourses, unbag functions as a space to explore ideas through discussion and exchange</p>
                 <div class="masthead">

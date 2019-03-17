@@ -131,3 +131,38 @@ nav li {
 .issue--post h6 {
   line-height: 1.5;
 }
+
+.post {
+  margin-top: 6em;
+  margin-bottom: 6em;
+}
+.post h1 {
+  font-size: 2.5em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  margin: 0;
+}
+.post h2 {
+  font-size: 1.1em;
+  font-weight: normal;
+  margin: 0;
+}
+.post--body {
+  margin: 2em 0 0 0;
+}
+.post--body img {
+  max-width: 100%;
+  border: 1px solid black;
+  margin: 1em auto;
+  display: block;
+}
+.post--body p {
+  margin: 1em 0;
+}
+.post--body hr {
+  width: 4em;
+  margin: 2em auto;
+  border: none;
+  height: 1px;
+  background: black;
+}
