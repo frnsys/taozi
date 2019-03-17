@@ -89,3 +89,23 @@ nav li {
 .issue:first-of-type {
   border-top: none;
 }
+
+.about {
+  color: #fff;
+  background: #222;
+}
+.about .section-title,
+.about a {
+  color: #fff;
+}
+.content {
+  margin: 0 auto;
+  padding: 0 0 4em 0;
+  max-width: 640px;
+}
+.masthead--group {
+  margin: 1.5em 0;
+}
+.masthead, .social {
+  margin-top: 4em;
+}
