@@ -5,11 +5,31 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>unbag</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
     {% include "_messages.html" %}
     <header>
+        <div class="header--meta">
+            <img src="{{ url_for('static', filename='logo.svg') }}" alt="Unbag logo" title="Unbag" class="header--brand">
+            <div class="header--current-issue">
+                {{ current_issue }}
+            </div>
+            {% if current_post %}
+                <div class="header--current-post">
+                    <em>{{ current_post.title }}</em>, {{ current_post.authors|join(', ', 'name') }}
+                </div>
+            {% endif %}
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('main.events') }}">Events</a></li>
+                <li><a href="{{ url_for('main.donate') }}">Donate</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="{{ url_for('main.shop') }}">Shop</a></li>
+            </ul>
+        </nav>
     </header>
     <main>
         {% block content %}

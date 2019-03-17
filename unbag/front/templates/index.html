@@ -1,7 +1,12 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<h1>hello world</h1>
+{% for issue in issues %}
+    {{ issue.name }}
+    {% for post in issue.posts %}
+        <a href="{{ url_for('main.post', slug=post.slug) }}">{{ post.title }}</a>
+    {% endfor %}
+{% endfor %}
 {% endblock %}
 
 

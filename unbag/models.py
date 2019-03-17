@@ -101,3 +101,6 @@ class Issue(db.Model):
     id                      = db.Column(db.Integer(), primary_key=True)
     name                    = db.Column(db.Unicode())
     slug                    = db.Column(db.Unicode(), unique=True)
+
+    def __repr__(self):
+        return '{} — Fall 2018'.format(self.name)
