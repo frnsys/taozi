@@ -109,3 +109,25 @@ nav li {
 .masthead, .social {
   margin-top: 4em;
 }
+
+.issue--post {
+  max-width: 30%;
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+  padding-bottom: 1em;
+}
+.issue--post img {
+  max-width: 100%;
+  min-width: 20px;
+  border: 1px solid black;
+}
+.issue--post h4,
+.issue--post h6 {
+  margin: 0;
+  line-height: 1.2;
+  font-weight: normal;
+}
+.issue--post h6 {
+  line-height: 1.5;
+}

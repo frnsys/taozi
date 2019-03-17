@@ -1,11 +1,14 @@
+{% from "_macros.html" import post_item %}
 {% extends 'layout.html' %}
 
 {% block content %}
 <div class="issue issue-focused">
     <a href="{{ url_for('main.issue', slug=current_issue.slug) }}"><h2 class="section-title">{{ current_issue.name }}</h2></a>
-    {% for post in current_issue.posts %}
-        <a href="{{ url_for('main.post', slug=post.slug) }}">{{ post.title }}</a>
-    {% endfor %}
+    <div class="content">
+        {% for post in current_issue.posts %}
+            {{ post_item(post) }}
+        {% endfor %}
+    </div>
 </div>
 {% for issue in issues %}
     {% if issue != current_issue %}

@@ -44,3 +44,13 @@
   </div>
   {% endif %}
 {%- endmacro %}
+
+{% macro post_item(post) -%}
+    <div class="issue--post" style="margin-top: {{range(-2, 6)|random}}em;margin-left: {{[0,0,32]|random}}%;margin-right: {{[2,2,32]|random}}%;max-width:{{[30, 30, 30, 60]|random}}%">
+        <a href="{{ url_for('main.post', slug=post.slug) }}">
+            <img src="{{ post.image.path }}" alt="{{ post.image.desc }}" title="{{ post.image.desc }}" width={{[50, 100, 100, 100]|random}}% />
+        </a>
+        <a href="{{ url_for('main.post', slug=post.slug) }}"><h4>{{ post.title }}</h4></a>
+        <h6>{{ post.authors|join(', ', 'name') }}</h6>
+    </div>
+{%- endmacro %}
