@@ -21,6 +21,9 @@ ul, li {
 }
 
 header {
+  position: fixed;
+  z-index: 2;
+  width: 100%;
   display: flex;
   justify-content: justify;
   padding: 0.5em 1.5em;
@@ -176,4 +179,10 @@ nav li {
 .post-tag-video {
   color: #fff;
   background: #222;
+}
+
+/* anchor target fix for sticky header */
+.anchor {
+  display: block;
+  padding-top: 2em;
 }

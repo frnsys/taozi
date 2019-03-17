@@ -1,23 +1,6 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>unbag</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <style>
-    {% for issue in issues %}
-        .issue-{{ issue.id }}:hover {
-            background: {{ issue.color }};
-        }
-    {% endfor %}
-  </style>
-</head>
-
-<body>
-    {% include "_messages.html" %}
-    <header>
+{% macro header(shadow=False) -%}
+    {# shadow header to properly push down other elements #}
+    <header {% if shadow %}style="position:relative;z-index:-1;"{% endif %}>
         <div class="header--meta">
             <a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='logo.svg') }}" alt="Unbag logo" title="Unbag" class="header--brand"></a>
             <div class="header--current-issue">
@@ -38,11 +21,35 @@
             </ul>
         </nav>
     </header>
+{%- endmacro %}
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>unbag</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    {% for issue in issues %}
+        .issue-{{ issue.id }}:hover {
+            background: {{ issue.color }};
+        }
+    {% endfor %}
+  </style>
+</head>
+
+<body>
+    {% include "_messages.html" %}
     <main>
+        {{ header() }}
+        {{ header(shadow=True) }}
         {% block content %}
         {% endblock %}
         <div class="about">
-            <a name="about"><h2 class="section-title">About</h2></a>
+            <a class="anchor" name="about"></a>
+            <h2 class="section-title">About</h2>
             <div class="content">
                 <p>unbag is a semi-annual magazine that promotes critical engagement with contemporary art and politics. Commissioning artists, writers, and thinkers who work outside of mainstream discourses, unbag functions as a space to explore ideas through discussion and exchange</p>
                 <div class="masthead">
