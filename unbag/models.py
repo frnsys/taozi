@@ -124,3 +124,7 @@ class Issue(db.Model):
 
     def __repr__(self):
         return '{} — {}'.format(self.name, self.edition)
+
+    @property
+    def published_posts(self):
+        return [p for p in self.posts if p.published]

@@ -58,6 +58,7 @@ with app.app_context():
             post = Post()
             post.title = p['title']
             post.slug = p['slug']
+            post.published = True
             post.published_at = datetime.fromtimestamp(p['published_at'])
             post.html = p['body']
             post.body = post.html

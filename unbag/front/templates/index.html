@@ -7,7 +7,7 @@
         <div class="issue issue-focused" style="background-color:{{ current_issue.color }}">
             <a href="{{ url_for('main.issue', slug=issue.slug) }}"><h2 class="section-title">{{ issue.name }}</h2></a>
             <div class="content">
-                {% for post in issue.posts %}
+                {% for post in issue.published_posts %}
                     {{ post_item(post) }}
                 {% endfor %}
             </div>

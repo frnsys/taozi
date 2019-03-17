@@ -3,6 +3,7 @@ import config
 from . import forms
 from .datastore import db
 from slugify import slugify
+from datetime import datetime
 from .compile import compile_markdown
 from .models import Post, Author, Media, Issue
 from flask_security.decorators import roles_required
@@ -58,8 +59,11 @@ def post(id):
 
     form = forms.PostForm(obj=post)
     if form.validate_on_submit():
+        already_published = post.published
         form.populate_obj(post)
         post.slug = slugify(post.title)
+        if not already_published and post.published:
+            post.published_at = datetime.utcnow()
         post.html = compile_markdown(post.body)
         db.session.add(post)
         db.session.commit()

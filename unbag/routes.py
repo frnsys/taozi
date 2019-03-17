@@ -27,11 +27,9 @@ def issue(slug):
 @bp.route('/<slug>')
 def post(slug):
     post = Post.query.filter_by(slug=slug).first_or_404()
-    issues = Issue.query.order_by(Issue.id.desc()).all()
-    # TODO temporary
-    return render_template('post.html', current_issue=post.issue, current_post=post, issues=issues)
     if not post.published and not current_user.is_authenticated:
         abort(404)
+    issues = Issue.query.order_by(Issue.id.desc()).all()
     return render_template('post.html', current_issue=post.issue, current_post=post, issues=issues)
 
 @bp.route('/events')
