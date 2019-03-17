@@ -47,6 +47,7 @@ class Post(db.Model):
     title                   = db.Column(db.Unicode())
     tags                    = db.Column(db.Unicode())
     published               = db.Column(db.Boolean(), default=False)
+    print_only              = db.Column(db.Boolean(), default=False)
     created_at              = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_at              = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
     published_at            = db.Column(db.DateTime(), default=datetime.utcnow)

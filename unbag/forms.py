@@ -31,6 +31,7 @@ class PostForm(FlaskForm):
     body = TextAreaField('Body', [InputRequired()])
     tags = TextField('Tags', [InputRequired()])
     published = BooleanField('Published')
+    print_only = BooleanField('Print Only')
     authors = QuerySelectMultipleField('Authors', query_factory=lambda: Author.query.all(),
                                        get_label='name')
     issue = QuerySelectField('Issue', query_factory=lambda: Issue.query.all(),
