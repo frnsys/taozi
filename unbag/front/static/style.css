@@ -32,13 +32,18 @@ header {
   flex: 1;
 }
 .header--current-issue {
-  padding: 0.5em;
   border: 1px solid black;
   display: inline-block;
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 0.75em;
   line-height: 1;
   margin: 0 0.75em 0 0;
+}
+.header--current-issue a {
+  color: black;
+  padding: 0.5em;
+  text-decoration: none;
+  display: block;
 }
 .header--current-post {
   font-family: 'Source Sans Pro', sans-serif;

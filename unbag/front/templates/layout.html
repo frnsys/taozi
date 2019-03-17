@@ -21,7 +21,7 @@
         <div class="header--meta">
             <a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='logo.svg') }}" alt="Unbag logo" title="Unbag" class="header--brand"></a>
             <div class="header--current-issue">
-                {{ current_issue }}
+                <a href="{{ url_for('main.issue', slug=current_issue.slug) }}">{{ current_issue }}</a>
             </div>
             {% if current_post %}
                 <div class="header--current-post">
