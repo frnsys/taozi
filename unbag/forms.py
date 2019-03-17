@@ -14,6 +14,8 @@ class AuthorForm(FlaskForm):
 
 class IssueForm(FlaskForm):
     name = TextField('Name', [InputRequired()])
+    edition = TextField('Edition', [InputRequired()])
+    color = TextField('Color', [InputRequired()])
 
 class UploadMediaForm(FlaskForm):
     file = FileField('Image', [FileRequired(),

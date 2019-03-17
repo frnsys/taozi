@@ -21,6 +21,7 @@ header {
   justify-content: justify;
   padding: 0.5em 1.5em;
   border-bottom: 1px solid black;
+  background: #fff;
 }
 .header--brand {
   height: 1.5em;
@@ -50,7 +51,7 @@ nav {
   line-height: 1.75;
 }
 nav a {
-  color: #000;
+  color: black;
   text-decoration: none;
 }
 nav li {
@@ -58,3 +59,28 @@ nav li {
   margin-left: 1em;
 }
 
+.issue-focused {
+  padding: 2em 2em 4em 2em;
+}
+.issue-focused .issue-link {
+  margin: 0 0 1em 0;
+}
+
+.issue-link {
+  width: 100%;
+  padding: 1em;
+  display: block;
+  color: black;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2em;
+  letter-spacing: 0.1em;
+}
+.issue {
+  border-top: 1px solid black;
+}
+.issue:first-of-type {
+  border-top: none;
+}

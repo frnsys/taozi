@@ -94,13 +94,28 @@ class Author(db.Model):
     id                      = db.Column(db.Integer(), primary_key=True)
     slug                    = db.Column(db.Unicode(), unique=True)
     name                    = db.Column(db.Unicode())
+    #bio                     = db.Column(db.Unicode())
     twitter                 = db.Column(db.Unicode())
+
+
+# class Event(db.Model):
+#     id                      = db.Column(db.Integer(), primary_key=True)
+#     title                   = db.Column(db.Unicode())
+#     desc                    = db.Column(db.Unicode())
+#     starts_at               = db.Column(db.DateTime())
+#     ends_at                 = db.Column(db.DateTime())
+#     published               = db.Column(db.Boolean(), default=False)
+#     published_at            = db.Column(db.DateTime(), default=datetime.utcnow)
+#     created_at              = db.Column(db.DateTime(), default=datetime.utcnow)
+#     updated_at              = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
 
 
 class Issue(db.Model):
     id                      = db.Column(db.Integer(), primary_key=True)
     name                    = db.Column(db.Unicode())
     slug                    = db.Column(db.Unicode(), unique=True)
+    color                   = db.Column(db.Unicode())
+    edition                 = db.Column(db.Unicode())
 
     def __repr__(self):
-        return '{} — Fall 2018'.format(self.name)
+        return '{} — {}'.format(self.name, self.edition)

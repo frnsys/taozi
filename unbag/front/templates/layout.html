@@ -6,13 +6,20 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>unbag</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    {% for issue in issues %}
+        .issue-{{ issue.id }}:hover {
+            background: {{ issue.color }};
+        }
+    {% endfor %}
+  </style>
 </head>
 
-<body>
+<body style="background-color:{{ current_issue.color }}">
     {% include "_messages.html" %}
     <header>
         <div class="header--meta">
-            <img src="{{ url_for('static', filename='logo.svg') }}" alt="Unbag logo" title="Unbag" class="header--brand">
+            <a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='logo.svg') }}" alt="Unbag logo" title="Unbag" class="header--brand"></a>
             <div class="header--current-issue">
                 {{ current_issue }}
             </div>
