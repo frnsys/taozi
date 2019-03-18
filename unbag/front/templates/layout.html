@@ -40,7 +40,7 @@
   </style>
 </head>
 
-<body>
+<body class="preload">
     {% include "_messages.html" %}
     <main>
         {{ header() }}
@@ -102,7 +102,11 @@
             </div>
         </div>
     </main>
-    <footer>
+    <script>
+        window.onload = function() {
+          document.body.classList.remove("preload");
+        }
+    </script>
 </body>
 </html>
 

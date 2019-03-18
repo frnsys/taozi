@@ -3,6 +3,9 @@
 * {
   box-sizing: border-box;
 }
+.preload * {
+  transition: none !important;
+}
 
 html, body {
   margin: 0;
@@ -34,6 +37,11 @@ header {
   height: 1.5em;
   vertical-align: middle;
   margin-right: 0.75em;
+  filter: grayscale(1) brightness(0.4);
+  transition: filter 0.2s;
+}
+.header--brand:hover {
+  filter: grayscale(0);
 }
 .header--meta {
   flex: 1;
@@ -45,8 +53,16 @@ header {
   font-size: 0.75em;
   line-height: 1;
   margin: 0 0.75em 0 0;
+  transition: border 0.2s;
+}
+.header--current-issue:hover {
+  border-color: #2593ca;
+}
+.header--current-issue:hover a {
+  color: #2593ca;
 }
 .header--current-issue a {
+  transition: color 0.2s;
   color: black;
   padding: 0.5em;
   text-decoration: none;
@@ -65,6 +81,10 @@ nav {
 nav a {
   color: black;
   text-decoration: none;
+  transition: color 0.2s;
+}
+nav a:hover {
+  color: #2593ca;
 }
 nav li {
   display: inline-block;
@@ -104,7 +124,7 @@ nav li {
 
 .about {
   color: #fff;
-  background: #222;
+  background: #232323;
 }
 .about .section-title,
 .about a {
@@ -128,6 +148,20 @@ nav li {
   position: relative;
   vertical-align: top;
   padding-bottom: 1em;
+  transition: color 0.2s;
+}
+.issue--post a {
+  transition: color 0.2s;
+}
+.issue--post img {
+  transition: border 0.2s;
+}
+.issue--post:hover,
+.issue--post:hover a {
+  color: #fff;
+}
+.issue--post:hover img {
+  border-color: #fff;
 }
 .issue--post img {
   min-width: 20px;
