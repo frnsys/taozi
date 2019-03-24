@@ -1,3 +1,4 @@
+import random
 from .datastore import db
 from flask import url_for
 from datetime import datetime
@@ -127,4 +128,6 @@ class Issue(db.Model):
 
     @property
     def published_posts(self):
-        return [p for p in self.posts if p.published]
+        posts = [p for p in self.posts if p.published]
+        random.shuffle(posts)
+        return posts

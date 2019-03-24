@@ -97,25 +97,39 @@ nav li {
 .issue-focused .issue-link {
   margin: 0 0 1em 0;
 }
+.issue-focused .content {
+  margin-top: -4.5em;
+}
 
-.section-title {
+.section-title,
+.section-subtitle {
   width: 100%;
-  padding: 1em;
+  padding: 0.5em;
   display: block;
   color: black;
   text-transform: uppercase;
   text-align: center;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1.6em;
   letter-spacing: 0.1em;
   color: black;
   margin: 0;
 }
+.section-subtitle {
+  margin: 1em 0;
+  position: relative;
+  z-index: 1;
+}
+.section-subtitle-contents {
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+  padding: 0.7em 1.9em;
+}
+
 .issue {
   border-top: 1px solid black;
-}
-.issue h2 {
-  transition: background-color 0.5s;
 }
 .issue a {
   color: black;
@@ -150,7 +164,7 @@ nav li {
   display: inline-block;
   position: relative;
   vertical-align: top;
-  padding-bottom: 1em;
+  padding-bottom: 3em;
   transition: color 0.2s;
 }
 .issue--post a {
