@@ -114,6 +114,9 @@ nav li {
 .issue {
   border-top: 1px solid black;
 }
+.issue h2 {
+  transition: background-color 0.5s;
+}
 .issue a {
   color: black;
   text-decoration: none;

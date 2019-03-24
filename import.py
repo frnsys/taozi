@@ -7,6 +7,7 @@ from datetime import datetime
 from unbag import create_app, db
 from unbag.models import Issue, Post, Author, Media
 
+
 app = create_app()
 
 exported = json.load(open('../importer/converted.json'))
@@ -14,9 +15,21 @@ exported = json.load(open('../importer/converted.json'))
 with app.app_context():
     print('Creating issues...')
     issues = ['Metis', 'End', 'Reverie']
+    colors = {
+        'Reverie': '#bac929',
+        'End': '#c6c6c6',
+        'Metis': '#847acc'
+    }
+    editions = {
+        'Reverie': 'Fall 2018',
+        'End': 'Winter 2018',
+        'Metis': 'Spring 2017'
+    }
     for name in issues:
         issue = Issue(name=name)
         issue.slug = slugify(issue.name)
+        issue.color = colors[name]
+        issue.edition = editions[name]
         db.session.add(issue)
         db.session.commit()
 
@@ -28,7 +41,7 @@ with app.app_context():
             print('Skipping:', fname)
             continue
 
-        for _, m in data['media'].items():
+        for m in data['media']:
             fname = m.split('/')[-1]
             media = Media.query.filter_by(filename=fname).first()
             if media is not None:
