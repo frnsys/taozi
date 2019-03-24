@@ -73,6 +73,7 @@ header {
   font-size: 0.75em;
   line-height: 1;
   display: inline-block;
+  max-width: 16em;
 }
 nav {
   text-transform: lowercase;
@@ -98,7 +99,7 @@ nav li {
   margin: 0 0 1em 0;
 }
 .issue-focused .content {
-  margin-top: -4.5em;
+  margin-top: -2.5em;
 }
 
 .section-title,
@@ -210,10 +211,11 @@ nav li {
 }
 .post--body {
   margin: 2em 0 0 0;
+  line-height: 1.4;
 }
 .post--body img {
   border: 1px solid black;
-  margin: 1em auto;
+  margin: 2em auto;
   display: block;
 }
 .post--body p {

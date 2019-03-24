@@ -8,7 +8,7 @@
             </div>
             {% if current_post %}
                 <div class="header--current-post">
-                    <em>{{ current_post.title }}</em>, {{ current_post.authors|join(', ', 'name') }}
+                    <marquee><em>{{ current_post.title }}</em>, {{ current_post.authors|join(', ', 'name') }}</marquee>
                 </div>
             {% endif %}
         </div>
