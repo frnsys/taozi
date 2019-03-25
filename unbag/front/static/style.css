@@ -145,6 +145,18 @@ nav li {
 .issue:first-of-type {
   border-top: none;
 }
+.home-issues {
+  padding-top: 3.5em;
+}
+.home-issues .issue:first-of-type {
+  border-top: 1px solid black;
+}
+.footer-issues {
+  padding-bottom: 3.5em;
+}
+.footer-issues .issue:last-of-type {
+  border-bottom: 1px solid black;
+}
 
 .about {
   color: #fff;

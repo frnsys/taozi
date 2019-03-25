@@ -2,23 +2,25 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-{% for issue in issues %}
-    {% if issue == current_issue %}
-        <div class="issue issue-focused" style="background-color:{{ current_issue.color }}">
-            <a href="{{ url_for('main.issue', slug=issue.slug) }}"><h2 class="section-title">{{ issue.name }}</h2></a>
-            <h2 class="section-subtitle"><div class="section-subtitle-contents" style="background-image:url('{{ url_for('static', filename='oval.svg') }}')">Contents</div></h2>
-            <div class="content">
-                {% for post in issue.published_posts %}
-                    {{ post_item(post) }}
-                {% endfor %}
+<div class="home-issues" style="background-color:{{ current_issue.color }}">
+    {% for issue in issues %}
+        {% if issue == current_issue %}
+            <div class="issue issue-focused">
+                <a href="{{ url_for('main.issue', slug=issue.slug) }}"><h2 class="section-title">{{ issue.name }}</h2></a>
+                <h2 class="section-subtitle"><div class="section-subtitle-contents" style="background-image:url('{{ url_for('static', filename='oval.svg') }}')">Contents</div></h2>
+                <div class="content">
+                    {% for post in issue.published_posts %}
+                        {{ post_item(post) }}
+                    {% endfor %}
+                </div>
             </div>
-        </div>
-    {% else %}
-        <div class="issue" style="background-color:{{ current_issue.color }}">
-            <a href="{{ url_for('main.issue', slug=issue.slug) }}"><h2 class="section-title issue-{{ issue.id }}">{{ issue.name }}</h2></a>
-        </div>
-    {% endif %}
-{% endfor %}
+        {% else %}
+            <div class="issue" style="background-color:{{ current_issue.color }}">
+                <a href="{{ url_for('main.issue', slug=issue.slug) }}"><h2 class="section-title issue-{{ issue.id }}">{{ issue.name }}</h2></a>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
 {% endblock %}
 
 
