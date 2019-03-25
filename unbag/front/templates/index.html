@@ -2,7 +2,7 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<div class="home-issues" style="background-color:{{ current_issue.color }}">
+<div class="issues home-issues" style="background-color:{{ current_issue.color }}">
     {% for issue in issues %}
         {% if issue == current_issue %}
             <div class="issue issue-current">

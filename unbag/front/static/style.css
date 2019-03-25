@@ -163,6 +163,9 @@ nav li {
 .about a {
   color: #fff;
 }
+.about .section-title {
+  margin-top: 1.5em;
+}
 .content {
   margin: 0 auto;
   padding: 0 0 4em 0;
@@ -251,5 +254,12 @@ nav li {
 /* anchor target fix for sticky header */
 .anchor {
   display: block;
-  padding-top: 2em;
+  height: 2.75em;
+  margin-top: -2.75em;
+  visibility: hidden;
+  position: relative;
+  z-index: -1;
+}
+.issues {
+  position: relative;
 }
