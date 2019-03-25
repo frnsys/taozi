@@ -100,6 +100,9 @@ nav li {
 }
 .issue-focused .content {
   margin-top: -2.5em;
+  max-width: 800px;
+  text-align: center;
+  text-align-last: left;
 }
 
 .section-title,
@@ -161,7 +164,6 @@ nav li {
 }
 
 .issue--post {
-  max-width: 30%;
   display: inline-block;
   position: relative;
   vertical-align: top;

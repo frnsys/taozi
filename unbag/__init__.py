@@ -2,6 +2,7 @@ import config
 import sentry_sdk
 from flask import Flask
 from flask_migrate import Migrate
+from flask_mail import Mail
 from flask_security import SQLAlchemyUserDatastore, Security
 from .datastore import db
 from .models import User, Role
@@ -28,6 +29,7 @@ def create_app(package_name=__name__, static_folder='front/static', template_fol
     # Setup security
     app.user_db = SQLAlchemyUserDatastore(db, User, Role)
     Security(app, app.user_db)
+    Mail(app)
 
     # Create the database tables.
     # Flask-SQLAlchemy needs to know which
