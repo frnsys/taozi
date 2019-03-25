@@ -11,6 +11,9 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: 'PT Serif', serif;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
 }
 
 img, iframe {
