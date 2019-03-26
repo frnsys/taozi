@@ -29,7 +29,7 @@ class PostForm(FlaskForm):
     title = TextField('Title', [InputRequired()])
     desc = TextField('Description', [InputRequired()])
     body = TextAreaField('Body', [InputRequired()])
-    tags = TextField('Tags', [InputRequired()])
+    tags = TextField('Tags')
     published = BooleanField('Published')
     print_only = BooleanField('Print Only')
     authors = QuerySelectMultipleField('Authors', query_factory=lambda: Author.query.all(),

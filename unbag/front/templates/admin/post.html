@@ -6,7 +6,7 @@
     <h1>Post</h1>
     <div>
         {% if post %}
-            <div><a href="{{ url_for("main.post", slug=post.slug) }}">
+            <div><a href="{{ url_for("main.post", slug=post.slug, issue=post.issue.slug) }}">
                 {% if post.published %}View{% else %}Preview{% endif %}
             </a></div>
         {% endif %}

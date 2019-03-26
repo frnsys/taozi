@@ -1,14 +1,16 @@
 {% macro header(shadow=False) -%}
     {# shadow header to properly push down other elements #}
-    <header {% if shadow %}style="position:relative;z-index:-1;"{% endif %}>
+    <header {% if shadow %}style="position:relative;z-index:-1;"{% endif %} class="primary-header">
         <div class="header--meta">
             <a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='logo.svg') }}" alt="Unbag logo" title="Unbag" class="header--brand"></a>
             <div class="header--current-issue">
-                <a href="{{ url_for('main.issue', slug=current_issue.slug) }}">{{ current_issue }}</a>
+                <!--<a href="{{ url_for('main.issue', slug=current_issue.slug) }}">{{ current_issue }}</a>-->
+                <a href="#current-issue">{{ current_issue }}</a>
             </div>
             {% if current_post %}
                 <div class="header--current-post">
-                    <marquee><em>{{ current_post.title }}</em>, {{ current_post.authors|join(', ', 'name') }}</marquee>
+                    <div class="marquee3k-size"><em>{{ current_post.title }}</em>, {{ current_post.authors|join(', ', 'name') }}</div>
+                    <div class="marquee3k" data-speed="0.15" data-pausable="true"><div><em>{{ current_post.title }}</em>, {{ current_post.authors|join(', ', 'name') }}</div></div>
                 </div>
             {% endif %}
         </div>
@@ -102,11 +104,13 @@
             </div>
         </div>
     </main>
+    <script src="{{ url_for('static', filename='js/marquee3k.js') }}"></script>
     <script>
         window.onload = function() {
           document.body.classList.remove("preload");
         }
+
+        Marquee3k.init();
     </script>
 </body>
 </html>
-

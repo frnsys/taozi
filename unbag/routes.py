@@ -24,9 +24,9 @@ def issue(slug):
     issues = Issue.query.order_by(Issue.id.desc()).all()
     return render_template('issue.html', issues=issues, current_issue=issue)
 
-@bp.route('/<slug>')
-def post(slug):
-    post = Post.query.filter_by(slug=slug).first_or_404()
+@bp.route('/<issue>/<slug>')
+def post(issue, slug):
+    post = Post.query.filter(Post.slug==slug, Post.issue.has(slug=issue)).first_or_404()
     if not post.published and not current_user.is_authenticated:
         abort(404)
     issues = Issue.query.order_by(Issue.id.desc()).all()

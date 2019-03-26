@@ -12,6 +12,7 @@
         </div>
     </div>
     <div class="issues focused-issues" style="background-color:{{ current_issue.color }}">
+        <a class="anchor" name="current-issue"></a>
         <div class="issue issue-current">
             <a href="{{ url_for('main.issue', slug=current_issue.slug) }}"><h2 class="section-title">{{ current_issue.name }}</h2></a>
             <h2 class="section-subtitle"><div class="section-subtitle-contents" style="background-image:url('{{ url_for('static', filename='oval.svg') }}')">Contents</div></h2>

@@ -16,17 +16,21 @@ html, body {
   font-smoothing: antialiased;
 }
 
-img, iframe {
+img, iframe, video {
   max-width: 100%;
 }
 
-ul, li {
+ul, ul li {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
+ol {
+  margin: 0 0 0 1em;
+  padding: 0;
+}
 
-header {
+header.primary-header {
   position: fixed;
   z-index: 2;
   width: 100%;
@@ -76,7 +80,10 @@ header {
   font-size: 0.75em;
   line-height: 1;
   display: inline-block;
-  max-width: 16em;
+  overflow: hidden;
+  padding: 0.2em 0;
+  vertical-align: middle;
+  position: relative;
 }
 nav {
   text-transform: lowercase;
@@ -191,10 +198,6 @@ nav li {
 .issue--post img {
   transition: border 0.2s;
 }
-.issue--post:hover,
-.issue--post:hover a {
-  color: #fff;
-}
 .issue--post:hover img {
   border-color: #fff;
 }
@@ -210,6 +213,9 @@ nav li {
 }
 .issue--post h6 {
   line-height: 1.5;
+}
+figcaption {
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 .post {
@@ -230,10 +236,20 @@ nav li {
   margin: 2em 0 0 0;
   line-height: 1.4;
 }
+.post--body h3 {
+  text-transform: uppercase;
+  font-size: 1.8em;
+}
 .post--body img {
   border: 1px solid black;
   margin: 2em auto;
   display: block;
+}
+.post--body figure {
+  margin: 2em auto;
+}
+.post--body figure img {
+  margin: 0;
 }
 .post--body p {
   margin: 1em 0;
@@ -254,12 +270,29 @@ nav li {
 /* anchor target fix for sticky header */
 .anchor {
   display: block;
-  height: 2.75em;
-  margin-top: -2.75em;
-  visibility: hidden;
-  position: relative;
-  z-index: -1;
+  height: 2.7em;
+  margin-top: -2.7em;
+  position: absolute;
 }
-.issues {
-  position: relative;
+.about, .issues {
+  overflow: hidden;
+}
+
+.footnote p {
+  margin: 0;
+}
+
+.marquee3k {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+}
+.marquee3k__copy {
+  padding-right: 1em;
+  box-sizing: border-box;
+}
+.marquee3k-size {
+  visibility: hidden;
 }

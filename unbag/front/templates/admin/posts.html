@@ -31,7 +31,7 @@
                         </div>
                     </div>
                     <div>
-                        <a href="{{ url_for("main.post", slug=post.slug) }}" class="view">
+                        <a href="{{ url_for("main.post", slug=post.slug, issue=post.issue.slug) }}" class="view">
                             {% if post.published %}View{% else %}Preview{% endif %}
                         </a>
                     </div>

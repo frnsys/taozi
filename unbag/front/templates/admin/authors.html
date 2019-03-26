@@ -18,7 +18,7 @@
                 <h2>{{ author.name }}</h2>
                 <div class="meta">
                     {% if author.posts %}
-                        <div>Most recent: <em><a href="{{ url_for('main.post', slug=author.posts[0].slug) }}" class="view">{{ author.posts[0].title }}</a></em></div>
+                        <div>Most recent: <em><a href="{{ url_for('main.post', slug=author.posts[0].slug, issue=author.posts[0].issue.slug) }}" class="view">{{ author.posts[0].title }}</a></em></div>
                     {% endif %}
                 </div>
             </li>
