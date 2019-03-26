@@ -17,6 +17,7 @@ html, body {
 }
 
 img, iframe, video {
+  height: auto;
   max-width: 100%;
 }
 
@@ -236,8 +237,13 @@ figcaption {
   margin: 2em 0 0 0;
   line-height: 1.4;
 }
-.post--body h3 {
+.post--body ol {
+  margin-left: 2em;
+}
+.post--body h3, .post--body h4 {
   text-transform: uppercase;
+}
+.post--body h3 {
   font-size: 1.8em;
 }
 .post--body img {
@@ -265,6 +271,14 @@ figcaption {
 .post-tag-video {
   color: #fff;
   background: #222;
+}
+.post-tag-audio {
+  color: #fff;
+  background: #000;
+}
+.post-tag-video a,
+.post-tag-audio a {
+  color: #999;
 }
 
 /* anchor target fix for sticky header */

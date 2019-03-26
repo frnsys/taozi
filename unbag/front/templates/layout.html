@@ -4,7 +4,6 @@
         <div class="header--meta">
             <a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='logo.svg') }}" alt="Unbag logo" title="Unbag" class="header--brand"></a>
             <div class="header--current-issue">
-                <!--<a href="{{ url_for('main.issue', slug=current_issue.slug) }}">{{ current_issue }}</a>-->
                 <a href="#current-issue">{{ current_issue }}</a>
             </div>
             {% if current_post %}
@@ -31,7 +30,13 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>unbag</title>
+  {% if current_post %}
+      <title>unbag - {{ current_post.title }}</title>
+  {% elif current_issue %}
+      <title>unbag - {{ current_issue }}</title>
+  {% else %}
+      <title>unbag</title>
+  {% endif %}
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <style>
     {% for issue in issues %}
