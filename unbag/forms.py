@@ -20,13 +20,14 @@ class IssueForm(FlaskForm):
 class UploadMediaForm(FlaskForm):
     file = FileField('Image', [FileRequired(),
                                FileAllowed(ALLOWED_EXTENSIONS, 'Images only')])
-    desc = TextField('Description', [InputRequired()])
+    desc = TextField('Description')
 
 class MediaForm(FlaskForm):
     desc = TextField('Description', [InputRequired()])
 
 class PostForm(FlaskForm):
     title = TextField('Title', [InputRequired()])
+    slug = TextField('Slug')
     desc = TextField('Description', [InputRequired()])
     body = TextAreaField('Body', [InputRequired()])
     tags = TextField('Tags')

@@ -34,7 +34,8 @@ def posts():
     if form.validate_on_submit():
         post = Post()
         form.populate_obj(post)
-        post.slug = slugify(post.title)
+        if not post.slug:
+            post.slug = slugify(post.title)
         post.html = compile_markdown(post.body)
         db.session.add(post)
         db.session.commit()
@@ -61,7 +62,8 @@ def post(id):
     if form.validate_on_submit():
         already_published = post.published
         form.populate_obj(post)
-        post.slug = slugify(post.title)
+        if not post.slug:
+            post.slug = slugify(post.title)
         if not already_published and post.published:
             post.published_at = datetime.utcnow()
         post.html = compile_markdown(post.body)
