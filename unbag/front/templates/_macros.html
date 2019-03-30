@@ -55,6 +55,10 @@
             {% endif %}
         </a>
         <a href="{{ url_for('main.post', slug=post.slug, issue=post.issue.slug) }}"><h4>{{ post.title }}</h4></a>
-        <h6>{{ post.authors|join(', ', 'name') }}</h6>
+        {% if post.event %}
+            <h6>{{ post.event }}</h6>
+        {% else %}
+            <h6>{{ post.authors|join(', ', 'name') }}</h6>
+        {% endif %}
     </div>
 {%- endmacro %}

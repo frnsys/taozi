@@ -128,3 +128,13 @@ class Event(db.Model):
     start                   = db.Column(db.DateTime())
     end                     = db.Column(db.DateTime())
     post                    = db.relationship('Post', uselist=False, back_populates='event')
+
+    def __repr__(self):
+        start = self.start.strftime('%m/%d/%Y %H:%M')
+        if not self.end:
+            return start
+        else:
+            if self.start.date() == self.end.date():
+                return '{}-{}'.format(start, self.end.strftime('%H:%M'))
+            else:
+                return '{} - {}'.format(start, self.end.strftime('%m/%d/%Y %H:%M'))
