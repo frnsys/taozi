@@ -64,11 +64,7 @@ class Post(db.Model):
                                                                  order_by='desc(Post.created_at)'))
 
     event_id                = db.Column(db.Integer, db.ForeignKey('event.id'))
-    event                   = db.relationship('Event',
-                                              uselist=False,
-                                              backref=db.backref('posts',
-                                                                 lazy='dynamic',
-                                                                 order_by='desc(Post.created_at)'))
+    event                   = db.relationship('Event', uselist=False, back_populates='post')
 
     issue_id                = db.Column(db.Integer, db.ForeignKey('issue.id'))
     issue                   = db.relationship('Issue',
@@ -131,3 +127,4 @@ class Event(db.Model):
     id                      = db.Column(db.Integer(), primary_key=True)
     start                   = db.Column(db.DateTime())
     end                     = db.Column(db.DateTime())
+    post                    = db.relationship('Post', uselist=False, back_populates='event')
