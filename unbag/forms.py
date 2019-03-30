@@ -14,7 +14,7 @@ class AuthorForm(FlaskForm):
 
 class IssueForm(FlaskForm):
     name = TextField('Name', [InputRequired()])
-    edition = TextField('Edition', [InputRequired()])
+    edition = TextField('Edition')
     color = TextField('Color', [InputRequired()])
 
 class UploadMediaForm(FlaskForm):

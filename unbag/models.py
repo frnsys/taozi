@@ -114,7 +114,9 @@ class Issue(db.Model):
     edition                 = db.Column(db.Unicode())
 
     def __repr__(self):
-        return '{} — {}'.format(self.name, self.edition)
+        if self.edition:
+            return '{} — {}'.format(self.name, self.edition)
+        return self.name
 
     @property
     def published_posts(self):
