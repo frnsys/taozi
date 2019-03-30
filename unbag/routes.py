@@ -1,5 +1,5 @@
 import config
-from .models import Post, Issue
+from .models import Post, Event, Issue
 from flask_security import current_user
 from flask import Blueprint, send_from_directory, render_template, abort
 
@@ -34,7 +34,8 @@ def post(issue, slug):
 
 @bp.route('/events')
 def events():
-    return 'TODO'
+    events = [e.post for e in Event.query.all() if e.post.published]
+    return render_template('events.html', events=events, current_issue='Events')
 
 @bp.route('/donate')
 def donate():
