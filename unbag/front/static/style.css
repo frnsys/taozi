@@ -356,3 +356,41 @@ figcaption {
 
  .embed-responsive-1by1::before {
    padding-top: 100%; }
+
+
+@media only screen and (max-width: 640px) {
+  .issue--post {
+    width: 100%;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+  .issue--post img {
+    width: 100%;
+  }
+  .content {
+    padding: 0 2em 4em 2em;
+  }
+  .header--current-post {
+    display: none;
+  }
+  header.primary-header {
+    display: block;
+    padding: 0;
+  }
+  .header--meta {
+    padding: 0.5em 1em;
+  }
+  nav {
+    border-top: 1px solid black;
+    padding: 0.5em;
+  }
+  nav ul {
+    display: flex;
+  }
+  nav ul li {
+    flex: 1;
+    display: block;
+    margin: 0;
+    text-align: center;
+  }
+}
