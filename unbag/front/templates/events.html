@@ -1,0 +1,18 @@
+{% from "_macros.html" import post_item %}
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="issues focused-issues">
+    <a class="anchor" name="current-issue"></a>
+    <div class="issue issue-current issue-focused">
+        <h2 class="section-title">Events</h2>
+        <h2 class="section-subtitle"><div class="section-subtitle-contents" style="background-image:url('{{ url_for('static', filename='oval.svg') }}')">Contents</div></h2>
+        <div class="content">
+            {% for post in events %}
+                {{ post_item(post) }}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -5,7 +5,7 @@ from .datastore import db
 from slugify import slugify
 from datetime import datetime
 from .compile import compile_markdown
-from .models import Post, Author, Media, Issue
+from .models import Post, Author, Media, Issue, Event
 from flask_security.decorators import roles_required
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from werkzeug.utils import secure_filename
@@ -41,7 +41,7 @@ def posts():
         db.session.commit()
         flash('Post created.')
 
-    paginator = Post.query.paginate(page, per_page=20)
+    paginator = Post.query.filter_by(event=None).paginate(page, per_page=20)
     return render_template('admin/posts.html', posts=paginator.items, paginator=paginator)
 
 
@@ -78,6 +78,67 @@ def post(id):
 
     return render_template('admin/post.html', post=post, form=form,
                            action=url_for('admin.post', id=post.id))
+
+
+@bp.route('/events', methods=['GET', 'POST'])
+@roles_required('admin')
+def events():
+    data = request.args
+    page = int(data.get('page', 1))
+
+    form = forms.EventForm()
+    if form.validate_on_submit():
+        event = Event()
+        event.post = Post()
+        form.populate_obj(event)
+        if not event.post.slug:
+            event.post.slug = slugify(event.post.title)
+        event.post.html = compile_markdown(event.post.body)
+        db.session.add(event)
+        db.session.commit()
+        flash('Event created.')
+    print(form.errors)
+
+    print(Event.query.count(), 'events')
+    paginator = Post.query.filter(Post.event != None).paginate(page, per_page=20)
+    return render_template('admin/events.html', posts=paginator.items, paginator=paginator)
+
+
+@bp.route('/events/new')
+@roles_required('admin')
+def new_event():
+    form = forms.EventForm()
+    return render_template('admin/event.html', form=form,
+                           action=url_for('admin.events'))
+
+
+@bp.route('/events/<int:id>', methods=['GET', 'POST', 'DELETE'])
+@roles_required('admin')
+def event(id):
+    post = Post.query.get_or_404(id)
+    event = post.event
+
+    form = forms.EventForm(obj=event)
+    if form.validate_on_submit():
+        already_published = post.published
+        form.populate_obj(event)
+        if not post.slug:
+            post.slug = slugify(post.title)
+        if not already_published and post.published:
+            post.published_at = datetime.utcnow()
+        post.html = compile_markdown(post.body)
+        db.session.add(event)
+        db.session.commit()
+        flash('Event updated.')
+
+    elif request.method == 'DELETE':
+        db.session.delete(post)
+        db.session.delete(event)
+        flash('Event deleted.')
+        return redirect(url_for('admin.events'))
+
+    return render_template('admin/event.html', post=post, form=form,
+                           action=url_for('admin.event', id=post.id))
 
 
 @bp.route('/authors', methods=['GET', 'POST'])

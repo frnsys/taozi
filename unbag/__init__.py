@@ -23,7 +23,7 @@ def create_app(package_name=__name__, static_folder='front/static', template_fol
 
     # Initialize the database and declarative Base class
     db.init_app(app)
-    Migrate(app, db)
+    Migrate(app, db, render_as_batch=True)
     app.db = db
 
     # Setup security

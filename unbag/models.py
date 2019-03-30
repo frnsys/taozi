@@ -35,7 +35,7 @@ class User(db.Model, UserMixin):
 
 class Post(db.Model):
     __mapper_args__         = {
-        'order_by': 'created_at DESC'
+        'order_by': db.text('created_at DESC')
     }
     __table_args__          = (
         db.UniqueConstraint('slug', 'issue_id', name='_slug_issue_uc'),
@@ -63,6 +63,9 @@ class Post(db.Model):
                                                                  lazy='dynamic',
                                                                  order_by='desc(Post.created_at)'))
 
+    event_id                = db.Column(db.Integer, db.ForeignKey('event.id'))
+    event                   = db.relationship('Event', uselist=False, back_populates='post')
+
     issue_id                = db.Column(db.Integer, db.ForeignKey('issue.id'))
     issue                   = db.relationship('Issue',
                                               uselist=False,
@@ -83,7 +86,7 @@ class Post(db.Model):
 
 class Media(db.Model):
     __mapper_args__         = {
-        'order_by': 'created_at DESC'
+        'order_by': db.text('created_at DESC')
     }
     id                      = db.Column(db.Integer(), primary_key=True)
     desc                    = db.Column(db.Unicode())
@@ -100,20 +103,7 @@ class Author(db.Model):
     id                      = db.Column(db.Integer(), primary_key=True)
     slug                    = db.Column(db.Unicode(), unique=True)
     name                    = db.Column(db.Unicode())
-    #bio                     = db.Column(db.Unicode())
     twitter                 = db.Column(db.Unicode())
-
-
-# class Event(db.Model):
-#     id                      = db.Column(db.Integer(), primary_key=True)
-#     title                   = db.Column(db.Unicode())
-#     desc                    = db.Column(db.Unicode())
-#     starts_at               = db.Column(db.DateTime())
-#     ends_at                 = db.Column(db.DateTime())
-#     published               = db.Column(db.Boolean(), default=False)
-#     published_at            = db.Column(db.DateTime(), default=datetime.utcnow)
-#     created_at              = db.Column(db.DateTime(), default=datetime.utcnow)
-#     updated_at              = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
 
 
 class Issue(db.Model):
@@ -124,10 +114,29 @@ class Issue(db.Model):
     edition                 = db.Column(db.Unicode())
 
     def __repr__(self):
-        return '{} — {}'.format(self.name, self.edition)
+        if self.edition:
+            return '{} — {}'.format(self.name, self.edition)
+        return self.name
 
     @property
     def published_posts(self):
         posts = [p for p in self.posts if p.published]
         random.shuffle(posts)
         return posts
+
+
+class Event(db.Model):
+    id                      = db.Column(db.Integer(), primary_key=True)
+    start                   = db.Column(db.DateTime())
+    end                     = db.Column(db.DateTime())
+    post                    = db.relationship('Post', uselist=False, back_populates='event')
+
+    def __repr__(self):
+        start = self.start.strftime('%m/%d/%Y %H:%M')
+        if not self.end:
+            return start
+        else:
+            if self.start.date() == self.end.date():
+                return '{}-{}'.format(start, self.end.strftime('%H:%M'))
+            else:
+                return '{} - {}'.format(start, self.end.strftime('%m/%d/%Y %H:%M'))
