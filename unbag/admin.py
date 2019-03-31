@@ -9,6 +9,7 @@ from .models import Post, Author, Media, Issue, Event
 from flask_security.decorators import roles_required
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from werkzeug.utils import secure_filename
+from PIL import Image
 
 bp = Blueprint('admin', __name__, url_prefix='/admin')
 
@@ -203,9 +204,14 @@ def media():
             flash('No selected file.')
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(config.UPLOAD_FOLDER, filename))
+            savepath = os.path.join(config.UPLOAD_FOLDER, filename)
+            file.save(savepath)
             media = Media(filename=filename)
             form.populate_obj(media)
+
+            img = Image.open(savepath)
+            media.width, media.height = img.size
+
             db.session.add(media)
             db.session.commit()
             flash('Media created.')

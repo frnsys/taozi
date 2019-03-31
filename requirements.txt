@@ -10,3 +10,4 @@ py-gfm==0.1.1
 bcrypt==3.1.6
 Flask==1.0.2
 Flask-Mail==0.9.1
+Pillow==5.4.1

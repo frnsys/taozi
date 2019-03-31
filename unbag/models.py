@@ -93,6 +93,8 @@ class Media(db.Model):
     filename                = db.Column(db.Unicode(), unique=True)
     created_at              = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_at              = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
+    width                   = db.Column(db.Integer())
+    height                  = db.Column(db.Integer())
 
     @property
     def path(self):

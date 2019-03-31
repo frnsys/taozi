@@ -11,6 +11,7 @@
                 alt="{{ media.desc }}" />
         </a>
         <div>{{ url_for('main.uploads', filename=media.filename) }}</div>
+        <div>{{ media.width }} x {{ media.height }}</div>
     </figure>
 {% endif %}
 <form method="POST" action="{{ action }}" enctype="multipart/form-data">

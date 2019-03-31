@@ -223,15 +223,18 @@ nav li {
 .issue--post a {
   transition: color 0.2s;
 }
-.issue--post img {
+.issue--post .img-wrap {
+  height: 0;
+}
+.post--image {
+  border: 1px solid black;
   transition: border 0.2s;
 }
-.issue--post:hover img {
+.post--image:hover {
   border-color: #fff;
 }
 .issue--post img {
   min-width: 20px;
-  border: 1px solid black;
 }
 .issue--post h4,
 .issue--post h6 {
