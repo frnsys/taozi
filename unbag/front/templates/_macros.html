@@ -62,3 +62,23 @@
         {% endif %}
     </div>
 {%- endmacro %}
+
+
+{% macro event_item(post) -%}
+    <div class="issue--event">
+        <div>
+            <a href="{{ url_for('main.post', slug=post.slug, issue=post.issue.slug) }}">
+                {% if post.image %}
+                    <!-- <img src="{{ post.image.path }}" alt="{{ post.image.desc }}" title="{{ post.image.desc }}" /> -->
+                    <img src="{{ url_for('static', filename='placeholder.jpg') }}" alt="Placeholder" title="Placeholder" />
+                {% else %}
+                    <img src="{{ url_for('static', filename='placeholder.jpg') }}" alt="Placeholder" title="Placeholder" />
+                {% endif %}
+            </a>
+        </div>
+        <div>
+            <a href="{{ url_for('main.post', slug=post.slug, issue=post.issue.slug) }}"><h4>{{ post.title }}</h4></a>
+            <h6>{{ post.event }}</h6>
+        </div>
+    </div>
+{%- endmacro %}

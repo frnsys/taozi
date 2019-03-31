@@ -120,8 +120,13 @@ class Issue(db.Model):
 
     @property
     def published_posts(self):
-        posts = [p for p in self.posts if p.published]
+        posts = [p for p in self.posts if p.published and p.event is None]
         random.shuffle(posts)
+        return posts
+
+    @property
+    def published_events(self):
+        posts = [p for p in self.posts if p.published and p.event is not None]
         return posts
 
 
@@ -132,11 +137,11 @@ class Event(db.Model):
     post                    = db.relationship('Post', uselist=False, back_populates='event')
 
     def __repr__(self):
-        start = self.start.strftime('%m/%d/%Y %H:%M')
+        start = self.start.strftime('%B %d, %Y %H:%M')
         if not self.end:
             return start
         else:
             if self.start.date() == self.end.date():
                 return '{}-{}'.format(start, self.end.strftime('%H:%M'))
             else:
-                return '{} - {}'.format(start, self.end.strftime('%m/%d/%Y %H:%M'))
+                return '{} - {}'.format(start, self.end.strftime('%B %d, %Y %H:%M'))

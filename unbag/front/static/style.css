@@ -103,8 +103,8 @@ nav li {
   margin-left: 1em;
 }
 
-.issue-current {
-  padding: 2em 2em 4em 2em;
+.issue-current .section-title {
+  padding: 2em 0 0 0;
 }
 .issue-current .issue-link {
   margin: 0 0 1em 0;
@@ -184,6 +184,33 @@ nav li {
 }
 .masthead, .social {
   margin-top: 4em;
+}
+
+.issue-current .events {
+  border-top: 1px solid black;
+}
+.events .section-subtitle {
+  margin-bottom: 2.5em;
+}
+.issue--event {
+  transition: color 0.2s;
+  margin: 1em auto;
+  max-width: 480px;
+  display: flex;
+}
+.issue--event img {
+  max-width: 80px;
+  border: 1px solid black;
+  margin-right: 1em;
+}
+.issue--event h4 {
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 1.3em;
+}
+.issue--event h6 {
+  margin: 0;
+  font-weight: normal;
 }
 
 .issue--post {

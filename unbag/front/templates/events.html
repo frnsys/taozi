@@ -1,14 +1,14 @@
-{% from "_macros.html" import post_item %}
+{% from "_macros.html" import event_item %}
 {% extends 'layout.html' %}
 
 {% block content %}
-<div class="issues focused-issues">
+<div class="issues focused-issues events">
     <a class="anchor" name="current-issue"></a>
     <div class="issue issue-current issue-focused">
         <h2 class="section-subtitle"><div class="section-subtitle-contents" style="background-image:url('{{ url_for('static', filename='oval.svg') }}')">Programs</div></h2>
         <div class="content">
             {% for post in events %}
-                {{ post_item(post) }}
+                {{ event_item(post) }}
             {% endfor %}
         </div>
     </div>

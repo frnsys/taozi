@@ -1,4 +1,4 @@
-{% from "_macros.html" import post_item %}
+{% from "_macros.html" import post_item, event_item %}
 {% extends 'layout.html' %}
 
 {% block content %}
@@ -12,6 +12,16 @@
                 {{ post_item(post) }}
             {% endfor %}
         </div>
+        {% if current_issue.published_events %}
+            <div class="events">
+                <h2 class="section-subtitle"><div class="section-subtitle-contents" style="background-image:url('{{ url_for('static', filename='oval.svg') }}')">Programs</div></h2>
+                <div class="content">
+                    {% for post in current_issue.published_events %}
+                        {{ event_item(post) }}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
     </div>
     {% for issue in issues %}
         {% if issue != current_issue %}
