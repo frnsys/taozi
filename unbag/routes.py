@@ -11,7 +11,7 @@ def not_found(e):
 
 @bp.route('/')
 def index():
-    issues = Issue.query.filter(Issue.name!='Events').order_by(Issue.id.asc()).all()
+    issues = Issue.query.filter(Issue.name!='Programs').order_by(Issue.id.asc()).all()
     return render_template('index.html', issues=issues, current_issue=issues[-1])
 
 @bp.route('/uploads/<filename>')
@@ -21,7 +21,7 @@ def uploads(filename):
 @bp.route('/issue/<slug>')
 def issue(slug):
     issue = Issue.query.filter_by(slug=slug).first_or_404()
-    issues = Issue.query.filter(Issue.name!='Events').order_by(Issue.id.desc()).all()
+    issues = Issue.query.filter(Issue.name!='Programs').order_by(Issue.id.desc()).all()
     return render_template('issue.html', issues=issues, current_issue=issue)
 
 @bp.route('/<issue>/<slug>')
@@ -29,13 +29,13 @@ def post(issue, slug):
     post = Post.query.filter(Post.slug==slug, Post.issue.has(slug=issue)).first_or_404()
     if not post.published and not current_user.is_authenticated:
         abort(404)
-    issues = Issue.query.filter(Issue.name!='Events').order_by(Issue.id.desc()).all()
+    issues = Issue.query.filter(Issue.name!='Programs').order_by(Issue.id.desc()).all()
     return render_template('post.html', current_issue=post.issue, current_post=post, issues=issues)
 
-@bp.route('/events')
+@bp.route('/programs')
 def events():
     events = [e.post for e in Event.query.all() if e.post.published]
-    return render_template('events.html', events=events, current_issue='Events')
+    return render_template('events.html', events=events, current_issue='Programs')
 
 @bp.route('/donate')
 def donate():
