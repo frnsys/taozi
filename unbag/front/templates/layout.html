@@ -13,7 +13,10 @@
                 </div>
             {% endif %}
         </div>
-        <nav>
+        {% if not shadow %}
+            <div id="mobile-menu" class="mobile-menu"><img src="{{ url_for('static', filename='menu.svg') }}" /></div>
+        {% endif %}
+        <nav {% if not shadow %}id="main-nav"{% endif %}>
             <ul>
                 <li><a href="{{ url_for('main.events') }}">Programs</a></li>
                 <li><a href="{{ url_for('main.donate') }}">Donate</a></li>
@@ -122,6 +125,10 @@
         }
 
         Marquee3k.init();
+        document.getElementById('mobile-menu').addEventListener('click', () => {
+            let display = document.getElementById('main-nav').style.display;
+            document.getElementById('main-nav').style.display = display == 'block' ? 'none' : 'block';
+        });
     </script>
 </body>
 </html>
