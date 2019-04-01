@@ -9,6 +9,7 @@ from .models import Post, Author, Media, Issue, Event
 from flask_security.decorators import roles_required
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from werkzeug.utils import secure_filename
+from sqlalchemy.exc import IntegrityError
 from PIL import Image
 
 bp = Blueprint('admin', __name__, url_prefix='/admin')
@@ -213,8 +214,13 @@ def media():
             media.width, media.height = img.size
 
             db.session.add(media)
-            db.session.commit()
-            flash('Media created.')
+
+            try:
+                db.session.commit()
+                flash('Media created.')
+            except IntegrityError:
+                db.session.rollback()
+                flash('There\'s already a file with this name. Please rename it and try again.')
 
     paginator = Media.query.paginate(page, per_page=20)
     return render_template('admin/media.html',
