@@ -1,4 +1,4 @@
-{% from "_macros.html" import event_item %}
+{% from "_macros.html" import post_item %}
 {% extends 'layout.html' %}
 
 {% block content %}
@@ -8,7 +8,7 @@
         <h2 class="section-subtitle"><div class="section-subtitle-contents" style="background-image:url('{{ url_for('static', filename='oval.svg') }}')">Programs</div></h2>
         <div class="content">
             {% for post in events %}
-                {{ event_item(post) }}
+                {{ post_item(post) }}
             {% endfor %}
         </div>
     </div>
