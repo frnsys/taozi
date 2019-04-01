@@ -47,22 +47,34 @@
 
 {% macro post_item(post) -%}
     <div class="issue--post" style="margin-top: {{range(-2, 2)|random}}em;margin-left: {{[0,0,2,4]|random}}%;margin-right: {{[2,2,4]|random}}%;width:{{[30, 35, 35, 40, 40, 55]|random}}%">
-        <a href="{{ url_for('main.post', slug=post.slug, issue=post.issue.slug) }}">
+        {% if post.print_only %}
+            <a href="https://store.unbag.net/{{ post.issue.slug }}">
+        {% else %}
+            <a href="{{ url_for('main.post', slug=post.slug, issue=post.issue.slug) }}">
+        {% endif %}
             {% if post.image %}
                 <div class="post--image" style="width:{{[50, 75, 100, 100, 100]|random}}%">
+                    {% if post.print_only %}<div class="post--print-only">Print Only</div>{% endif %}
                     <div class="img-wrap" style="{% if post.image.height %}padding-bottom:{{ post.image.height/post.image.width * 100}}%;{% endif %}">
                         <img src="{{ post.image.path }}" alt="{{ post.image.desc }}" title="{{ post.image.desc }}" />
                     </div>
                 </div>
             {% else %}
                 <div class="post--image" style="width:{{[50, 75, 100, 100, 100]|random}}%">
+                    {% if post.print_only %}<div class="post--print-only">Print Only</div>{% endif %}
                     <div class="img-wrap">
                         <img src="{{ url_for('static', filename='placeholder.jpg') }}" alt="Placeholder" title="Placeholder" />
                     </div>
                 </div>
             {% endif %}
         </a>
-        <a href="{{ url_for('main.post', slug=post.slug, issue=post.issue.slug) }}"><h4>{{ post.title }}</h4></a>
+        {% if post.print_only %}
+            <a href="https://store.unbag.net/{{ post.issue.slug }}">
+        {% else %}
+            <a href="{{ url_for('main.post', slug=post.slug, issue=post.issue.slug) }}">
+        {% endif %}
+            <h4>{{ post.title }}</h4>
+        </a>
         {% if post.event %}
             <h6>{{ post.event }}</h6>
         {% else %}

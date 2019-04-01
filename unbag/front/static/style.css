@@ -229,9 +229,21 @@ nav li {
 .post--image {
   border: 1px solid black;
   transition: border 0.2s;
+  position: relative;
 }
 .post--image:hover {
   border-color: #fff;
+}
+.post--image:hover .post--print-only {
+  color: #fff;
+}
+.post--print-only {
+  transition: color 0.2s;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 0.9em;
+  position: absolute;
+  bottom: 0.5em;
+  left: 0.5em;
 }
 .issue--post img {
   min-width: 20px;
