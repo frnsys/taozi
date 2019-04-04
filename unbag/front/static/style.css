@@ -217,7 +217,7 @@ nav li {
   display: inline-block;
   position: relative;
   vertical-align: top;
-  padding-bottom: 3em;
+  padding-bottom: 6em;
   transition: color 0.2s;
 }
 .issue--post a {
@@ -408,6 +408,11 @@ figcaption {
 }
 .mobile-menu img {
   width: 22px;
+}
+
+/* Fractured Atlas widget overrides */
+#shopping-cart {
+  background: none !important;
 }
 
 @media only screen and (max-width: 640px) {

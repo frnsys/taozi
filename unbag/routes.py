@@ -39,7 +39,8 @@ def events():
 
 @bp.route('/donate')
 def donate():
-    return 'TODO'
+    issues = Issue.query.filter(Issue.name!='Programs').order_by(Issue.id.asc()).all()
+    return render_template('donate.html', current_issue=issues[-1])
 
 @bp.route('/shop')
 def shop():
