@@ -12,7 +12,7 @@ def not_found(e):
 @bp.route('/')
 def index():
     issues = Issue.query.filter(Issue.name!='Programs').order_by(Issue.id.asc()).all()
-    return render_template('index.html', issues=issues, current_issue=issues[-1])
+    return render_template('index.html', issues=issues, current_issue=issues[-1], current_post=Post.latest_event())
 
 @bp.route('/uploads/<filename>')
 def uploads(filename):
@@ -35,7 +35,7 @@ def post(issue, slug):
 @bp.route('/programs')
 def events():
     events = [e.post for e in Event.query.all() if e.post.published]
-    return render_template('events.html', events=events, current_issue='Programs')
+    return render_template('events.html', events=events, current_issue='Programs', current_post=Post.latest_event())
 
 @bp.route('/donate')
 def donate():

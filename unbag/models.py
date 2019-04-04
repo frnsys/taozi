@@ -83,6 +83,10 @@ class Post(db.Model):
     def tags_list(self):
         return [t.strip() for t in self.tags.split(',')]
 
+    @staticmethod
+    def latest_event():
+        return Post.query.filter(Post.published==True, Post.event!=None).first()
+
 
 class Media(db.Model):
     __mapper_args__         = {

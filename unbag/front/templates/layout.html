@@ -7,9 +7,14 @@
                 <a href="#current-issue">{{ current_issue }}</a>
             </div>
             {% if current_post %}
+                {% if current_post.event %}
+                    {% set meta = current_post.event %}
+                {% else %}
+                    {% set meta = current_post.authors|join(', ', 'name') %}
+                {% endif %}
                 <div class="header--current-post">
-                    <div class="marquee3k-size"><em>{{ current_post.title }}</em>, {{ current_post.authors|join(', ', 'name') }}</div>
-                    <div class="marquee3k" data-speed="0.15" data-pausable="true"><div><em>{{ current_post.title }}</em>, {{ current_post.authors|join(', ', 'name') }}</div></div>
+                    <div class="marquee3k-size"><em>{{ current_post.title }}</em>, {{ meta }}</div>
+                    <div class="marquee3k" data-speed="0.15" data-pausable="true"><div><em>{{ current_post.title }}</em>, {{ meta }}</div></div>
                 </div>
             {% endif %}
         </div>
