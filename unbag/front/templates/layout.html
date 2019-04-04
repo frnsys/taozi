@@ -38,7 +38,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  {% if current_post %}
+  {% if current_post and not current_post.event %}
       <title>unbag - {{ current_post.title }}</title>
   {% elif current_issue %}
       <title>unbag - {{ current_issue }}</title>
