@@ -289,6 +289,33 @@ img.thumb {
   text-decoration: underline;
 }
 
+.textarea {
+  position: relative;
+}
+.textarea textarea {
+  padding-bottom: 1.5em;
+}
+.markdown-ref {
+  font-size: 0.75em;
+  position: absolute;
+  bottom: 2px;
+  left: 2px;
+  right: 2px;
+  background: #eee;
+  padding: 0.4em;
+  border-top: 1px solid black;
+}
+.markdown-ref ul,
+.markdown-ref li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.markdown-ref li {
+  display: inline-block;
+  margin-right: 0.5em;
+}
+
 @media only screen and (max-width: 1000px) {
   nav {
     position: static;

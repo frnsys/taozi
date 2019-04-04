@@ -1,4 +1,5 @@
 {% from "_macros.html" import render_field_with_errors, render_field %}
+{% from "admin/_macros.html" import markdown_ref %}
 {% extends 'admin/layout.html' %}
 
 {% block content %}
@@ -18,7 +19,10 @@
   {{ render_field_with_errors(form.title) }}
   {{ render_field_with_errors(form.slug) }}
   {{ render_field_with_errors(form.desc) }}
-  {{ render_field_with_errors(form.body) }}
+  <div class="textarea">
+      {{ render_field_with_errors(form.body) }}
+      {{ markdown_ref() }}
+  </div>
   <div class="column-2">
       <div>
         {{ render_field_with_errors(form.authors) }}
