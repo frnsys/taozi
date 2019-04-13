@@ -397,6 +397,9 @@ figcaption {
   bottom: 0;
   top: 0;
 }
+.marquee3k a {
+  color: #000;
+}
 .marquee3k__copy {
   padding-right: 1em;
   box-sizing: border-box;
