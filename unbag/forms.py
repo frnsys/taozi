@@ -30,7 +30,7 @@ class PostForm(FlaskForm):
     title = TextField('Title', [InputRequired()])
     subtitle = TextField('Subtitle')
     desc = TextField('Description', [InputRequired()])
-    body = TextAreaField('Body', [InputRequired()])
+    body = TextAreaField('Body')
     tags = TextField('Tags')
     published = BooleanField('Published')
     print_only = BooleanField('Print Only')
