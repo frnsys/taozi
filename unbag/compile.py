@@ -105,12 +105,14 @@ Copyright 2013 - [Helder Correia](http://heldercorreia.com) (GPL2)
 """
 from markdown.blockprocessors import BlockProcessor
 from markdown.inlinepatterns import IMAGE_LINK_RE, IMAGE_REFERENCE_RE
-FIGURES = [u'^\s*'+IMAGE_LINK_RE+u'\s*$', u'^\s*'+IMAGE_REFERENCE_RE+u'\s*$'] #is: linestart, any whitespace (even none), image, any whitespace (even none), line ends.
+CLASS_RE = '(\{\.([A-Za-z-_]+)\})'
+FIGURES = [u'^\s*'+IMAGE_LINK_RE+CLASS_RE+u'?\s*$', u'^\s*'+IMAGE_REFERENCE_RE+CLASS_RE+u'?\s*$'] #is: linestart, any whitespace (even none), image, any whitespace (even none), line ends.
 
 
 # This is the core part of the extension
 class FigureCaptionProcessor(BlockProcessor):
     FIGURES_RE = re.compile('|'.join(f for f in FIGURES))
+    CLASS_RE = re.compile(CLASS_RE)
     def test(self, parent, block): # is the block relevant
         isImage = bool(self.FIGURES_RE.search(block))
         isOnlyOneLine = (len(block.splitlines())== 1)
@@ -128,6 +130,12 @@ class FigureCaptionProcessor(BlockProcessor):
 
         # create figure
         figure = etree.SubElement(parent, 'figure')
+
+        cls = self.CLASS_RE.search(raw_block)
+        if cls is not None:
+            cls = cls.group(2)
+            raw_block = self.CLASS_RE.sub('', raw_block)
+            figure.attrib['class'] = cls
 
         # render image in figure
         figure.text = raw_block

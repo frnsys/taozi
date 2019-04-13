@@ -274,6 +274,7 @@ figcaption {
 
 .post {
   padding: 6em 1em;
+  overflow-x: hidden;
 }
 .post h1 {
   font-size: 2.5em;
@@ -317,6 +318,24 @@ figcaption {
 }
 .post--body figure img {
   margin: 0;
+}
+.post--body figure.half-width img {
+  width: 50%;
+  margin: 0 auto;
+}
+.post--body figure.full-width figcaption {
+  padding: 0 1.5em;
+}
+.post--body figure.full-width img {
+  width: 100%;
+}
+.post--body figure.full-width {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
 }
 .post--body p {
   margin: 1em 0;
