@@ -222,6 +222,8 @@ nav li {
   vertical-align: top;
   padding-bottom: 6em;
   transition: color 0.2s;
+  text-align: left;
+  text-align-last: left;
 }
 .issue--post a {
   transition: color 0.2s;
