@@ -64,12 +64,17 @@ header.primary-header {
   line-height: 1;
   margin: 0 0.75em 0 0;
   transition: border 0.2s;
+  box-shadow: 1px 1px 0 #000;
 }
 .header--current-issue:hover {
   border-color: #2593ca;
 }
 .header--current-issue:hover a {
   color: #2593ca;
+}
+.header--current-issue-icon {
+  width: 8px;
+  margin-left: 4px;
 }
 .header--current-issue a {
   transition: color 0.2s;
