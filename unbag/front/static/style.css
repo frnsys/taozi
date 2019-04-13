@@ -173,6 +173,7 @@ nav li {
 }
 .issue-focused {
   border-top: none;
+  padding: 0 2em;
 }
 
 .about {
