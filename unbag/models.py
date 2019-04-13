@@ -4,6 +4,8 @@ from flask import url_for
 from datetime import datetime
 from flask_security import UserMixin, RoleMixin
 
+dtfmt = '%B %d, %Y %-I:%M%p'
+
 roles_users = db.Table('roles_users',
         db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
         db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
@@ -143,11 +145,11 @@ class Event(db.Model):
     post                    = db.relationship('Post', uselist=False, back_populates='event')
 
     def __repr__(self):
-        start = self.start.strftime('%B %d, %Y %H:%M')
+        start = self.start.strftime(dtfmt)
         if not self.end:
             return start
         else:
             if self.start.date() == self.end.date():
-                return '{}-{}'.format(start, self.end.strftime('%H:%M'))
+                return '{}-{}'.format(start, self.end.strftime('%I:%M%p'))
             else:
-                return '{} - {}'.format(start, self.end.strftime('%B %d, %Y %H:%M'))
+                return '{} - {}'.format(start, self.end.strftime(dtfmt))
