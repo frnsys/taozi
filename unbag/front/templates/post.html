@@ -25,15 +25,30 @@
         <div class="issue issue-current">
             {% if current_issue.name == 'Programs' %}
                 <h2 class="section-subtitle"><div class="section-subtitle-contents" style="background-image:url('{{ url_for('static', filename='oval.svg') }}')">Programs</div></h2>
+                <div class="content">
+                    {% for post in current_issue.published_events %}
+                        {{ post_item(post) }}
+                    {% endfor %}
+                </div>
             {% else %}
                 <a href="{{ url_for('main.issue', slug=current_issue.slug) }}"><h2 class="section-title">{{ current_issue.name }}</h2></a>
                 <h2 class="section-subtitle"><div class="section-subtitle-contents" style="background-image:url('{{ url_for('static', filename='oval.svg') }}')">Contents</div></h2>
+                <div class="content">
+                    {% for post in current_issue.published_posts %}
+                        {{ post_item(post) }}
+                    {% endfor %}
+                </div>
+                {% if current_issue.published_events %}
+                    <div class="events">
+                        <h2 class="section-subtitle"><div class="section-subtitle-contents" style="background-image:url('{{ url_for('static', filename='oval.svg') }}')">Programs</div></h2>
+                        <div class="content">
+                            {% for post in current_issue.published_events %}
+                                {{ post_item(post) }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
             {% endif %}
-            <div class="content">
-                {% for post in current_issue.published_posts %}
-                    {{ post_item(post) }}
-                {% endfor %}
-            </div>
         </div>
         {% for issue in issues %}
             {% if issue != current_issue %}
