@@ -4,15 +4,17 @@
 {% block content %}
     <div class="post {{'post-tag-' ~ current_post.tags_list|join(" post-tag-")}}">
         <div class="content">
-            <h1>{{ current_post.title }}</h1>
-            {% if current_post.subtitle %}
-                <h2>{{ current_post.subtitle }}</h2>
-            {% endif %}
-            {% if current_post.event %}
-                <h3>{{ current_post.event }}</h3>
-            {% else %}
-                <h3>{{ current_post.authors|join(', ', 'name') }}</h3>
-            {% endif %}
+            <header class="post--header">
+                <h1>{{ current_post.title }}</h1>
+                {% if current_post.subtitle %}
+                    <h2>{{ current_post.subtitle }}</h2>
+                {% endif %}
+                {% if current_post.event %}
+                    <h3>{{ current_post.event }}</h3>
+                {% else %}
+                    <h3>{{ current_post.authors|join(', ', 'name') }}</h3>
+                {% endif %}
+            </header>
             <div class="post--body">
                 {{ current_post.html|safe }}
             </div>
