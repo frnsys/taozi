@@ -14,7 +14,11 @@
                 {% endif %}
                 <div class="header--current-post">
                     <div class="marquee3k-size"><em>{{ current_post.title }}</em>, {{ meta }}</div>
-                    <div class="marquee3k" data-speed="0.15" data-pausable="true"><div><em>{{ current_post.title }}</em>, {{ meta }}</div></div>
+                    {% if current_post.event %}
+                        <div class="marquee3k" data-speed="0.15" data-pausable="true"><div><a href="{{ url_for('main.post', slug=current_post.slug, issue=current_post.issue.slug) }}"><em>{{ current_post.title }}</em>, {{ meta }}</a></div></div>
+                    {% else %}
+                        <div class="marquee3k" data-speed="0.15" data-pausable="true"><div><em>{{ current_post.title }}</em>, {{ meta }}</div></div>
+                    {% endif %}
                 </div>
             {% endif %}
         </div>
