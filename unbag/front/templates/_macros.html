@@ -48,7 +48,7 @@
 {% macro post_item(post) -%}
     <div class="issue--post" style="margin-top: {{range(-4, 12)|random}}em;margin-left: {{[0,0,2,4]|random}}%;margin-right: {{[2,2,4]|random}}%;width:{{[240, 280, 280, 320, 320, 440]|random}}px">
         {% if post.print_only %}
-            <a href="https://store.unbag.net/{{ post.issue.slug }}">
+            <a href="{{ post.issue.store_url }}">
         {% else %}
             <a href="{{ url_for('main.post', slug=post.slug, issue=post.issue.slug) }}">
         {% endif %}
@@ -69,7 +69,7 @@
             {% endif %}
         </a>
         {% if post.print_only %}
-            <a href="https://store.unbag.net/{{ post.issue.slug }}">
+            <a href="{{ post.issue.store_url }}">
         {% else %}
             <a href="{{ url_for('main.post', slug=post.slug, issue=post.issue.slug) }}">
         {% endif %}

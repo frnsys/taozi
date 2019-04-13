@@ -121,6 +121,7 @@ class Issue(db.Model):
     slug                    = db.Column(db.Unicode(), unique=True)
     color                   = db.Column(db.Unicode())
     edition                 = db.Column(db.Unicode())
+    store_url               = db.Column(db.Unicode())
 
     def __repr__(self):
         if self.edition:
