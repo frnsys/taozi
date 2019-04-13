@@ -245,10 +245,11 @@ nav li {
 .post--print-only {
   transition: color 0.2s;
   font-family: 'Source Sans Pro', sans-serif;
-  font-size: 0.9em;
+  font-size: 0.75em;
   position: absolute;
   bottom: 0.5em;
   left: 0.5em;
+  font-style: italic;
 }
 .issue--post img {
   min-width: 20px;
