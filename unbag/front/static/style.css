@@ -474,6 +474,16 @@ figcaption {
   width: 22px;
 }
 
+#donate {
+  padding: 4em 0;
+}
+#donate h1 {
+  text-transform: uppercase;
+}
+#donate h2 {
+  font-weight: normal;
+}
+
 /* Fractured Atlas widget overrides */
 #shopping-cart {
   background: none !important;
