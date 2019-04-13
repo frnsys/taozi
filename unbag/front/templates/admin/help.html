@@ -1,0 +1,20 @@
+{% extends 'admin/layout.html' %}
+
+{% block content %}
+<header>
+    <h1>Help</h1>
+</header>
+<div>
+Posts are written in Markdown, which is like a simpler form of HTML:
+<pre>
+- Bold: **text**
+- Italic: _text_
+- Image: ![Caption text](https://image/url.jpg)
+    - Full bleed image: ![Caption text](https://image/url.jpg){.full-width}
+- Link: [Link text](https://url.com)
+- Lists: each item preceded with "- "
+- And any HTML is valid too
+</pre>
+</div>
+{% endblock %}
+

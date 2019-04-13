@@ -26,6 +26,12 @@ def index():
     return redirect(url_for('admin.posts'))
 
 
+@bp.route('/help')
+@roles_required('admin')
+def help():
+    return render_template('admin/help.html')
+
+
 @bp.route('/posts', methods=['GET', 'POST'])
 @roles_required('admin')
 def posts():
