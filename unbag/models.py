@@ -4,8 +4,6 @@ from flask import url_for
 from datetime import datetime
 from flask_security import UserMixin, RoleMixin
 
-dtfmt = '%B %d, %Y %-I:%M%p'
-
 roles_users = db.Table('roles_users',
         db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
         db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
@@ -88,7 +86,8 @@ class Post(db.Model):
 
     @staticmethod
     def latest_event():
-        return Post.query.filter(Post.published==True, Post.event!=None).first()
+        now = datetime.utcnow()
+        return Post.query.join(Event).filter(Post.published==True, Post.event!=None, Post.event.has(Event.start >= now)).order_by(Event.start.asc()).first()
 
 
 class Media(db.Model):
@@ -145,13 +144,21 @@ class Event(db.Model):
     start                   = db.Column(db.DateTime())
     end                     = db.Column(db.DateTime())
     post                    = db.relationship('Post', uselist=False, back_populates='event')
+    ignore_time             = db.Column(db.Boolean(), default=False)
 
     def __repr__(self):
-        start = self.start.strftime(dtfmt)
+        if self.ignore_time:
+            dtfmt = '%B %-d, %Y'
+            suffix = ''
+        else:
+            dtfmt = '%B %-d, %Y %-I:%M'
+            suffix = '%p'
         if not self.end:
-            return start
+            return self.start.strftime(dtfmt + suffix)
         else:
             if self.start.date() == self.end.date():
-                return '{}-{}'.format(start, self.end.strftime('%I:%M%p'))
+                start = self.start.strftime(dtfmt)
+                return '{}-{}'.format(start, self.end.strftime('%-I:%M%p'))
             else:
-                return '{} - {}'.format(start, self.end.strftime(dtfmt))
+                start = self.start.strftime(dtfmt + suffix)
+                return '{} - {}'.format(start, self.end.strftime(dtfmt + suffix))

@@ -59,4 +59,5 @@ class EventPostForm(FlaskForm):
 class EventForm(FlaskForm):
     start = DateTimeField('Start', [InputRequired()], format='%Y-%m-%d %H:%M')
     end = DateTimeField('End', format='%Y-%m-%d %H:%M')
+    ignore_time = BooleanField('Ignore time')
     post = FormField(EventPostForm)
