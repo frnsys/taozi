@@ -26,8 +26,9 @@ class MediaForm(FlaskForm):
     desc = TextField('Description', [InputRequired()])
 
 class PostForm(FlaskForm):
-    title = TextField('Title', [InputRequired()])
     slug = TextField('Slug')
+    title = TextField('Title', [InputRequired()])
+    subtitle = TextField('Subtitle')
     desc = TextField('Description', [InputRequired()])
     body = TextAreaField('Body', [InputRequired()])
     tags = TextField('Tags')

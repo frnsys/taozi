@@ -17,6 +17,7 @@
   {% include "_messages.html" %}
   {{ form.hidden_tag() }}
   {{ render_field_with_errors(form.title) }}
+  {{ render_field_with_errors(form.subtitle) }}
   {{ render_field_with_errors(form.slug) }}
   {{ render_field_with_errors(form.desc) }}
   <div class="textarea">

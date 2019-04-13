@@ -48,6 +48,7 @@ class Post(db.Model):
     desc                    = db.Column(db.Unicode())
     html                    = db.Column(db.Unicode())
     title                   = db.Column(db.Unicode())
+    subtitle                = db.Column(db.Unicode())
     tags                    = db.Column(db.Unicode())
     published               = db.Column(db.Boolean(), default=False)
     print_only              = db.Column(db.Boolean(), default=False)
