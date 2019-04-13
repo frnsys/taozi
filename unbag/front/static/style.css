@@ -89,6 +89,10 @@ header.primary-header {
   position: relative;
   margin-top: 0.4em;
 }
+a {
+  text-decoration: none;
+  color: #2593ca;
+}
 nav {
   text-transform: lowercase;
   line-height: 1.75;
@@ -265,6 +269,7 @@ nav li {
 }
 figcaption {
   font-family: 'Source Sans Pro', sans-serif;
+  font-size: 0.75em;
 }
 
 .post {
@@ -283,7 +288,10 @@ figcaption {
 }
 .post--body {
   margin: 2em 0 0 0;
-  line-height: 1.4;
+  line-height: 1.6;
+}
+.post--body a:hover {
+  text-decoration: underline;
 }
 .post--body ol {
   margin-left: 2em;
@@ -333,7 +341,7 @@ figcaption {
 }
 .post-tag-audio {
   color: #fff;
-  background: #000;
+  background: #232323;
 }
 .post-tag-video a,
 .post-tag-audio a {
@@ -351,6 +359,9 @@ figcaption {
   overflow: hidden;
 }
 
+.footnote {
+  font-size: 0.75em;
+}
 .footnote p {
   margin: 0;
 }
