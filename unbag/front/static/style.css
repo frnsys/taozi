@@ -344,9 +344,8 @@ figcaption {
 .post--body figure img {
   margin: 0;
 }
-.post--body figure.half-width img {
+.post--body figure.half-width {
   width: 50%;
-  margin: 0 auto;
 }
 .post--body figure.full-width figcaption {
   padding: 0 1.5em;
