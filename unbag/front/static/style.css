@@ -189,6 +189,10 @@ nav li {
   color: #fff;
   background: #232323;
 }
+.about .content {
+  padding-right: 1em;
+  padding-left: 1em;
+}
 .about .section-title,
 .about a {
   color: #fff;
@@ -546,5 +550,12 @@ figcaption {
   }
   .mobile-menu {
     display: block;
+  }
+  .masthead, .social {
+    display: block;
+  }
+  .post .content {
+    padding-left: 0;
+    padding-right: 0;
   }
 }
