@@ -72,9 +72,18 @@ header.primary-header {
 .header--current-issue:hover a {
   color: #2593ca;
 }
+.header--current-issue:hover .header--current-issue-icon {
+  background: #2593ca;
+}
 .header--current-issue-icon {
+  transition: background 0.2s;
   width: 8px;
+  height: 8px;
+  display: inline-block;
   margin-left: 4px;
+  background-color: black;
+  -webkit-mask: url(/assets/triangle.svg) no-repeat center;
+  mask: url(/assets/triangle.svg) no-repeat center;
 }
 .header--current-issue a {
   transition: color 0.2s;
@@ -307,6 +316,7 @@ figcaption {
   font-size: 1.6em;
   font-weight: normal;
   margin: 0 0 0.1em 0;
+  text-decoration: underline;
 }
 .post--header h3 {
   font-size: 1.1em;
@@ -325,7 +335,7 @@ figcaption {
   text-decoration: underline;
 }
 .post--body ol {
-  margin-left: 2em;
+  margin-left: 1em;
 }
 .post--body h3, .post--body h4 {
   text-transform: uppercase;
@@ -425,6 +435,9 @@ figcaption {
 .marquee3k a {
   color: #000;
 }
+.marquee3k a:hover {
+  color: #2593ca;
+}
 .marquee3k__copy {
   padding-right: 1em;
   box-sizing: border-box;
@@ -483,6 +496,7 @@ figcaption {
   padding: 4em 0;
 }
 #donate h1 {
+  font-size: 2.5em;
   text-transform: uppercase;
 }
 #donate h2 {

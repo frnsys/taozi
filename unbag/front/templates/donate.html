@@ -1,3 +1,4 @@
+{% from "_macros.html" import post_item %}
 {% extends 'layout.html' %}
 
 {% block content %}
@@ -14,9 +15,47 @@
 
 <div id="donate" class="content">
     <h1>Support Us</h1>
-    <img src="{{ url_for('static', filename='placeholder.jpg') }}" alt="Placeholder" title="Placeholder" />
+    <img src="/uploads/Donate_page_animation_2.gif" alt="Placeholder" title="Placeholder" />
     <h2>Donate to unbag!</h2>
     <p>unbag is a semi-annual magazine that promotes critical engagement with contemporary art and politics. Commissioning artists, writers, and thinkers who work outside of mainstream discourse, unbag functions as a space to explore ideas through discussion and exchange.</p>
     <div id='donation'></div>
+</div>
+<div class="issues focused-issues" style="background-color:{{ current_issue.color }}">
+    <a class="anchor" name="current-issue"></a>
+    <div class="issue issue-current">
+        {% if current_issue.name == 'Programs' %}
+            <h2 class="section-subtitle"><div class="section-subtitle-contents" style="background-image:url('{{ url_for('static', filename='oval.svg') }}')">Programs</div></h2>
+            <div class="content">
+                {% for post in current_issue.published_events %}
+                    {{ post_item(post) }}
+                {% endfor %}
+            </div>
+        {% else %}
+            <a href="{{ url_for('main.issue', slug=current_issue.slug) }}"><h2 class="section-title">{{ current_issue.name }}</h2></a>
+            <h2 class="section-subtitle"><div class="section-subtitle-contents" style="background-image:url('{{ url_for('static', filename='oval.svg') }}')">Contents</div></h2>
+            <div class="content">
+                {% for post in current_issue.published_posts %}
+                    {{ post_item(post) }}
+                {% endfor %}
+            </div>
+            {% if current_issue.published_events %}
+                <div class="events">
+                    <h2 class="section-subtitle"><div class="section-subtitle-contents" style="background-image:url('{{ url_for('static', filename='oval.svg') }}')">Programs</div></h2>
+                    <div class="content">
+                        {% for post in current_issue.published_events %}
+                            {{ post_item(post) }}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+    {% for issue in issues %}
+        {% if issue != current_issue %}
+            <div class="issue">
+                <a href="{{ url_for('main.issue', slug=issue.slug) }}"><h2 class="section-title issue-{{ issue.id }}">{{ issue.name }}</h2></a>
+            </div>
+        {% endif %}
+    {% endfor %}
 </div>
 {% endblock %}

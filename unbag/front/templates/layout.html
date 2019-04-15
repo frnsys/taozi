@@ -4,7 +4,7 @@
         <div class="header--meta">
             <a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='logo.svg') }}" alt="Unbag logo" title="Unbag" class="header--brand"></a>
             <div class="header--current-issue">
-                <a href="#current-issue">{{ current_issue }} <img class="header--current-issue-icon" src="{{ url_for('static', filename='triangle.svg') }}" /></a>
+                <a href="#current-issue">{{ current_issue }} <div class="header--current-issue-icon"></div></a>
             </div>
             {% if current_post %}
                 {% if current_post.event %}
