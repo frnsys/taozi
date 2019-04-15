@@ -87,7 +87,7 @@ class Post(db.Model):
     @staticmethod
     def latest_event():
         now = datetime.utcnow()
-        return Post.query.join(Event).filter(Post.published==True, Post.event!=None, Post.event.has(Event.start >= now)).order_by(Event.start.asc()).first()
+        return Post.query.join(Event).filter(Post.published==True, Post.event!=None, Post.event.has(Event.end >= now)).order_by(Event.start.asc()).first()
 
 
 class Media(db.Model):
