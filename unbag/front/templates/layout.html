@@ -1,6 +1,6 @@
 {% macro header(shadow=False) -%}
     {# shadow header to properly push down other elements #}
-    <header {% if shadow %}style="position:relative;z-index:-1;"{% endif %} class="primary-header">
+    <header {% if shadow %}style="position:relative;z-index:-1;visibility:hidden;"{% endif %} class="primary-header">
         <div class="header--meta">
             <a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='logo.svg') }}" alt="Unbag logo" title="Unbag" class="header--brand"></a>
             <div class="header--current-issue">

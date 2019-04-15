@@ -569,4 +569,7 @@ figcaption {
   .header--current-issue:hover .header--current-issue-icon {
     background: black;
   }
+  nav a:hover {
+    color: black;
+  }
 }
