@@ -558,4 +558,15 @@ figcaption {
     padding-left: 0;
     padding-right: 0;
   }
+
+  /* sticky hover fix for mobile */
+  .header--current-issue:hover {
+    border-color: black;
+  }
+  .header--current-issue:hover a {
+    color: black;
+  }
+  .header--current-issue:hover .header--current-issue-icon {
+    background: black;
+  }
 }
