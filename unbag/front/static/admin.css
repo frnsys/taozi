@@ -194,6 +194,7 @@ img.thumb {
 }
 .listing .post .thumb {
   width: 112px;
+  min-width: 112px;
   height: 142px;
   margin-right: 1em;
 }
