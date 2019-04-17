@@ -380,7 +380,7 @@ figcaption, .small-text {
 }
 .post--body hr {
   width: 4em;
-  margin: 2em auto;
+  margin: 4em auto;
   border: none;
   height: 1px;
   background: black;
@@ -424,6 +424,9 @@ figcaption, .small-text {
 .footnote {
   font-size: 0.75em;
   font-family: 'Source Sans Pro', sans-serif;
+}
+.footnote hr {
+  display: none;
 }
 .footnote p {
   margin: 0;
