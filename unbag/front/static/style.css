@@ -301,7 +301,7 @@ nav li {
 .issue--post h6 {
   line-height: 1.5;
 }
-figcaption {
+figcaption, .small-text {
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 0.75em;
 }
