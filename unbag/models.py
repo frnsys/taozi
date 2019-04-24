@@ -1,3 +1,4 @@
+import config
 import random
 from .datastore import db
 from flask import url_for
@@ -82,7 +83,13 @@ class Post(db.Model):
 
     @property
     def tags_list(self):
-        return [t.strip() for t in self.tags.split(',')]
+        return [t.lower().strip() for t in self.tags.split(',')]
+
+    @property
+    def category(self):
+        for t in self.tags_list:
+            if t in config.CATEGORY_TAGS:
+                return t
 
     @staticmethod
     def latest_event():

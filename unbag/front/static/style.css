@@ -278,6 +278,9 @@ nav li {
 .post--image:hover .post--print-only {
   color: #fff;
 }
+.post--category {
+  font-family: 'Source Sans Pro', sans-serif;
+}
 .post--print-only {
   transition: color 0.2s;
   font-family: 'Source Sans Pro', sans-serif;
