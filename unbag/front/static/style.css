@@ -202,7 +202,7 @@ nav li {
 }
 .content {
   margin: 0 auto;
-  padding: 0 0 4em 0;
+  padding: 0 1em 4em;
   max-width: 640px;
 }
 .masthead--group {
