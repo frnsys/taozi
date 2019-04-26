@@ -221,8 +221,27 @@ nav li {
   padding-top: 2em;
   border-top: 1px solid #fff;
 }
+.social > div {
+  flex: 1;
+  flex-basis: 50%;
+  margin: 0 0 2em 0;
+}
 .social a {
   text-decoration: underline;
+}
+.mc-field-group label {
+  display: none;
+}
+#mc_embed_signup {
+  max-width: 50%;
+}
+#mc_embed_signup input, .mce_inline_error {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+#mc_embed_signup input[type=submit] {
+  border: none;
+  padding: 0.2em 0.6em;
+  cursor: pointer;
 }
 
 .issue-current .events {
