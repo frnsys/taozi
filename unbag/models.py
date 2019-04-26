@@ -167,13 +167,16 @@ class Event(db.Model):
             suffix = ''
         else:
             dtfmt = '%B %-d, %Y %-I:%M'
-            suffix = '%p'
+            suffix = ' %p'
         if not self.end:
             return self.start.strftime(dtfmt + suffix)
         else:
             if self.start.date() == self.end.date():
                 start = self.start.strftime(dtfmt)
-                return '{}-{}'.format(start, self.end.strftime('%-I:%M%p'))
+                if self.ignore_time:
+                    return start
+                else:
+                    return '{}-{}'.format(start, self.end.strftime('%-I:%M %p'))
             else:
                 start = self.start.strftime(dtfmt + suffix)
                 return '{} - {}'.format(start, self.end.strftime(dtfmt + suffix))

@@ -34,7 +34,7 @@ def post(issue, slug):
 
 @bp.route('/programs')
 def events():
-    events = [e.post for e in Event.query.all() if e.post.published]
+    events = [e.post for e in Event.query.order_by(Event.end.desc(), Event.start.asc()).all() if e.post.published]
     issues = Issue.query.filter(Issue.name!='Programs').order_by(Issue.id.desc()).all()
     return render_template('events.html', events=events, current_issue='Programs', issues=issues, current_post=Post.latest_event())
 

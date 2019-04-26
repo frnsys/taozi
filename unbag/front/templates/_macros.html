@@ -79,7 +79,7 @@
             <h6>{{ post.event }}</h6>
         {% else %}
             {% if post.print_only %}
-                <h6>{{ post.authors|join(', ', 'name') }} <span class="post--category">— Print</span></h6>
+                <h6>{{ post.authors|join(', ', 'name') }} <span class="post--category">— Print Exclusive</span></h6>
             {% elif post.category %}
                 <h6>{{ post.authors|join(', ', 'name') }} <span class="post--category">— {{ post.category|title }}</span></h6>
             {% else %}
