@@ -235,6 +235,9 @@ nav li {
 #mc_embed_signup {
   max-width: 50%;
 }
+#mc_embed_signup_scroll {
+  display: flex;
+}
 #mc_embed_signup input, .mce_inline_error {
   font-family: 'Source Sans Pro', sans-serif;
 }
@@ -242,6 +245,12 @@ nav li {
   border: none;
   padding: 0.2em 0.6em;
   cursor: pointer;
+  margin-left: 1px;
+}
+#mce-EMAIL {
+  width: 100%;
+  border: none;
+  padding: 0.2em;
 }
 
 .issue-current .events {
@@ -540,6 +549,7 @@ figcaption, .small-text {
 /* Fractured Atlas widget overrides */
 #shopping-cart {
   background: none !important;
+  z-index: 1;
 }
 
 @media only screen and (max-width: 640px) {
