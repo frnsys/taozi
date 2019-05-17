@@ -16,7 +16,8 @@ class IssueForm(FlaskForm):
     name = TextField('Name', [InputRequired()])
     edition = TextField('Edition')
     color = TextField('Color', [InputRequired()])
-    store_url = TextField('Store URL', [InputRequired()])
+    store_url = TextField('Store URL')
+    published = BooleanField('Published')
 
 class UploadMediaForm(FlaskForm):
     file = FileField('Image', [FileRequired(),

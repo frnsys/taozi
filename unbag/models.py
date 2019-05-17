@@ -136,6 +136,7 @@ class Issue(db.Model):
     color                   = db.Column(db.Unicode())
     edition                 = db.Column(db.Unicode())
     store_url               = db.Column(db.Unicode())
+    published               = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
         if self.edition:
