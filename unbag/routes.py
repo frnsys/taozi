@@ -36,7 +36,8 @@ def post(issue, slug):
 def events():
     events = [e.post for e in Event.query.order_by(Event.end.desc(), Event.start.asc()).all() if e.post.published]
     issues = Issue.query.filter(Issue.name!='Programs', Issue.published).order_by(Issue.id.desc()).all()
-    return render_template('events.html', events=events, current_issue='Programs', issues=issues, current_post=Post.latest_event())
+    issue = Issue.query.filter(Issue.name=='Programs').first()
+    return render_template('events.html', events=events, current_issue=issue, issues=issues, current_post=Post.latest_event())
 
 @bp.route('/donate')
 def donate():
