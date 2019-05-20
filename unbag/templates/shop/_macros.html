@@ -1,0 +1,16 @@
+{% macro store_item(p) -%}
+    <div class="issue--post" style="margin-top: {{range(-4, 12)|random}}em;margin-left: {{[0,0,2,4]|random}}%;margin-right: {{[2,2,4]|random}}%;width:{{[240, 280, 280, 320, 320, 440]|random}}px">
+        {% set url = url_for('shop.product', id=p.id[5:]) if p.type == 'good' else url_for('shop.plan', id=p.id[5:]) %}
+        <a href="{{ url }}">
+            {% set image = p.images[0] if p.images else p.metadata.image %}
+            <div class="post--image" style="width:{{[50, 75, 100, 100, 100]|random}}%">
+                <img src="{{ image }}" alt="{{ p.name }}" title="{{ p.name }}" />
+            </div>
+        </a>
+        <a href="{{ url }}">
+            <h4>{{ p.name }}</h4>
+        </a>
+        <h6>{{ p.metadata.price }}</h6>
+    </div>
+{%- endmacro %}
+

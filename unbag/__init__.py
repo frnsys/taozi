@@ -5,13 +5,14 @@ from flask_migrate import Migrate
 from flask_mail import Mail
 from flask_security import SQLAlchemyUserDatastore, Security
 from .datastore import db
-from .models import User, Role
+from .models import User, Role, Issue
 from .admin import bp as admin_bp
 from .routes import bp as main_bp
 from sentry_sdk.integrations.flask import FlaskIntegration
+from flask_konbini import Konbini
 
 
-def create_app(package_name=__name__, static_folder='front/static', template_folder='front/templates', **config_overrides):
+def create_app(package_name=__name__, static_folder='static', template_folder='templates', **config_overrides):
     app = Flask(package_name,
                 static_url_path='/assets',
                 static_folder=static_folder,
@@ -41,10 +42,20 @@ def create_app(package_name=__name__, static_folder='front/static', template_fol
     app.register_blueprint(admin_bp)
     app.register_blueprint(main_bp)
 
+    k = Konbini(app)
+
     if not app.debug:
         sentry_sdk.init(
             dsn=config.SENTRY_DSN,
             integrations=[FlaskIntegration()]
         )
+
+    @app.context_processor
+    def inject_issues():
+        """Inject issues into all templates"""
+        issues = Issue.query.filter(Issue.name!='Programs', Issue.published).order_by(Issue.id.desc()).all()
+        return dict(issues=issues,
+                    get_products=app.get_products,
+                    get_plans=app.get_plans)
 
     return app

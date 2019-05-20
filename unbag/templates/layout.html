@@ -4,7 +4,11 @@
         <div class="header--meta">
             <a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='logo.svg') }}" alt="Unbag logo" title="Unbag" class="header--brand"></a>
             <div class="header--current-issue">
-                <a href="#current-issue">{{ current_issue }}</a>
+                {% if request.endpoint.startswith('shop.') %}
+                    <a href="#current-issue">Store</a>
+                {% else %}
+                    <a href="#current-issue">{{ request.endpoint }}</a>
+                {% endif %}
             </div>
             {% if current_post %}
                 {% if current_post.event %}
@@ -30,7 +34,7 @@
                 <li><a href="{{ url_for('main.events') }}">Programs</a></li>
                 <li><a href="{{ url_for('main.donate') }}">Donate</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="https://unbag-llc.square.site/s/shop">Shop</a></li>
+                <li><a href="{{ url_for('shop.index') }}">Shop</a></li>
             </ul>
         </nav>
     </header>

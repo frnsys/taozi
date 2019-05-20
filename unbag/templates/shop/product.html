@@ -1,0 +1,41 @@
+{% from "shop/_macros.html" import store_item %}
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="product">
+    <div class="product--gallery">
+        {% for img in images %}
+            <figure>
+                <img src="{{ img }}" />
+            </figure>
+        {% endfor %}
+    </div>
+    <div class="product--info">
+        <h1>{{ product.name }}</h1>
+        <p>{{ product.description }}</p>
+        <div class="product--skus">
+            {% for sku in skus %}
+                <div class="product--sku">
+                    <form action='{{ url_for('shop.cart') }}' method='POST'>
+                        <input type='hidden' name='sku' value={{ sku.id }}>
+                        <input type='hidden' name='name' value='{{ product.name }} - {{ sku.attributes.values()|join(', ') }}'>
+                        <div class="sku">
+                            <div>
+                                <div class="sku--name">{{ sku.attributes.values()|join(', ') }}</div>
+                                <div class="sku--price">{{ '${:,.2f}'.format(sku.price/100) }}</div>
+                            </div>
+                            {% if sku.in_stock %}
+                                <input type="submit" value='Add to Cart'>
+                            {% else %}
+                                <input type="submit" disabled value='Out of Stock'>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% include "shop/_footer.html" %}
+{% endblock %}
