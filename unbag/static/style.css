@@ -289,6 +289,9 @@ nav li {
 .shop .post--image img {
   border: 1px solid black;
 }
+.shop .section-subtitle-contents {
+  padding: 0.7em 2.9em;
+}
 
 .issue--post {
   display: inline-block;
@@ -585,8 +588,7 @@ figcaption, .small-text {
 .product--gallery img {
   display: block;
   margin: 3em 0;
-  max-width: 100%;
-  max-height: 80vh;
+  width: 100%;
   border: 1px solid black;
 }
 .product--skus {
