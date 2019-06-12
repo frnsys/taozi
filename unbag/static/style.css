@@ -549,7 +549,7 @@ figcaption, .small-text {
 }
 
 #donate {
-  padding: 4em 0;
+  padding: 4em 1em;
 }
 #donate h1 {
   font-size: 2.5em;
@@ -557,6 +557,9 @@ figcaption, .small-text {
 }
 #donate h2 {
   font-weight: normal;
+}
+#donate img {
+  border: 1px solid black;
 }
 
 /* Fractured Atlas widget overrides */
@@ -575,6 +578,7 @@ figcaption, .small-text {
 }
 .product--gallery {
   flex: 1;
+  min-width: 40%;
 }
 .product--info {
   padding: 1em;
@@ -823,5 +827,9 @@ a.go-checkout:hover {
   }
   nav a:hover {
     color: black;
+  }
+
+  .product {
+    display: block;
   }
 }
