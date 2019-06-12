@@ -79,7 +79,7 @@
   </style>
 </head>
 
-<body class="preload">
+<body class="preload {{ 'store' if 'shop' in request.endpoint else '' }}">
     {% include "_messages.html" %}
     <main>
         {{ header() }}

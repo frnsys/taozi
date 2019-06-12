@@ -768,6 +768,10 @@ a.go-checkout:hover {
   text-align: center;
 }
 
+.store {
+  background: #48a4d8;
+}
+
 @media only screen and (max-width: 640px) {
   .issue--post {
     width: 100%;
