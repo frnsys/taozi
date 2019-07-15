@@ -54,14 +54,14 @@
         {% endif %}
             {% if post.image %}
                 <div class="post--image" style="width:{{[50, 75, 100, 100, 100]|random}}%">
-                    {% if post.print_only %}<div class="post--print-only">Visit Shop</div>{% endif %}
+                    {% if post.print_only %}<div class="post--print-only">Visit Store</div>{% endif %}
                     <div class="img-wrap" style="{% if post.image.height %}padding-bottom:{{ post.image.height/post.image.width * 100}}%;{% endif %}">
                         <img src="{{ post.image.path }}" alt="{{ post.image.desc }}" title="{{ post.image.desc }}" />
                     </div>
                 </div>
             {% else %}
                 <div class="post--image" style="width:{{[50, 75, 100, 100, 100]|random}}%">
-                    {% if post.print_only %}<div class="post--print-only">Visit Shop</div>{% endif %}
+                    {% if post.print_only %}<div class="post--print-only">Visit Store</div>{% endif %}
                     <div class="img-wrap">
                         <img src="{{ url_for('static', filename='placeholder.jpg') }}" alt="Placeholder" title="Placeholder" />
                     </div>

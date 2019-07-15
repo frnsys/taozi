@@ -283,6 +283,9 @@ nav li {
   font-weight: normal;
 }
 
+.shop .content {
+  max-width: 960px;
+}
 .shop .post--image {
   border: none;
 }
@@ -575,14 +578,18 @@ figcaption, .small-text {
   margin: 0 auto;
   display: flex;
   position: relative;
+  padding: 3.5em 0;
 }
 .product--gallery {
   flex: 1;
-  min-width: 40%;
+  min-width: 60%;
 }
 .product--info {
   padding: 1em;
   min-width: 380px;
+}
+.product--info p {
+  line-height: 1.6;
 }
 .product h1 {
   font-size: 2.2em;
@@ -616,15 +623,19 @@ figcaption, .small-text {
   padding: 0.2em 0.5em;
   box-shadow: 1px 1px 0 0 black;
   font-family: 'Source Sans Pro', sans-serif;
+  transition: color 0.2s, border-color 0.2s;
 }
-.sku input[type=submit]:hover {
-  background: #eee;
+.sku input[type="submit"]:hover {
+  background: #fff;
+  color: #2593ca;
+  border-color: #2593ca;
 }
 .sku input[type=submit][disabled],
 .sku input[type=submit][disabled]:hover {
   cursor: default;
-  background: #ddd;
-  color: #222;
+  border: none;
+  box-shadow: none;
+  color: black;
 }
 .sku--name {
   text-decoration: underline;
@@ -768,8 +779,11 @@ a.go-checkout:hover {
   text-align: center;
 }
 
-.store {
+.store, .store .shop {
   background: #48a4d8;
+}
+.store--product {
+  background: #fff;
 }
 
 @media only screen and (max-width: 640px) {

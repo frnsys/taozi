@@ -10,7 +10,7 @@
     </div>
     <div class="product--info">
         <h1>{{ product.name }}</h1>
-        <p>{{ product.metadata.description }}</p>
+        <p>{{ product.metadata.description|safe }}</p>
         <div class="product--skus">
             {% for plan in plans %}
                 <div class="product--sku">

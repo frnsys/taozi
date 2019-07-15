@@ -12,7 +12,7 @@
     </div>
     <div class="product--info">
         <h1>{{ product.name }}</h1>
-        <p>{{ product.description }}</p>
+        <p>{{ product.description|safe }}</p>
         <div class="product--skus">
             {% for sku in skus %}
                 <div class="product--sku">

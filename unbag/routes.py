@@ -1,7 +1,7 @@
 import config
 from .models import Post, Event, Issue
 from flask_security import current_user
-from flask import Blueprint, send_from_directory, render_template, abort
+from flask import Blueprint, send_from_directory, render_template, abort, redirect
 
 bp = Blueprint('main', __name__)
 
@@ -41,8 +41,9 @@ def events():
 
 @bp.route('/donate')
 def donate():
-    issues = Issue.query.filter(Issue.name!='Programs', Issue.published).order_by(Issue.id.asc()).all()
-    return render_template('donate.html', current_issue=issues[-1], issues=issues)
+    return redirect('https://fundraising.fracturedatlas.org/unbag/campaigns/2655')
+    # issues = Issue.query.filter(Issue.name!='Programs', Issue.published).order_by(Issue.id.asc()).all()
+    # return render_template('donate.html', current_issue=issues[-1], issues=issues)
 
 @bp.route('/store')
 def shop_temp():
