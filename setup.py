@@ -8,7 +8,7 @@ setup(
     author='Francis Tseng',
     author_email='f@frnsys.com',
     license='GPLv3',
-
+    include_package_data=True,
     packages=['taozi'],
     install_requires=[
         'Flask-Security==3.0.0',
