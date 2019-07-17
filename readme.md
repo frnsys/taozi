@@ -2,7 +2,11 @@ User management is handled via the `flask` management program.
 
 ## Setup
 
-## Usage
+### Configuration
+
+### Create an uploads folder
+
+### Create an admin
 
 To create the admin role:
 
