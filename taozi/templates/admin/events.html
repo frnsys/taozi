@@ -1,0 +1,44 @@
+{% from "admin/_macros.html" import pagination %}
+{% extends 'admin/layout.html' %}
+
+{% block content %}
+<header>
+    <h1>Events</h1>
+    <div>
+        <a href="{{ url_for('admin.new_event') }}">+ Event</a>
+    </div>
+</header>
+{% if not posts %}
+    <h2>No events</h2>
+{% else %}
+    <ul class="listing">
+        {% for post in posts %}
+            <li class="post item">
+                <a href="{{ url_for('admin.event', id=post.id) }}" class="blanket"></a>
+                {% if post.image %}
+                    <img src="{{ post.image.path }}" class="thumb" />
+                {% else %}
+                    <img src="{{ url_for('static', filename='none.png') }}" class="thumb" />
+                {% endif %}
+                <div class="justify-vertical">
+                    <div>
+                        {% if post.published %}<div class="tag">Published</div>{% endif %}
+                        <h2>{{ post.title }}</h2>
+                        <div class="meta">
+                            <div>{% if post.desc %}{{ post.desc }}{% else %}(No description){% endif %}</div>
+                            <div>by <em>{{ post.byline }}</em></div>
+                            <div>in <em>{{ post.issue.name }}</em></div>
+                        </div>
+                    </div>
+                    <div>
+                        <a href="{{ url_for('front.post', slug=post.slug, issue=post.issue.slug) }}" class="view">
+                            {% if post.published %}View{% else %}Preview{% endif %}
+                        </a>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    {{ pagination(paginator, 'admin.events') }}
+{% endif %}
+{% endblock %}

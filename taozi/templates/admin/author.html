@@ -1,0 +1,21 @@
+{% from "admin/_macros.html" import render_field_with_errors, render_field %}
+{% extends 'admin/layout.html' %}
+
+{% block content %}
+<h1>Author</h1>
+<form method="POST" action="{{ action }}">
+  {% include "_messages.html" %}
+  {{ form.hidden_tag() }}
+  {{ render_field_with_errors(form.name) }}
+  {% for field in form %}
+    {% if field.name not in ['csrf_token', 'name'] %}
+        {{ render_field_with_errors(field) }}
+    {% endif %}
+  {% endfor %}
+  <div class="actions">
+    <input type="submit" value="Save">
+  </div>
+</form>
+{% endblock %}
+
+

@@ -1,0 +1,30 @@
+{% from "admin/_macros.html" import pagination %}
+{% extends 'admin/layout.html' %}
+
+{% block content %}
+<header>
+    <h1>Authors</h1>
+    <div>
+        <a href="{{ url_for('admin.new_author') }}">+ Author</a>
+    </div>
+</header>
+{% if not authors %}
+    <h2>No authors</h2>
+{% else %}
+    <ul class="listing">
+        {% for author in authors %}
+            <li class="item">
+                <a href="{{ url_for('admin.author', id=author.id) }}" class="blanket"></a>
+                <h2>{{ author.name }}</h2>
+                <div class="meta">
+                    {% if author.posts %}
+                        <div>Most recent: <em><a href="{{ url_for('front.post', slug=author.posts[0].slug, issue=author.posts[0].issue.slug) }}" class="view">{{ author.posts[0].title }}</a></em></div>
+                    {% endif %}
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    {{ pagination(paginator, 'admin.authors') }}
+{% endif %}
+{% endblock %}
+

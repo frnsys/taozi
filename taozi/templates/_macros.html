@@ -1,0 +1,21 @@
+{% macro pagination(paginator, route) -%}
+  <div class="pagination">
+    {% if paginator.has_prev %}
+        <a class="prev_page" rel="prev" href="{{ url_for(route, page=paginator.prev_num) }}">
+            <span class="icon-left-arrow"></span>
+        </a>
+    {% endif %}
+    {% for page in range(1, paginator.pages + 1) %}
+        {% if page == paginator.page %}
+            <em class="current">{{ page }}</em>
+        {% else %}
+            <a href="{{ url_for(route, page=page) }}">{{ page }}</a>
+        {% endif %}
+    {% endfor %}
+    {% if paginator.has_next %}
+        <a class="next_page" rel="next" href="{{ url_for(route, page=paginator.next_num) }}">
+            <span class="icon-right-arrow"></span>
+        </a>
+  </div>
+  {% endif %}
+{%- endmacro %}

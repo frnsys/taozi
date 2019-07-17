@@ -1,6 +1,5 @@
 Flask-Security==3.0.0
 Flask-SQLAlchemy==2.3.2
-sentry-sdk==0.6.9
 Flask-Migrate==2.3.1
 Flask-WTF==0.14.2
 python-slugify==2.0.1
@@ -12,4 +11,3 @@ Flask-Mail==0.9.1
 Pillow==5.4.1
 SQLAlchemy==1.3.3
 python-slugify==2.0.1
-git+https://github.com/frnsys/konbini

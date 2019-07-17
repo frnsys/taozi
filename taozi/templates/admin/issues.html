@@ -1,0 +1,27 @@
+{% from "admin/_macros.html" import pagination %}
+{% extends 'admin/layout.html' %}
+
+{% block content %}
+<header>
+    <h1>Issues</h1>
+    <div>
+        <a href="{{ url_for('admin.new_issue') }}">+ Issue</a>
+    </div>
+</header>
+{% if not issues %}
+    <h2>No issues</h2>
+{% else %}
+    <ul class="listing">
+        {% for issue in issues %}
+            <li class="item">
+                <a href="{{ url_for('admin.issue', id=issue.id) }}" class="blanket"></a>
+                <h2>{{ issue.name }}</h2>
+                <div class="meta">
+                    {{ issue.posts.count() }} posts
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    {{ pagination(paginator, 'admin.issues') }}
+{% endif %}
+{% endblock %}

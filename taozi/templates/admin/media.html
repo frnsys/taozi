@@ -1,0 +1,25 @@
+{% from "admin/_macros.html" import pagination %}
+{% extends 'admin/layout.html' %}
+
+{% block content %}
+<header>
+    <h1>Media</h1>
+    <div>
+        <a href="{{ url_for('admin.new_medium') }}">+ Media</a>
+    </div>
+</header>
+<ul class="grid">
+    {% for medium in media %}
+        <li>
+            <a href="{{ url_for('admin.medium', id=medium.id) }}">
+                <img src="{{ url_for('front.uploads', filename=medium.filename) }}"
+                     title="{{ medium.desc }}"
+                     alt="{{ medium.desc }}" />
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+{{ pagination(paginator, 'admin.media') }}
+{% endblock %}
+
+

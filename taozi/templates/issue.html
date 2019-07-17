@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1>Posts from "{{ issue.name }}"</h1>
+<ul>
+    {% for post in issue.posts %}
+        <li><a href="{{ url_for('front.post', issue=post.issue.slug, slug=post.slug) }}">{{ post.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}
