@@ -49,6 +49,8 @@ class HasMeta:
                 meta[field.name] = field.data
         self.set_meta(meta)
 
+    def __getitem__(self, key):
+        return self.get_meta()[key]
 
 class Post(db.Model, HasMeta):
     __mapper_args__         = {
@@ -73,6 +75,7 @@ class Post(db.Model, HasMeta):
     authors                 = db.relationship('Author',
                                               secondary=posts_authors,
                                               backref='posts')
+    meta                    = db.Column(db.Unicode())
 
     image_id                = db.Column(db.Integer, db.ForeignKey('media.id'))
     image                   = db.relationship('Media',
@@ -147,8 +150,6 @@ class Issue(db.Model, HasMeta):
     published               = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
-        if self.edition:
-            return '{} — {}'.format(self.name, self.edition)
         return self.name
 
     @property
