@@ -1,0 +1,42 @@
+{% from "_macros.html" import render_field_with_errors, render_field %}
+{% extends 'admin/layout.html' %}
+
+{% block content %}
+<header>
+    <h1>Post</h1>
+    <div>
+        {% if post %}
+            <div><a href="{{ url_for('front.post', slug=post.slug, issue=post.issue.slug) }}">
+                {% if post.published %}View{% else %}Preview{% endif %}
+            </a></div>
+        {% endif %}
+    </div>
+</header>
+<form method="POST" action="{{ action }}">
+  {% include "_messages.html" %}
+  {{ form.hidden_tag() }}
+  {{ render_field_with_errors(form.title) }}
+  {{ render_field_with_errors(form.subtitle) }}
+  {{ render_field_with_errors(form.slug) }}
+  {{ render_field_with_errors(form.desc) }}
+  <div class="textarea">
+      {{ render_field_with_errors(form.body) }}
+  </div>
+  <div class="column-2">
+      <div>
+        {{ render_field_with_errors(form.authors) }}
+      </div>
+      <div>
+        {{ render_field_with_errors(form.issue) }}
+        {{ render_field_with_errors(form.image) }}
+      </div>
+  </div>
+  {{ render_field_with_errors(form.tags) }}
+  {{ render_field_with_errors(form.print_only) }}
+  {{ render_field_with_errors(form.published) }}
+  <div class="actions">
+    <input type="submit" value="Save">
+  </div>
+</form>
+{% endblock %}
+

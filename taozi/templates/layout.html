@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="Description" CONTENT="taozi">
+  <title>taozi</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon/16.png') }}" sizes="16x16" />
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon/32.png') }}" sizes="32x32" />
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon/96.png') }}" sizes="96x96" />
+
+  {% block meta %}
+      <meta property="og:site_name" content="taozi">
+      <meta property="og:type" content="website">
+      <meta property="og:description" content="taozi">
+      <meta property="og:title" content="taozi">
+      <meta name="twitter:card" content="summary">
+      <meta name="twitter:title" content="taozi">
+      <meta name="twitter:description" content="taozi">
+  {% endblock %}
+</head>
+
+<body>
+    {% include "_messages.html" %}
+    <nav>
+        <a href="{{ url_for('front.posts') }}">Posts</a>
+        <a href="{{ url_for('front.issues') }}">Issues</a>
+        <a href="{{ url_for('front.events') }}">Events</a>
+    </nav>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <article>
+        <img src="{{ post.image.path }}" />
+        <header>
+            <h1>{{ post.title }}</h1>
+            {% if post.subtitle %}
+                <em>{{ post.subtitle }}</em>
+            {% endif %}
+                {% if post.event %}
+                    <h3>{{ post.event }}</h3>
+                {% else %}
+                    <h3>by {{ post.authors|join(', ', 'name') }}</h3>
+                {% endif %}
+        </header>
+        <div>
+            {{ post.html|safe }}
+        </div>
+    </div>
+{% endblock %}
