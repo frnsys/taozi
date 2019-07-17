@@ -46,6 +46,7 @@ def posts():
         if not post.slug:
             post.slug = slugify(post.title)
         post.html = compile_markdown(post.body)
+        post.set_meta_from_form(form)
         db.session.add(post)
         db.session.commit()
         flash('Post created.')
@@ -67,7 +68,7 @@ def new_post():
 def post(id):
     post = Post.query.get_or_404(id)
 
-    form = forms.PostForm(obj=post)
+    form = forms.PostForm(obj=post, **post.get_meta())
     if form.validate_on_submit():
         already_published = post.published
         form.populate_obj(post)
@@ -76,6 +77,7 @@ def post(id):
         if not already_published and post.published:
             post.published_at = datetime.utcnow()
         post.html = compile_markdown(post.body)
+        post.set_meta_from_form(form)
         db.session.add(post)
         db.session.commit()
         flash('Post updated.')
@@ -161,6 +163,7 @@ def authors():
         author = Author()
         form.populate_obj(author)
         author.slug = slugify(author.name)
+        author.set_meta_from_form(form)
         db.session.add(author)
         db.session.commit()
         flash('Author added.')
@@ -182,10 +185,11 @@ def new_author():
 def author(id):
     author = Author.query.get_or_404(id)
 
-    form = forms.AuthorForm(obj=author)
+    form = forms.AuthorForm(obj=author, **author.get_meta())
     if form.validate_on_submit():
         form.populate_obj(author)
         author.slug = slugify(author.name)
+        author.set_meta_from_form(form)
         db.session.add(author)
         db.session.commit()
         flash('Author updated.')
@@ -274,6 +278,7 @@ def issues():
         issue = Issue()
         form.populate_obj(issue)
         issue.slug = slugify(issue.name)
+        issue.set_meta_from_form(form)
         db.session.add(issue)
         db.session.commit()
         flash('Issue created.')
@@ -295,10 +300,11 @@ def new_issue():
 def issue(id):
     issue = Issue.query.get_or_404(id)
 
-    form = forms.IssueForm(obj=issue)
+    form = forms.IssueForm(obj=issue, **issue.get_meta())
     if form.validate_on_submit():
         form.populate_obj(issue)
         issue.slug = slugify(issue.name)
+        issue.set_meta_from_form(form)
         db.session.add(issue)
         db.session.commit()
         flash('Issue updated.')

@@ -1,3 +1,4 @@
+from flask import current_app
 from .models import Issue, Media, Author
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
@@ -10,13 +11,9 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 class AuthorForm(FlaskForm):
     name = TextField('Name', [InputRequired()])
-    twitter = TextField('Twitter')
 
 class IssueForm(FlaskForm):
     name = TextField('Name', [InputRequired()])
-    edition = TextField('Edition')
-    color = TextField('Color', [InputRequired()])
-    store_url = TextField('Store URL')
     published = BooleanField('Published')
 
 class UploadMediaForm(FlaskForm):
@@ -62,3 +59,14 @@ class EventForm(FlaskForm):
     end = DateTimeField('End', format='%Y-%m-%d %H:%M')
     ignore_time = BooleanField('Ignore time')
     post = FormField(EventPostForm)
+
+
+
+def append_fields(form_cls, spec):
+    for name, typ in spec.items():
+        if typ == str:
+            field = TextField(name.title())
+        elif typ == bool:
+            field = BooleanField(name.title())
+        setattr(form_cls, name, field)
+

@@ -7,7 +7,11 @@
   {% include "_messages.html" %}
   {{ form.hidden_tag() }}
   {{ render_field_with_errors(form.name) }}
-  {{ render_field_with_errors(form.twitter) }}
+  {% for field in form %}
+    {% if field.name not in ['csrf_token', 'name'] %}
+        {{ render_field_with_errors(field) }}
+    {% endif %}
+  {% endfor %}
   <div class="actions">
     <input type="submit" value="Save">
   </div>

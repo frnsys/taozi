@@ -1,3 +1,4 @@
+import json
 import random
 from .datastore import db
 from flask import url_for
@@ -33,7 +34,23 @@ class User(db.Model, UserMixin):
                                       backref=db.backref('users', lazy='dynamic'))
 
 
-class Post(db.Model):
+class HasMeta:
+    def set_meta(self, data):
+        self.meta = json.dumps(data)
+
+    def get_meta(self):
+        return json.loads(self.meta) if self.meta else {}
+
+    def set_meta_from_form(self, form):
+        cols = self.__table__.columns.keys()
+        meta = self.get_meta()
+        for field in form:
+            if field.name not in cols and field.name is not 'csrf_token':
+                meta[field.name] = field.data
+        self.set_meta(meta)
+
+
+class Post(db.Model, HasMeta):
     __mapper_args__         = {
         'order_by': db.text('created_at DESC')
     }
@@ -115,20 +132,18 @@ class Media(db.Model):
         return url_for('front.uploads', filename=self.filename)
 
 
-class Author(db.Model):
+class Author(db.Model, HasMeta):
     id                      = db.Column(db.Integer(), primary_key=True)
     slug                    = db.Column(db.Unicode(), unique=True)
     name                    = db.Column(db.Unicode())
-    twitter                 = db.Column(db.Unicode())
+    meta                    = db.Column(db.Unicode())
 
 
-class Issue(db.Model):
+class Issue(db.Model, HasMeta):
     id                      = db.Column(db.Integer(), primary_key=True)
     name                    = db.Column(db.Unicode())
     slug                    = db.Column(db.Unicode(), unique=True)
-    color                   = db.Column(db.Unicode())
-    edition                 = db.Column(db.Unicode())
-    store_url               = db.Column(db.Unicode())
+    meta                    = db.Column(db.Unicode())
     published               = db.Column(db.Boolean, default=False)
 
     def __repr__(self):

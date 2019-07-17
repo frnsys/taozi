@@ -2,6 +2,7 @@ from flask import Flask
 from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_security import SQLAlchemyUserDatastore, Security
+from .forms import PostForm, IssueForm, AuthorForm, append_fields
 from .datastore import db
 from .models import User, Role, Issue
 from .admin import bp as admin_bp
@@ -36,5 +37,10 @@ def create_app(config, blueprints=None, name=__name__, static_folder='static', t
         app.register_blueprint(bp)
     app.register_blueprint(admin_bp)
     app.register_blueprint(front_bp)
+
+    # Setup additional fields on forms
+    append_fields(PostForm, app.config.get('POST_META', {}))
+    append_fields(IssueForm, app.config.get('ISSUE_META', {}))
+    append_fields(AuthorForm, app.config.get('AUTHOR_META', {}))
 
     return app
