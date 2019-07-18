@@ -45,7 +45,7 @@ class HasMeta:
         cols = self.__table__.columns.keys()
         meta = self.get_meta()
         for field in form:
-            if field.name not in cols and field.name is not 'csrf_token':
+            if field.name not in cols and field.name is not 'csrf_token' and type(field.data) in [bool, int, str]:
                 meta[field.name] = field.data
         self.set_meta(meta)
 
