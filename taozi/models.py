@@ -1,5 +1,4 @@
 import json
-import random
 from .datastore import db
 from flask import url_for
 from datetime import datetime
@@ -56,7 +55,7 @@ class HasMeta:
 
 class Post(db.Model, HasMeta):
     __mapper_args__         = {
-        'order_by': db.text('created_at DESC')
+        'order_by': db.text('published_at DESC')
     }
     __table_args__          = (
         db.UniqueConstraint('slug', 'issue_id', name='_slug_issue_uc'),
@@ -161,7 +160,6 @@ class Issue(db.Model, HasMeta):
     @property
     def published_posts(self):
         posts = [p for p in self.posts if p.published and p.event is None]
-        random.shuffle(posts)
         return posts
 
     @property
