@@ -4,6 +4,8 @@ from .datastore import db
 from flask import url_for
 from datetime import datetime
 from flask_security import UserMixin, RoleMixin
+from .compile import compile_markdown
+from .search import index_post, unindex_post, search_posts
 
 roles_users = db.Table('roles_users',
         db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
@@ -117,6 +119,10 @@ class Post(db.Model, HasMeta):
             latest = query.order_by(Event.start.desc()).first()
         return latest
 
+    @staticmethod
+    def search(query):
+        ids = search_posts(query)
+        return [Post.query.get(id) for id in ids]
 
 class Media(db.Model):
     __mapper_args__         = {
@@ -190,3 +196,18 @@ class Event(db.Model):
             else:
                 start = self.start.strftime(dtfmt + suffix)
                 return '{} - {}'.format(start, self.end.strftime(dtfmt + suffix))
+
+
+@db.event.listens_for(Post, 'before_insert')
+def receive_insert(mapper, connection, target):
+    index_post(target)
+    target.html = compile_markdown(target.body)
+
+@db.event.listens_for(Post, 'before_update')
+def receive_update(mapper, connection, target):
+    index_post(target)
+    target.html = compile_markdown(target.body)
+
+@db.event.listens_for(Post, 'before_delete')
+def receive_update(mapper, connection, target):
+    unindex_post(target)

@@ -1,6 +1,6 @@
 from .models import Post, Event, Issue
 from flask_security import current_user
-from flask import Blueprint, send_from_directory, render_template, abort, current_app
+from flask import Blueprint, send_from_directory, render_template, request, abort, current_app
 
 bp = Blueprint('front', __name__)
 
@@ -38,3 +38,12 @@ def post(issue, slug):
 def events():
     events = [e.post for e in Event.query.order_by(Event.end.desc(), Event.start.asc()).all() if e.post.published]
     return render_template('events.html', events=events)
+
+@bp.route('/search')
+def search():
+    query = request.args.get('query')
+    if query:
+        posts = Post.search(query)
+    else:
+        posts = []
+    return render_template('search.html', query=query, posts=posts)
