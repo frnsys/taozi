@@ -42,8 +42,5 @@ def events():
 @bp.route('/search')
 def search():
     query = request.args.get('query')
-    if query:
-        posts = Post.search(query)
-    else:
-        posts = []
+    posts = Post.search(query) if query else []
     return render_template('search.html', query=query, posts=posts)

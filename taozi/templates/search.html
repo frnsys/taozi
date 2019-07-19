@@ -2,7 +2,7 @@
 
 {% block content %}
     <form>
-        <input type="text" name="query" value="{{ query or '' }}" placeholder="Query" />
+        <input type="text" name="query" value="{{ query or '' }}" placeholder="Query" autofocus />
         <input type="submit" value="Search" />
     </form>
     {% if query %}
