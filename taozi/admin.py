@@ -3,7 +3,6 @@ from . import forms
 from .datastore import db
 from slugify import slugify
 from datetime import datetime
-from .compile import compile_markdown
 from .models import Post, Author, Media, Issue, Event
 from flask_security.decorators import roles_required
 from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
@@ -45,7 +44,6 @@ def posts():
         form.populate_obj(post)
         if not post.slug:
             post.slug = slugify(post.title)
-        post.html = compile_markdown(post.body)
         post.set_meta_from_form(form)
         db.session.add(post)
         db.session.commit()
@@ -76,7 +74,6 @@ def post(id):
             post.slug = slugify(post.title)
         if not already_published and post.published:
             post.published_at = datetime.utcnow()
-        post.html = compile_markdown(post.body)
         post.set_meta_from_form(form)
         db.session.add(post)
         db.session.commit()
@@ -104,7 +101,6 @@ def events():
         form.populate_obj(event)
         if not event.post.slug:
             event.post.slug = slugify(event.post.title)
-        event.post.html = compile_markdown(event.post.body)
         db.session.add(event)
         db.session.commit()
         flash('Event created.')
@@ -137,7 +133,6 @@ def event(id):
             post.slug = slugify(post.title)
         if not already_published and post.published:
             post.published_at = datetime.utcnow()
-        post.html = compile_markdown(post.body)
         db.session.add(event)
         db.session.commit()
         flash('Event updated.')
