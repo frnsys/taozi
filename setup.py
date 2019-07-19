@@ -23,7 +23,8 @@ setup(
         'Flask-Mail==0.9.1',
         'Pillow==5.4.1',
         'SQLAlchemy==1.3.3',
-        'python-slugify==2.0.1'
+        'python-slugify==2.0.1',
+        'Whoosh==2.7.4'
     ]
 )
 
