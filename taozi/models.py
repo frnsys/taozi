@@ -139,6 +139,10 @@ class Media(db.Model):
     def path(self):
         return url_for('front.uploads', filename=self.filename)
 
+    @property
+    def url(self):
+        return url_for('front.uploads', filename=self.filename, _external=True)
+
 
 class Author(db.Model, HasMeta):
     id                      = db.Column(db.Integer(), primary_key=True)
