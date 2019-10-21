@@ -2,6 +2,8 @@
 
 A simple Flask-based CMS.
 
+`taozi` is currently powering [pinko](https://pinko.online/) and [unbag](https://unbag.net/).
+
 You write `Posts` which are associated with `Issues`, have one or more `Authors` and have associated `Media`. You can also create `Events` that are also linked to `Issues`. `Posts`, `Authors`, and `Issues` also support arbitrary metadata; see below.
 
 In combination with [`konbini`](https://github.com/frnsys/konbini) you can handle print subscriptions (plus other merch) as well.
