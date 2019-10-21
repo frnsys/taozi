@@ -110,9 +110,7 @@ def events():
         db.session.add(event)
         db.session.commit()
         flash('Event created.')
-    print(form.errors)
 
-    print(Event.query.count(), 'events')
     paginator = Post.query.filter(Post.event != None).paginate(page, per_page=20)
     return render_template('admin/events.html', posts=paginator.items, paginator=paginator)
 
