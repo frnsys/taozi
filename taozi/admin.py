@@ -32,12 +32,19 @@ def help():
     return render_template('admin/help.html')
 
 
-@bp.route('/posts', methods=['GET', 'POST'])
+@bp.route('/posts')
 @roles_required('admin')
 def posts():
     data = request.args
     page = int(data.get('page', 1))
 
+    paginator = Post.query.filter_by(event=None).paginate(page, per_page=20)
+    return render_template('admin/posts.html', posts=paginator.items, paginator=paginator)
+
+
+@bp.route('/posts/new', methods=['GET', 'POST'])
+@roles_required('admin')
+def new_post():
     form = forms.PostForm()
     if form.validate_on_submit():
         post = Post()
@@ -46,20 +53,15 @@ def posts():
             post.slug = slugify(post.title)
         post.set_meta_from_form(form)
         db.session.add(post)
-        db.session.commit()
-        flash('Post created.')
+        try:
+            db.session.commit()
+            flash('Post created.')
+        except IntegrityError:
+            db.session.rollback()
+            flash('There is already a post with this slug, please use a different one.', 'error')
 
-    paginator = Post.query.filter_by(event=None).paginate(page, per_page=20)
-    return render_template('admin/posts.html', posts=paginator.items, paginator=paginator)
-
-
-@bp.route('/posts/new')
-@roles_required('admin')
-def new_post():
-    form = forms.PostForm()
     return render_template('admin/post.html', form=form,
-                           action=url_for('admin.posts'))
-
+                           action=url_for('admin.new_post'))
 
 @bp.route('/posts/<int:id>', methods=['GET', 'POST', 'DELETE'])
 @roles_required('admin')
@@ -76,8 +78,12 @@ def post(id):
             post.published_at = datetime.utcnow()
         post.set_meta_from_form(form)
         db.session.add(post)
-        db.session.commit()
-        flash('Post updated.')
+        try:
+            db.session.commit()
+            flash('Post updated.')
+        except IntegrityError:
+            db.session.rollback()
+            flash('There is already a post with this slug, please use a different one.', 'error')
 
     elif request.method == 'DELETE':
         db.session.delete(post)
@@ -208,7 +214,7 @@ def media():
     if form.validate_on_submit():
         file = request.files[form.file.name]
         if file.filename == '':
-            flash('No selected file.')
+            flash('No selected file.', 'error')
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             savepath = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
@@ -226,7 +232,7 @@ def media():
                 flash('Media created.')
             except IntegrityError:
                 db.session.rollback()
-                flash('There\'s already a file with this name. Please rename it and try again.')
+                flash('There\'s already a file with this name. Please rename it and try again.', 'error')
 
     paginator = Media.query.paginate(page, per_page=20)
     return render_template('admin/media.html',

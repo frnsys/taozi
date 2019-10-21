@@ -80,6 +80,9 @@ main {
   color: #fff;
   border-radius: 0.2em;
 }
+.flashes li.error {
+  background: #e62b2b;
+}
 
 .grid {
   display: grid;
