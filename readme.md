@@ -32,6 +32,7 @@ SECURITY_PASSWORD_HASH = 'bcrypt'
 SECURITY_PASSWORD_SALT = 'another-secret'
 SECURITY_CHANGEABLE = True
 SECURITY_RECOVERABLE = True
+SECURITY_EMAIL_SENDER = 'foo@foo.co'
 
 MAIL_SERVER = 'smtp.mailgun.org'
 MAIL_USERNAME = 'postmaster@foo.mailgun.org'
