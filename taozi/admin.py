@@ -56,6 +56,7 @@ def new_post():
         try:
             db.session.commit()
             flash('Post created.')
+            return redirect(url_for('admin.post', id=post.id))
         except IntegrityError:
             db.session.rollback()
             flash('There is already a post with this slug, please use a different one.', 'error')
