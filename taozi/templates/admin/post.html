@@ -32,6 +32,7 @@
       </div>
   </div>
   {{ render_field_with_errors(form.tags) }}
+  {{ render_field_with_errors(form.published_at) }}
   {{ render_field_with_errors(form.print_only) }}
   {{ render_field_with_errors(form.published) }}
   <div class="actions">
@@ -39,6 +40,9 @@
     <div id="js-delete-post">Delete</div>
   </div>
 </form>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
     document.getElementById('js-delete-post').addEventListener('click', () => {
         if (confirm('Are you sure you want to delete this post?')) {
@@ -54,6 +58,11 @@
             });
         }
     });
+    const conf = {
+        enableTime: true,
+        dateFormat: "Y-m-d H:i"
+    };
+    flatpickr('#published_at', conf);
 </script>
 {% endblock %}
 

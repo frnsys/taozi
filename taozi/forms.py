@@ -32,6 +32,7 @@ class PostForm(FlaskForm):
     body = TextAreaField('Body')
     tags = TextField('Tags')
     published = BooleanField('Published')
+    published_at = DateTimeField('Published At', [InputRequired()], format='%Y-%m-%d %H:%M')
     print_only = BooleanField('Print Only')
     authors = QuerySelectMultipleField('Authors', query_factory=lambda: Author.query.all(),
                                        get_label='name')
