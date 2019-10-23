@@ -35,8 +35,9 @@ def index_post(post):
 
 def unindex_post(post):
     """Delete a post from the search index"""
-    ix.delete_by_term('id', post.id)
-    ix.commit()
+    writer = ix.writer()
+    writer.delete_by_term('id', str(post.id))
+    writer.commit()
 
 def search_posts(query):
     with ix.searcher() as searcher:

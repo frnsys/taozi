@@ -320,6 +320,16 @@ img.thumb {
   margin-right: 0.5em;
 }
 
+.actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+#js-delete-post {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 @media only screen and (max-width: 1000px) {
   nav {
     position: static;

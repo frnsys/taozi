@@ -5,7 +5,7 @@ from slugify import slugify
 from datetime import datetime
 from .models import Post, Author, Media, Issue, Event
 from flask_security.decorators import roles_required
-from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
+from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app, jsonify
 from werkzeug.utils import secure_filename
 from sqlalchemy.exc import IntegrityError
 from PIL import Image
@@ -69,30 +69,31 @@ def new_post():
 def post(id):
     post = Post.query.get_or_404(id)
 
-    form = forms.PostForm(obj=post, **post.get_meta())
-    if form.validate_on_submit():
-        already_published = post.published
-        form.populate_obj(post)
-        if not post.slug:
-            post.slug = slugify(post.title)
-        if not already_published and post.published:
-            post.published_at = datetime.utcnow()
-        post.set_meta_from_form(form)
-        db.session.add(post)
-        try:
-            db.session.commit()
-            flash('Post updated.')
-        except IntegrityError:
-            db.session.rollback()
-            flash('There is already a post with this slug, please use a different one.', 'error')
-
-    elif request.method == 'DELETE':
+    if request.method == 'DELETE':
         db.session.delete(post)
-        flash('Post deleted.')
-        return redirect(url_for('admin.posts'))
+        db.session.commit()
+        return jsonify(success=True)
 
-    return render_template('admin/post.html', post=post, form=form,
-                           action=url_for('admin.post', id=post.id))
+    else:
+        form = forms.PostForm(obj=post, **post.get_meta())
+        if form.validate_on_submit():
+            already_published = post.published
+            form.populate_obj(post)
+            if not post.slug:
+                post.slug = slugify(post.title)
+            if not already_published and post.published:
+                post.published_at = datetime.utcnow()
+            post.set_meta_from_form(form)
+            db.session.add(post)
+            try:
+                db.session.commit()
+                flash('Post updated.')
+            except IntegrityError:
+                db.session.rollback()
+                flash('There is already a post with this slug, please use a different one.', 'error')
+
+        return render_template('admin/post.html', post=post, form=form,
+                            action=url_for('admin.post', id=post.id))
 
 
 @bp.route('/events', methods=['GET', 'POST'])
