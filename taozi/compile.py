@@ -13,7 +13,6 @@ def compile_markdown(md):
     extensions = [
         GFM(),
         ExtendedMD(),
-        MathJaxExtension(),
         FigureCaptionExtension(),
         'markdown.extensions.footnotes',
         'markdown.extensions.attr_list',
@@ -68,24 +67,6 @@ class ExtendedMD(markdown.Extension):
 
         url_pattern = IFramePattern(self.URL_RE)
         md.inlinePatterns.add('iframe_link', url_pattern, '_begin')
-
-
-"""
-from <https://github.com/mayoff/python-markdown-mathjax>
-"""
-class MathJaxPattern(markdown.inlinepatterns.Pattern):
-    def __init__(self):
-        markdown.inlinepatterns.Pattern.__init__(self, r'(?<!\\)(\$\$?)(.+?)\2')
-
-    def handleMatch(self, m):
-        node = markdown.util.etree.Element('mathjax')
-        node.text = markdown.util.AtomicString(m.group(2) + m.group(3) + m.group(2))
-        return node
-
-class MathJaxExtension(markdown.Extension):
-    def extendMarkdown(self, md, md_globals):
-        # Needs to come before escape matching because \ is pretty important in LaTeX
-        md.inlinePatterns.add('mathjax', MathJaxPattern(), '<escape')
 
 
 """
