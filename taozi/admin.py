@@ -144,7 +144,7 @@ def event(id):
         form.populate_obj(event)
         if not post.slug:
             post.slug = slugify(post.title)
-        else post.slug:
+        else:
             post.slug = slugify(post.slug)
         if not already_published and post.published:
             post.published_at = datetime.utcnow()
