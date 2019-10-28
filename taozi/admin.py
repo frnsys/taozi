@@ -51,6 +51,8 @@ def new_post():
         form.populate_obj(post)
         if not post.slug:
             post.slug = slugify(post.title)
+        else:
+            post.slug = slugify(post.slug)
         post.set_meta_from_form(form)
         db.session.add(post)
         try:
@@ -81,6 +83,9 @@ def post(id):
             form.populate_obj(post)
             if not post.slug:
                 post.slug = slugify(post.title)
+            else:
+                post.slug = slugify(post.slug)
+
             if not already_published and post.published:
                 post.published_at = datetime.utcnow()
             post.set_meta_from_form(form)
@@ -109,6 +114,8 @@ def events():
         form.populate_obj(event)
         if not event.post.slug:
             event.post.slug = slugify(event.post.title)
+        else:
+            event.post.slug = slugify(event.post.slug)
         db.session.add(event)
         db.session.commit()
         flash('Event created.')
@@ -137,6 +144,8 @@ def event(id):
         form.populate_obj(event)
         if not post.slug:
             post.slug = slugify(post.title)
+        else post.slug:
+            post.slug = slugify(post.slug)
         if not already_published and post.published:
             post.published_at = datetime.utcnow()
         db.session.add(event)
