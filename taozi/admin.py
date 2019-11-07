@@ -119,7 +119,7 @@ def events():
         db.session.add(event)
         db.session.commit()
         flash('Event created.')
-        return redirect(url_for('admin.event', id=event.id))
+        return redirect(url_for('admin.event', id=post.id))
 
     paginator = Post.query.filter(Post.event != None).paginate(page, per_page=20)
     return render_template('admin/events.html', posts=paginator.items, paginator=paginator)
@@ -136,8 +136,8 @@ def new_event():
 @bp.route('/events/<int:id>', methods=['GET', 'POST', 'DELETE'])
 @roles_required('admin')
 def event(id):
-    event = Event.query.get_or_404(id)
-    post = event.post
+    post = Post.query.get_or_404(id)
+    event = post.event
 
     form = forms.EventForm(obj=event)
     if form.validate_on_submit():
