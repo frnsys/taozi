@@ -136,8 +136,8 @@ def new_event():
 @bp.route('/events/<int:id>', methods=['GET', 'POST', 'DELETE'])
 @roles_required('admin')
 def event(id):
-    post = Post.query.get_or_404(id)
-    event = post.event
+    event = Event.query.get_or_404(id)
+    post = event.post
 
     form = forms.EventForm(obj=event)
     if form.validate_on_submit():
