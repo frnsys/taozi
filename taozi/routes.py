@@ -1,6 +1,6 @@
 from .models import Post, Event, Issue
 from flask_security import current_user
-from flask import Blueprint, send_from_directory, render_template, request, abort, current_app
+from flask import Blueprint, send_from_directory, render_template, request, abort, redirect, current_app
 
 bp = Blueprint('front', __name__)
 
@@ -32,6 +32,8 @@ def post(issue, slug):
     post = Post.query.filter(Post.slug==slug, Post.issue.has(slug=issue)).first_or_404()
     if not post.published and not current_user.is_authenticated:
         abort(404)
+    if post.redirect:
+        return redirect(post.redirect)
     return render_template('post.html', post=post, issue=post.issue)
 
 @bp.route('/events')

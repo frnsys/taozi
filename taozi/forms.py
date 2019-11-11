@@ -2,6 +2,7 @@ from flask import current_app
 from .models import Issue, Media, Author
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
+from wtforms.fields.html5 import URLField
 from wtforms.validators import InputRequired
 from wtforms.fields import TextField, TextAreaField, BooleanField, DateTimeField, FormField
 from wtforms.ext.sqlalchemy.fields import QuerySelectMultipleField, QuerySelectField
@@ -31,6 +32,7 @@ class PostForm(FlaskForm):
     desc = TextField('Description', [InputRequired()])
     body = TextAreaField('Body')
     tags = TextField('Tags')
+    redirect = URLField('Redirect URL')
     published = BooleanField('Published')
     published_at = DateTimeField('Published At', [InputRequired()], format='%Y-%m-%d %H:%M')
     print_only = BooleanField('Print Only')
