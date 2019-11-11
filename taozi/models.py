@@ -211,5 +211,5 @@ def receive_update(mapper, connection, target):
     target.html = compile_markdown(target.body)
 
 @db.event.listens_for(Post, 'before_delete')
-def receive_update(mapper, connection, target):
+def receive_delete(mapper, connection, target):
     unindex_post(target)
