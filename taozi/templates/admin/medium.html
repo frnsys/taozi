@@ -23,6 +23,32 @@
   {{ render_field_with_errors(form.desc) }}
   <div class="actions">
     <input type="submit" value="Save">
+    <button id="js-delete">Delete</button>
   </div>
 </form>
+<script>
+document.getElementById('js-delete').addEventListener('click', (ev) => {
+    ev.preventDefault();
+    if (confirm('Are you sure?')) {
+        fetch(window.location.href, {
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin',
+            method: 'DELETE'
+        })
+        .then(res => res.json())
+        .then((data) => {
+            if (data.success) {
+                window.location = data.url;
+            } else {
+                alert('Something went wrong');
+            }
+        })
+        .catch(err => alert(err));
+    }
+    return false;
+});
+</script>
 {% endblock %}

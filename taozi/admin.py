@@ -261,21 +261,21 @@ def new_medium():
 @roles_required('admin')
 def medium(id):
     media = Media.query.get_or_404(id)
-
-    form = forms.MediaForm(obj=media)
-    if form.validate_on_submit():
-        form.populate_obj(media)
-        db.session.add(media)
-        db.session.commit()
-        flash('Media updated.')
-
-    elif request.method == 'DELETE':
+    if request.method == 'DELETE':
         db.session.delete(media)
+        db.session.commit()
         flash('Media deleted.')
-        return redirect(url_for('admin.media'))
+        return jsonify(success=True, url=url_for('admin.media'))
+    else:
+        form = forms.MediaForm(obj=media)
+        if form.validate_on_submit():
+            form.populate_obj(media)
+            db.session.add(media)
+            db.session.commit()
+            flash('Media updated.')
 
-    return render_template('admin/medium.html', media=media,
-                           form=form, action=url_for('admin.medium', id=media.id))
+        return render_template('admin/medium.html', media=media,
+                            form=form, action=url_for('admin.medium', id=media.id))
 
 
 @bp.route('/issues', methods=['GET', 'POST'])
