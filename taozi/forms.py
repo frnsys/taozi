@@ -7,7 +7,7 @@ from wtforms.validators import InputRequired
 from wtforms.fields import TextField, TextAreaField, BooleanField, DateTimeField, FormField
 from wtforms.ext.sqlalchemy.fields import QuerySelectMultipleField, QuerySelectField
 
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+ALLOWED_EXTENSIONS = set(Media.extensions)
 
 
 class AuthorForm(FlaskForm):
@@ -18,8 +18,10 @@ class IssueForm(FlaskForm):
     published = BooleanField('Published')
 
 class UploadMediaForm(FlaskForm):
-    file = FileField('Image', [FileRequired(),
-                               FileAllowed(ALLOWED_EXTENSIONS, 'Images only')])
+    file = FileField('File', [
+        FileRequired(),
+        FileAllowed(ALLOWED_EXTENSIONS,
+            'Supported filetypes: {}'.format(','.join(ALLOWED_EXTENSIONS)))])
     desc = TextField('Description')
 
 class MediaForm(FlaskForm):

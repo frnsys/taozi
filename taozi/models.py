@@ -125,6 +125,8 @@ class Post(db.Model, HasMeta):
         return [Post.query.get(id) for id in ids]
 
 class Media(db.Model):
+    extensions = ['png', 'jpg', 'jpeg', 'gif', 'pdf']
+
     __mapper_args__         = {
         'order_by': db.text('created_at DESC')
     }
@@ -143,6 +145,15 @@ class Media(db.Model):
     @property
     def url(self):
         return url_for('front.uploads', filename=self.filename, _external=True)
+
+    @property
+    def ext(self):
+        if '.' in self.filename:
+            return self.filename.rsplit('.', 1)[1].lower()
+
+    @property
+    def is_image(self):
+        return self.ext in ['png', 'jpg', 'jpeg', 'gif']
 
 
 class Author(db.Model, HasMeta):

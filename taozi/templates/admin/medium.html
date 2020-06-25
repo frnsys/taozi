@@ -5,13 +5,21 @@
 <h1>Media</h1>
 {% if media %}
     <figure class="media-preview">
-        <a href="{{ url_for('front.uploads', filename=media.filename) }}">
-            <img src="{{ url_for('front.uploads', filename=media.filename) }}"
-                title="{{ media.desc }}"
-                alt="{{ media.desc }}" />
-        </a>
-        <div>{{ url_for('front.uploads', filename=media.filename) }}</div>
-        <div>{{ media.width }} x {{ media.height }}</div>
+        {% if media.is_image %}
+            <a href="{{ url_for('front.uploads', filename=media.filename) }}">
+                <img src="{{ url_for('front.uploads', filename=media.filename) }}"
+                    title="{{ media.desc }}"
+                    alt="{{ media.desc }}" />
+            </a>
+        {% endif %}
+        <div>
+            <a href="{{ url_for('front.uploads', filename=media.filename) }}">
+                {{ url_for('front.uploads', filename=media.filename) }}
+            </a>
+        </div>
+        {% if media.is_image %}
+            <div>{{ media.width }} x {{ media.height }}</div>
+        {% endif %}
     </figure>
 {% endif %}
 <form method="POST" action="{{ action }}" enctype="multipart/form-data">

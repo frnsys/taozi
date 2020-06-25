@@ -232,8 +232,12 @@ def media():
             media = Media(filename=filename)
             form.populate_obj(media)
 
-            img = Image.open(savepath)
-            media.width, media.height = img.size
+            try:
+                img = Image.open(savepath)
+                media.width, media.height = img.size
+            except OSError:
+                # Not an image, ignore
+                pass
 
             db.session.add(media)
 

@@ -12,9 +12,13 @@
     {% for medium in media %}
         <li>
             <a href="{{ url_for('admin.medium', id=medium.id) }}">
-                <img src="{{ url_for('front.uploads', filename=medium.filename) }}"
-                     title="{{ medium.desc }}"
-                     alt="{{ medium.desc }}" />
+                {% if medium.is_image %}
+                    <img src="{{ url_for('front.uploads', filename=medium.filename) }}"
+                         title="{{ medium.desc }}"
+                         alt="{{ medium.desc }}" />
+                {% else %}
+                    <div>{{ medium.desc }}</div>
+                {% endif %}
             </a>
         </li>
     {% endfor %}
