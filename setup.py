@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='taozi',
-    version='0.0.2',
+    version='0.0.3',
     description='simple CMS for flask',
     url='https://github.com/frnsys/taozi',
     author='Francis Tseng',
