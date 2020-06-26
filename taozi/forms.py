@@ -66,6 +66,10 @@ class EventForm(FlaskForm):
     post = FormField(EventPostForm)
 
 
+class MetaForm(FlaskForm):
+    slug = TextField('Slug', [InputRequired()])
+    text = TextAreaField('Text', [InputRequired()])
+
 
 def append_fields(form_cls, spec):
     for name, typ in spec.items():

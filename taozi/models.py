@@ -212,6 +212,13 @@ class Event(db.Model):
                 return '{} - {}'.format(start, self.end.strftime(dtfmt + suffix))
 
 
+class Meta(db.Model):
+    id                      = db.Column(db.Integer(), primary_key=True)
+    slug                    = db.Column(db.Unicode(), unique=True)
+    text                    = db.Column(db.Unicode())
+    html                    = db.Column(db.Unicode())
+
+
 @db.event.listens_for(Post, 'before_insert')
 def receive_insert(mapper, connection, target):
     index_post(target)
@@ -225,3 +232,11 @@ def receive_update(mapper, connection, target):
 @db.event.listens_for(Post, 'before_delete')
 def receive_delete(mapper, connection, target):
     unindex_post(target)
+
+@db.event.listens_for(Meta, 'before_insert')
+def receive_insert(mapper, connection, target):
+    target.html = compile_markdown(target.text)
+
+@db.event.listens_for(Meta, 'before_update')
+def receive_update(mapper, connection, target):
+    target.html = compile_markdown(target.text)

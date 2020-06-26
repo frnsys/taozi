@@ -1,0 +1,25 @@
+{% from "admin/_macros.html" import pagination %}
+{% extends 'admin/layout.html' %}
+
+{% block content %}
+<header>
+    <h1>Meta</h1>
+    <div>
+        <a href="{{ url_for('admin.new_metum') }}">+ Meta</a>
+    </div>
+</header>
+{% if not meta %}
+    <h2>No meta</h2>
+{% else %}
+    <ul class="listing">
+        {% for metum in meta %}
+            <li class="item">
+                <a href="{{ url_for('admin.metum', id=metum.id) }}" class="blanket"></a>
+                <h2>{{ metum.slug }}</h2>
+            </li>
+        {% endfor %}
+    </ul>
+    {{ pagination(paginator, 'admin.meta') }}
+{% endif %}
+{% endblock %}
+

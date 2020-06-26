@@ -2,17 +2,16 @@
 {% extends 'admin/layout.html' %}
 
 {% block content %}
-<h1>Issue</h1>
+<header>
+    <h1>Meta</h1>
+</header>
 <form method="POST" action="{{ action }}">
   {% include "_messages.html" %}
   {{ form.hidden_tag() }}
-  {{ render_field_with_errors(form.name) }}
-  {% for field in form %}
-    {% if field.name not in ['csrf_token', 'name', 'published'] %}
-        {{ render_field_with_errors(field) }}
-    {% endif %}
-  {% endfor %}
-  {{ render_field_with_errors(form.published) }}
+  {{ render_field_with_errors(form.slug) }}
+  <div class="textarea">
+      {{ render_field_with_errors(form.text) }}
+  </div>
   <div class="actions">
     <input type="submit" value="Save">
   </div>

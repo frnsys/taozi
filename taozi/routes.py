@@ -1,5 +1,5 @@
-from .models import Post, Event, Issue
 from flask_security import current_user
+from .models import Post, Event, Issue, Meta
 from flask import Blueprint, send_from_directory, render_template, request, abort, redirect, current_app
 
 bp = Blueprint('front', __name__)
@@ -46,3 +46,10 @@ def search():
     query = request.args.get('query')
     posts = Post.search(query) if query else []
     return render_template('search.html', query=query, posts=posts)
+
+@bp.app_template_global('meta')
+def meta(slug):
+    meta = Meta.query.filter(Meta.slug==slug).first()
+    if meta:
+        return meta.html
+    return  '[No meta for slug={}]'.format(slug)

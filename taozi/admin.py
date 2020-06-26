@@ -3,7 +3,7 @@ from . import forms
 from .datastore import db
 from slugify import slugify
 from datetime import datetime
-from .models import Post, Author, Media, Issue, Event
+from .models import Post, Author, Media, Issue, Event, Meta
 from flask_security.decorators import roles_required
 from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app, jsonify
 from werkzeug.utils import secure_filename
@@ -331,3 +331,53 @@ def issue(id):
 
     return render_template('admin/issue.html', issue=issue, form=form,
                            action=url_for('admin.issue', id=issue.id))
+
+
+@bp.route('/meta', methods=['GET', 'POST'])
+@roles_required('admin')
+def meta():
+    data = request.args
+    page = int(data.get('page', 1))
+
+    form = forms.MetaForm()
+    if form.validate_on_submit():
+        meta = Meta()
+        form.populate_obj(meta)
+        meta.slug = slugify(meta.slug)
+        db.session.add(meta)
+        db.session.commit()
+        flash('Meta created.')
+        return redirect(url_for('admin.meta', id=meta.id))
+
+    paginator = Meta.query.paginate(page, per_page=20)
+    return render_template('admin/meta.html', meta=paginator.items, paginator=paginator)
+
+
+@bp.route('/meta/new')
+@roles_required('admin')
+def new_metum():
+    form = forms.MetaForm()
+    return render_template('admin/metum.html', form=form,
+                           action=url_for('admin.meta'))
+
+
+@bp.route('/meta/<int:id>', methods=['GET', 'POST', 'DELETE'])
+@roles_required('admin')
+def metum(id):
+    meta = Meta.query.get_or_404(id)
+
+    form = forms.MetaForm(obj=meta)
+    if form.validate_on_submit():
+        form.populate_obj(meta)
+        meta.slug = slugify(meta.slug)
+        db.session.add(meta)
+        db.session.commit()
+        flash('Meta updated.')
+
+    elif request.method == 'DELETE':
+        db.session.delete(meta)
+        flash('Meta deleted.')
+        return redirect(url_for('admin.meta'))
+
+    return render_template('admin/metum.html', post=post, form=form,
+                           action=url_for('admin.metum', id=meta.id))
