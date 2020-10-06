@@ -1,5 +1,6 @@
 import os
 from whoosh import index
+from whoosh.writing import AsyncWriter
 from whoosh.fields import Schema, ID, TEXT
 from whoosh.qparser import MultifieldParser
 
@@ -22,7 +23,7 @@ else:
 
 def index_post(post):
     """Add or update a post's search entry"""
-    writer = ix.writer()
+    writer = AsyncWriter(ix)
     writer.update_document(
         id=str(post.id),
         title=post.title,
@@ -35,7 +36,7 @@ def index_post(post):
 
 def unindex_post(post):
     """Delete a post from the search index"""
-    writer = ix.writer()
+    writer = AsyncWriter(ix)
     writer.delete_by_term('id', str(post.id))
     writer.commit()
 
