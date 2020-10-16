@@ -125,7 +125,7 @@ class Post(db.Model, HasMeta):
         return [Post.query.get(id) for id in ids]
 
 class Media(db.Model):
-    extensions = ['png', 'jpg', 'jpeg', 'gif', 'pdf']
+    extensions = ['png', 'jpg', 'jpeg', 'gif', 'pdf', 'svg']
 
     __mapper_args__         = {
         'order_by': db.text('created_at DESC')
@@ -153,7 +153,7 @@ class Media(db.Model):
 
     @property
     def is_image(self):
-        return self.ext in ['png', 'jpg', 'jpeg', 'gif']
+        return self.ext in ['png', 'jpg', 'jpeg', 'gif', 'svg']
 
 
 class Author(db.Model, HasMeta):
