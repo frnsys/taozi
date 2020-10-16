@@ -211,6 +211,21 @@ class Event(db.Model):
                 start = self.start.strftime(dtfmt + suffix)
                 return '{} - {}'.format(start, self.end.strftime(dtfmt + suffix))
 
+    def time_range(self, delimiter='-'):
+        if self.start.strftime('%p') == self.end.strftime('%p'):
+            if self.start.strftime('%-I:%M') == self.end.strftime('%-I:%M'):
+                return self.start.strftime('%-I:%M %p')
+            else:
+                return '{}{}{}'.format(
+                            self.start.strftime('%-I:%M'),
+                            delimiter,
+                            self.end.strftime('%-I:%M %p'))
+        else:
+            return '{}{}{}'.format(
+                        self.start.strftime('%-I:%M %p'),
+                        delimiter,
+                        self.end.strftime('%-I:%M %p'))
+
 
 class Meta(db.Model):
     id                      = db.Column(db.Integer(), primary_key=True)
