@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='taozi',
-    version='0.0.3',
+    version='0.0.4',
     description='simple CMS for flask',
     url='https://github.com/frnsys/taozi',
     author='Francis Tseng',
@@ -24,7 +24,9 @@ setup(
         'Pillow==8.1.1',
         'SQLAlchemy==1.3.3',
         'python-slugify==2.0.1',
-        'Whoosh==2.7.4'
+        'Whoosh==2.7.4',
+        'werkzeug==0.16.1',
+        'WTForms==2.2.1'
     ]
 )
 
