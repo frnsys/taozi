@@ -1,5 +1,12 @@
-{% macro render_field_with_errors(field, hint, label=True) %}
+{% macro render_field_with_errors(field, hint, label=True, extras=None) %}
   <div class="form-field">
+    {% if extras %}
+        <div class="form-field--extras">
+            {% for k, v in extras.items() %}
+                <div id="{{k}}">{{v}}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
     {% if field.type != 'BooleanField' %}
         {% if label %} {{ field.label }} {% endif %} {{ field(**kwargs)|safe }}
     {% else %}

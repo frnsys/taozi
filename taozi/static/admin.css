@@ -196,6 +196,16 @@ form .column-2 {
 form .column-2 > div {
   flex: 0 0 48%;
 }
+.form-field {
+  position: relative;
+}
+.form-field--extras {
+  position: absolute;
+  right: 0;
+}
+.form-field--extras > div {
+  cursor: pointer;
+}
 
 img.thumb {
   width: 80px;

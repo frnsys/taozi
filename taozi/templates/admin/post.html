@@ -17,7 +17,7 @@
   {{ form.hidden_tag() }}
   {{ render_field_with_errors(form.title) }}
   {{ render_field_with_errors(form.subtitle) }}
-  {{ render_field_with_errors(form.slug) }}
+  {{ render_field_with_errors(form.slug, extras={'regenerate-slug': '🔄'}) }}
   {{ render_field_with_errors(form.desc) }}
   <div class="textarea">
       {{ render_field_with_errors(form.body) }}
@@ -89,11 +89,16 @@
         .replace(/\-\-+/g, '-');        // Replace multiple - with single -
     }
 
-    document.getElementById('title').addEventListener('change', (ev) => {
-        let slug = document.getElementById('slug');
-        if (ev.target.value.length > 0 && slug.value == '') {
-            slug.value = slugify(ev.target.value);
+    const title = document.getElementById('title');
+    const slug = document.getElementById('slug');
+    function generateSlug() {
+        if (title.value.length > 0) {
+            slug.value = slugify(title.value);
         };
+    }
+    document.getElementById('title').addEventListener('change', (ev) => {
+        if (slug.value == '') generateSlug();
     });
+    document.getElementById('regenerate-slug').addEventListener('click', generateSlug);
 </script>
 {% endblock %}
