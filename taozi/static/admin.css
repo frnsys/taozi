@@ -79,6 +79,7 @@ main {
   background: blue;
   color: #fff;
   border-radius: 0.2em;
+  pointer-events: none;
 }
 .flashes li.error {
   background: #e62b2b;
