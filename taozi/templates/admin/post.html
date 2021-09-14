@@ -64,6 +64,18 @@
         dateFormat: "Y-m-d H:i"
     };
     flatpickr('#published_at', conf);
+
+    document.getElementById('published').addEventListener('change', (ev) => {
+        let pub_at = document.getElementById('published_at');
+        if (ev.target.checked && pub_at.value == '') {
+            let d = new Date();
+            let month = (d.getMonth() + 1).toString().padStart(2, '0');
+            let day = d.getDate().toString().padStart(2, '0');
+            let hours = d.getHours().toString().padStart(2, '0');
+            let mins = d.getMinutes().toString().padStart(2, '0');
+            pub_at.value = `${d.getFullYear()}-${month}-${day} ${hours}:${mins}`;
+        }
+    });
 </script>
 {% endblock %}
 
