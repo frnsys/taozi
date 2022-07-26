@@ -30,6 +30,7 @@ class User(db.Model, UserMixin):
     confirmed_at    = db.Column(db.DateTime())
     created_at      = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_at      = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
+    fs_uniquifier   = db.Column(db.String(255), unique=True, nullable=False)
     password        = db.Column(db.String(255))
     roles           = db.relationship('Role', secondary=roles_users,
                                       backref=db.backref('users', lazy='dynamic'))
@@ -46,7 +47,7 @@ class HasMeta:
         cols = self.__table__.columns.keys()
         meta = self.get_meta()
         for field in form:
-            if field.name not in cols and field.name is not 'csrf_token' and type(field.data) in [bool, int, str]:
+            if field.name not in cols and field.name != 'csrf_token' and type(field.data) in [bool, int, str]:
                 meta[field.name] = field.data
         self.set_meta(meta)
 
