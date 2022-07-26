@@ -5,7 +5,7 @@
     {% for post in posts %}
         <article>
                 <h2>
-                    <a href="{{ url_for('front.post', issue=post.issue.slug, slug=post.slug) }}">{{ post.title }}</a>
+                    <a href="{{ url_for('taozi.post', issue=post.issue.slug, slug=post.slug) }}">{{ post.title }}</a>
                 </h2>
                 {% if post.subtitle %}
                     <h3>{{ post.subtitle }}</h3>

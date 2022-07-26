@@ -4,7 +4,7 @@
 <h1>Posts from "{{ issue.name }}"</h1>
 <ul>
     {% for post in issue.posts %}
-        <li><a href="{{ url_for('front.post', issue=post.issue.slug, slug=post.slug) }}">{{ post.title }}</a></li>
+        <li><a href="{{ url_for('taozi.post', issue=post.issue.slug, slug=post.slug) }}">{{ post.title }}</a></li>
     {% endfor %}
 </ul>
 {% endblock %}

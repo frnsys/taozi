@@ -13,7 +13,7 @@
         <li>
             <a href="{{ url_for('admin.medium', id=medium.id) }}">
                 {% if medium.is_image %}
-                    <img src="{{ url_for('front.uploads', filename=medium.filename) }}"
+                    <img src="{{ url_for('taozi.uploads', filename=medium.filename) }}"
                          title="{{ medium.desc }}"
                          alt="{{ medium.desc }}" />
                 {% else %}

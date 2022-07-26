@@ -5,7 +5,7 @@
 <h1>Issues</h1>
 <ul>
     {% for issue in issues %}
-        <li><a href="{{ url_for('front.issue', slug=issue.slug) }}">{{ issue.name }}</a></li>
+        <li><a href="{{ url_for('taozi.issue', slug=issue.slug) }}">{{ issue.name }}</a></li>
     {% endfor %}
 </ul>
 {% endblock %}

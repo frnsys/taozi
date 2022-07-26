@@ -6,15 +6,15 @@
 {% if media %}
     <figure class="media-preview">
         {% if media.is_image %}
-            <a href="{{ url_for('front.uploads', filename=media.filename) }}">
-                <img src="{{ url_for('front.uploads', filename=media.filename) }}"
+            <a href="{{ url_for('taozi.uploads', filename=media.filename) }}">
+                <img src="{{ url_for('taozi.uploads', filename=media.filename) }}"
                     title="{{ media.desc }}"
                     alt="{{ media.desc }}" />
             </a>
         {% endif %}
         <div>
-            <a href="{{ url_for('front.uploads', filename=media.filename) }}">
-                {{ url_for('front.uploads', filename=media.filename) }}
+            <a href="{{ url_for('taozi.uploads', filename=media.filename) }}">
+                {{ url_for('taozi.uploads', filename=media.filename) }}
             </a>
         </div>
         {% if media.is_image %}

@@ -25,9 +25,9 @@
 <body>
     {% include "_messages.html" %}
     <nav>
-        <a href="{{ url_for('front.posts') }}">Posts</a>
-        <a href="{{ url_for('front.issues') }}">Issues</a>
-        <a href="{{ url_for('front.events') }}">Events</a>
+        <a href="{{ url_for('taozi.posts') }}">Posts</a>
+        <a href="{{ url_for('taozi.issues') }}">Issues</a>
+        <a href="{{ url_for('taozi.events') }}">Events</a>
     </nav>
     <main>
         {% block content %}

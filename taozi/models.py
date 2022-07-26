@@ -140,11 +140,11 @@ class Media(db.Model):
 
     @property
     def path(self):
-        return url_for('front.uploads', filename=self.filename)
+        return url_for('taozi.uploads', filename=self.filename)
 
     @property
     def url(self):
-        return url_for('front.uploads', filename=self.filename, _external=True)
+        return url_for('taozi.uploads', filename=self.filename, _external=True)
 
     @property
     def ext(self):
