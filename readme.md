@@ -104,6 +104,8 @@ User-supplied blueprints take priority, so you can override default routes.
 
 Setup your own templates and static files in `static` and `templates` (by default).
 
+To access pre-defined routes, use the blueprint name `taozi`, e.g. `url_for('taozi.post', issue=post.issue.slug, slug=post.slug)`.
+
 ### Create an admin
 
 To create the admin role:

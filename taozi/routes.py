@@ -2,7 +2,7 @@ from flask_security import current_user
 from .models import Post, Event, Issue, Meta
 from flask import Blueprint, send_from_directory, render_template, request, abort, redirect, current_app
 
-bp = Blueprint('front', __name__)
+bp = Blueprint('taozi', __name__)
 
 @bp.errorhandler(404)
 def not_found(e):
