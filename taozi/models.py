@@ -71,7 +71,6 @@ class Post(db.Model, HasMeta):
     tags                    = db.Column(db.Unicode())
     redirect                = db.Column(db.Unicode())
     published               = db.Column(db.Boolean(), default=False)
-    print_only              = db.Column(db.Boolean(), default=False)
     created_at              = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_at              = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
     published_at            = db.Column(db.DateTime(), default=datetime.utcnow)
