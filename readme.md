@@ -118,7 +118,7 @@ To create a user and make them an admin:
     flask users activate <EMAIL>
     flask roles add <EMAIL> admin
 
-The login at `/login` and access the admin backend at `/admin`.
+Then login at `/login` and access the admin backend at `/admin`.
 
 ## Demo
 
