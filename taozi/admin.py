@@ -46,22 +46,25 @@ def posts():
 @roles_required('admin')
 def new_post():
     form = forms.PostForm()
-    if form.validate_on_submit():
-        post = Post()
-        form.populate_obj(post)
-        if not post.slug:
-            post.slug = slugify(post.title)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            post = Post()
+            form.populate_obj(post)
+            if not post.slug:
+                post.slug = slugify(post.title)
+            else:
+                post.slug = slugify(post.slug)
+            post.set_meta_from_form(form)
+            db.session.add(post)
+            try:
+                db.session.commit()
+                flash('Post created.')
+                return redirect(url_for('admin.post', id=post.id))
+            except IntegrityError:
+                db.session.rollback()
+                flash('There is already a post with this slug, please use a different one.', 'error')
         else:
-            post.slug = slugify(post.slug)
-        post.set_meta_from_form(form)
-        db.session.add(post)
-        try:
-            db.session.commit()
-            flash('Post created.')
-            return redirect(url_for('admin.post', id=post.id))
-        except IntegrityError:
-            db.session.rollback()
-            flash('There is already a post with this slug, please use a different one.', 'error')
+            flash('There is one or more issues with the post.', 'error')
 
     return render_template('admin/post.html', form=form,
                            action=url_for('admin.new_post'))
@@ -78,24 +81,27 @@ def post(id):
 
     else:
         form = forms.PostForm(obj=post, **post.get_meta())
-        if form.validate_on_submit():
-            already_published = post.published
-            form.populate_obj(post)
-            if not post.slug:
-                post.slug = slugify(post.title)
-            else:
-                post.slug = slugify(post.slug)
+        if request.method == 'POST':
+            if form.validate_on_submit():
+                already_published = post.published
+                form.populate_obj(post)
+                if not post.slug:
+                    post.slug = slugify(post.title)
+                else:
+                    post.slug = slugify(post.slug)
 
-            if not already_published and post.published:
-                post.published_at = datetime.utcnow()
-            post.set_meta_from_form(form)
-            db.session.add(post)
-            try:
-                db.session.commit()
-                flash('Post updated.')
-            except IntegrityError:
-                db.session.rollback()
-                flash('There is already a post with this slug, please use a different one.', 'error')
+                if not already_published and post.published:
+                    post.published_at = datetime.utcnow()
+                post.set_meta_from_form(form)
+                db.session.add(post)
+                try:
+                    db.session.commit()
+                    flash('Post updated.')
+                except IntegrityError:
+                    db.session.rollback()
+                    flash('There is already a post with this slug, please use a different one.', 'error')
+            else:
+                flash('There is one or more issues with the post.', 'error')
 
         return render_template('admin/post.html', post=post, form=form,
                             action=url_for('admin.post', id=post.id))
@@ -108,18 +114,21 @@ def events():
     page = int(data.get('page', 1))
 
     form = forms.EventForm()
-    if form.validate_on_submit():
-        event = Event()
-        event.post = Post()
-        form.populate_obj(event)
-        if not event.post.slug:
-            event.post.slug = slugify(event.post.title)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            event = Event()
+            event.post = Post()
+            form.populate_obj(event)
+            if not event.post.slug:
+                event.post.slug = slugify(event.post.title)
+            else:
+                event.post.slug = slugify(event.post.slug)
+            db.session.add(event)
+            db.session.commit()
+            flash('Event created.')
+            return redirect(url_for('admin.event', id=event.post.id))
         else:
-            event.post.slug = slugify(event.post.slug)
-        db.session.add(event)
-        db.session.commit()
-        flash('Event created.')
-        return redirect(url_for('admin.event', id=event.post.id))
+            flash('There is one or more issues with the event.', 'error')
 
     paginator = Post.query.filter(Post.event != None).paginate(page, per_page=20)
     return render_template('admin/events.html', posts=paginator.items, paginator=paginator)
@@ -140,18 +149,21 @@ def event(id):
     event = post.event
 
     form = forms.EventForm(obj=event)
-    if form.validate_on_submit():
-        already_published = post.published
-        form.populate_obj(event)
-        if not post.slug:
-            post.slug = slugify(post.title)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            already_published = post.published
+            form.populate_obj(event)
+            if not post.slug:
+                post.slug = slugify(post.title)
+            else:
+                post.slug = slugify(post.slug)
+            if not already_published and post.published:
+                post.published_at = datetime.utcnow()
+            db.session.add(event)
+            db.session.commit()
+            flash('Event updated.')
         else:
-            post.slug = slugify(post.slug)
-        if not already_published and post.published:
-            post.published_at = datetime.utcnow()
-        db.session.add(event)
-        db.session.commit()
-        flash('Event updated.')
+            flash('There is one or more issues with the event.', 'error')
 
     elif request.method == 'DELETE':
         db.session.delete(post)
