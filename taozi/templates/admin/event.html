@@ -23,17 +23,16 @@
   {{ render_field_with_errors(form.ignore_time) }}
   {{ render_field_with_errors(form.post.title) }}
   {{ render_field_with_errors(form.post.slug) }}
-  {{ render_field_with_errors(form.post.desc) }}
+  {{ render_field_with_errors(form.post.desc, "Displayed in embeds and in search results.") }}
   <div class="textarea">
       {{ render_field_with_errors(form.post.body) }}
   </div>
   <div class="column-2">
     {{ render_field_with_errors(form.post.issue) }}
-    {{ render_field_with_errors(form.post.image) }}
+    {{ render_field_with_errors(form.post.image, "Used for social media embeds.") }}
   </div>
   {{ render_field_with_errors(form.post.tags) }}
   {{ render_field_with_errors(form.post.published) }}
-  {{ render_field_with_errors(form.post.visible) }}
   <div class="actions">
     <input type="submit" value="Save">
   </div>

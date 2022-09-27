@@ -35,7 +35,7 @@ class PostForm(FlaskForm):
     body = TextAreaField('Body')
     tags = TextField('Tags')
     redirect = URLField('Redirect URL')
-    visible = BooleanField('Visible')
+    visible = BooleanField('Listed', default=True)
     published = BooleanField('Published')
     published_at = DateTimeField('Published At', [InputRequired()], format='%Y-%m-%d %H:%M')
     authors = QuerySelectMultipleField('Authors', query_factory=lambda: Author.query.all(),
@@ -52,7 +52,6 @@ class EventPostForm(FlaskForm):
     desc = TextField('Description', [InputRequired()])
     body = TextAreaField('Body', [InputRequired()])
     tags = TextField('Tags')
-    visible = BooleanField('Visible')
     published = BooleanField('Published')
     issue = QuerySelectField('Issue', query_factory=lambda: Issue.query.all(),
                              get_label='name')

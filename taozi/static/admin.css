@@ -134,7 +134,6 @@ figure img {
 
 input, textarea, select, button {
   font-family: 'Arimo', sans-serif;
-  margin: 0 0 1em 0;
 }
 input[type=text],
 input[type=url],
@@ -198,6 +197,12 @@ form .column-2 > div {
 }
 .form-field {
   position: relative;
+  margin-bottom: 1em;
+}
+.form-field-hint {
+  font-size: 0.7em;
+  padding: 2px;
+  color: #8e7366;
 }
 .form-field--extras {
   position: absolute;

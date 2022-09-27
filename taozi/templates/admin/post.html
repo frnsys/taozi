@@ -16,20 +16,20 @@
   {% include "_messages.html" %}
   {{ form.hidden_tag() }}
   {{ render_field_with_errors(form.title) }}
-  {{ render_field_with_errors(form.subtitle) }}
+  {{ render_field_with_errors(form.subtitle, "Optional dek/subhead.") }}
   {{ render_field_with_errors(form.slug, extras={'regenerate-slug': '🔄'}) }}
-  {{ render_field_with_errors(form.desc) }}
+  {{ render_field_with_errors(form.desc, "Displayed in embeds and in search results.") }}
   <div class="textarea">
-      {{ render_field_with_errors(form.body) }}
+      {{ render_field_with_errors(form.body, "You can use markdown.") }}
   </div>
-  {{ render_field_with_errors(form.redirect) }}
+  {{ render_field_with_errors(form.redirect, "Optional; if specified this post will redirect to this url.") }}
   <div class="column-2">
       <div>
         {{ render_field_with_errors(form.authors) }}
       </div>
       <div>
         {{ render_field_with_errors(form.issue) }}
-        {{ render_field_with_errors(form.image) }}
+        {{ render_field_with_errors(form.image, "Used for social media embeds.") }}
       </div>
   </div>
   {{ render_field_with_errors(form.tags) }}
@@ -79,7 +79,23 @@
             let mins = d.getMinutes().toString().padStart(2, '0');
             pub_at.value = `${d.getFullYear()}-${month}-${day} ${hours}:${mins}`;
         }
+        toggleListed();
     });
+
+    function toggleListed() {
+        let published = document.getElementById('published').checked;
+        let parent = document.getElementById('visible').parentElement;
+        if (published) {
+            parent.style.opacity = 1.0;
+            parent.style.filter = '';
+            parent.style.pointerEvents = 'default';
+        } else {
+            parent.style.opacity = 0.5;
+            parent.style.filter = 'grayscale(1)';
+            parent.style.pointerEvents = 'none';
+        }
+    }
+    toggleListed();
 
     // https://gist.github.com/codeguy/6684588#gistcomment-3243980
     function slugify(text) {
