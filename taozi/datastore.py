@@ -1,3 +1,5 @@
+import re
+import sqlalchemy as sa
 from sqlalchemy import MetaData
 from flask_sqlalchemy import SQLAlchemy
 
@@ -9,3 +11,14 @@ naming_convention = {
     "pk": "pk_%(table_name)s"
 }
 db = SQLAlchemy(session_options={'autoflush': False}, metadata=MetaData(naming_convention=naming_convention))
+
+def search(item, expr):
+    return re.search(expr, item) is not None
+
+def init_db():
+    db.configure_mappers()
+    db.create_all()
+
+    @sa.event.listens_for(db.engine, 'connect')
+    def on_connect(dbapi_connection, connection_record):
+        dbapi_connection.create_function('REGEX', 2, search)

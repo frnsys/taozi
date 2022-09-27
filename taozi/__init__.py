@@ -3,7 +3,7 @@ from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_security import SQLAlchemyUserDatastore, Security
 from .forms import PostForm, IssueForm, AuthorForm, append_fields
-from .datastore import db
+from .datastore import db, init_db
 from .models import User, Role, Issue
 from .admin import bp as admin_bp
 from .routes import bp as front_bp
@@ -29,8 +29,7 @@ def create_app(config, blueprints=None, name=__name__, static_folder='static', t
     # Flask-SQLAlchemy needs to know which
     # app context to create the tables in.
     with app.app_context():
-        db.configure_mappers()
-        db.create_all()
+        init_db()
 
     blueprints = blueprints or []
     for bp in blueprints:

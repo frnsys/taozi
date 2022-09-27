@@ -2,9 +2,11 @@ import json
 from .datastore import db
 from flask import url_for
 from datetime import datetime
+from sqlalchemy import func
 from flask_security import UserMixin, RoleMixin
 from .compile import compile_markdown
 from .search import index_post, unindex_post, search_posts
+
 
 roles_users = db.Table('roles_users',
         db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
@@ -124,6 +126,12 @@ class Post(db.Model, HasMeta):
         ids = search_posts(query)
         return [Post.query.get(id) for id in ids]
 
+    @staticmethod
+    def filter_by_tag(tag):
+        tag_regex = f'(^|,\s?){tag}(,|$)'
+        return Post.query.filter(
+                func.regex(Post.tags, tag_regex))
+
 class Media(db.Model):
     extensions = ['png', 'jpg', 'jpeg', 'gif', 'pdf', 'svg']
 
@@ -155,6 +163,9 @@ class Media(db.Model):
     def is_image(self):
         return self.ext in ['png', 'jpg', 'jpeg', 'gif', 'svg']
 
+    @staticmethod
+    def get_by_slug(slug):
+        return Meta.query.filter_by(slug=slug).first()
 
 class Author(db.Model, HasMeta):
     id                      = db.Column(db.Integer(), primary_key=True)
