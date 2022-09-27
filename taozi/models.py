@@ -7,7 +7,6 @@ from flask_security import UserMixin, RoleMixin
 from .compile import compile_markdown
 from .search import index_post, unindex_post, search_posts
 
-
 roles_users = db.Table('roles_users',
         db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
         db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
@@ -72,6 +71,7 @@ class Post(db.Model, HasMeta):
     subtitle                = db.Column(db.Unicode())
     tags                    = db.Column(db.Unicode())
     redirect                = db.Column(db.Unicode())
+    visible                 = db.Column(db.Boolean(), default=True)
     published               = db.Column(db.Boolean(), default=False)
     created_at              = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_at              = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -185,13 +185,17 @@ class Issue(db.Model, HasMeta):
         return self.name
 
     @property
-    def published_posts(self):
-        posts = [p for p in self.posts if p.published and p.event is None]
+    def published_posts(self, include_hidden=True):
+        posts = [p for p in self.posts
+                if p.published and (include_hidden or p.visible)
+                and p.event is None]
         return posts
 
     @property
-    def published_events(self):
-        posts = [p for p in self.posts if p.published and p.event is not None]
+    def published_events(self, include_hidden=True):
+        posts = [p for p in self.posts
+                if p.published and (include_hidden or p.visible)
+                and p.event is not None]
         return posts
 
 

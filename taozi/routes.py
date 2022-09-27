@@ -14,7 +14,7 @@ def uploads(filename):
 
 @bp.route('/')
 def posts():
-    posts = Post.query.filter(Post.published).all()
+    posts = Post.query.filter(Post.published & Post.visible).all()
     return render_template('posts.html', posts=posts)
 
 @bp.route('/issues')
@@ -38,7 +38,9 @@ def post(issue, slug):
 
 @bp.route('/events')
 def events():
-    events = [e.post for e in Event.query.order_by(Event.end.desc(), Event.start.asc()).all() if e.post.published]
+    events = [e.post
+            for e in Event.query.order_by(Event.end.desc(), Event.start.asc()).all()
+            if e.post.published and e.post.visible]
     return render_template('events.html', events=events)
 
 @bp.route('/search')

@@ -206,6 +206,20 @@ form .column-2 > div {
 .form-field--extras > div {
   cursor: pointer;
 }
+.published-fields {
+  margin-bottom: 2em;
+}
+.published-fields div:last-child {
+  max-width: 90px;
+  margin-top: 0.5em;
+}
+.published-fields div:last-child .form-field {
+  margin-bottom: 0.5em;
+}
+.published-fields > .form-field:first-child {
+  flex: 1 0 auto;
+  margin-right: 1em;
+}
 
 img.thumb {
   width: 80px;

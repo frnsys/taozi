@@ -33,8 +33,13 @@
       </div>
   </div>
   {{ render_field_with_errors(form.tags) }}
-  {{ render_field_with_errors(form.published_at) }}
-  {{ render_field_with_errors(form.published) }}
+  <div class="column-2 published-fields">
+      {{ render_field_with_errors(form.published_at) }}
+      <div>
+          {{ render_field_with_errors(form.published) }}
+          {{ render_field_with_errors(form.visible) }}
+      </div>
+    </div>
   <div class="actions">
     <input type="submit" value="Save">
     <div id="js-delete-post">Delete</div>

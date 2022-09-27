@@ -22,7 +22,7 @@
                 {% endif %}
                 <div class="justify-vertical">
                     <div>
-                        {% if post.published %}<div class="tag">Published</div>{% endif %}
+                        {% if post.published %}<div class="tag">Published{% if not post.visible %} (Unlisted){% endif %}</div>{% endif %}
                         <h2>{{ post.title }}</h2>
                         <div class="meta">
                             <div>{% if post.desc %}{{ post.desc }}{% else %}(No description){% endif %}</div>
