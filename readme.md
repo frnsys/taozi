@@ -163,7 +163,41 @@ That being said there are some helper methods to make certain queries easier:
 
 #### Creating arbitrary (non-post) pages
 
-TODO
+If you want to create standalone pages with content editable by the CMS you can use `Meta` objects.
+
+The basic procedure is as follows:
+
+1. Define your `Meta` content in the admin backend.
+    - Let's say we create two, with the slugs `about` and `team`.
+2. Create your route:
+
+```python
+# ...
+
+@bp.route('/about')
+def about():
+    about = Meta.get_by_slug('about')
+    team = Meta.get_by_slug('team')
+    return render_tempalte('about.html', about=about, team=team)
+
+# ...
+```
+
+3. Then define your template (e.g. `templates/about.html`):
+
+```jinja
+{% extends 'layout.html' %}
+
+{% block content %}
+<div id="about">
+    <h2>About Us</h2>
+    {{ about.html|safe }}
+
+    <h2>Our Team</h2>
+    {{ team.html|safe }}
+</div>
+{% endblock %}
+```
 
 ### Create an admin
 
