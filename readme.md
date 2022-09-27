@@ -161,6 +161,15 @@ That being said there are some helper methods to make certain queries easier:
 - `Event`
     - `Event.latest()`: returns the latest event in the future, if any
 
+As a reminder you can also paginate, e.g.:
+
+```python
+@bp.route('/posts/<int:page>')
+def paged(page):
+    posts = Post.query.paginate(page, per_page=20)
+    return render_template('posts.html', posts=posts)
+```
+
 #### Creating arbitrary (non-post) pages
 
 If you want to create standalone pages with content editable by the CMS you can use `Meta` objects.
