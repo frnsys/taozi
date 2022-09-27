@@ -109,19 +109,6 @@ class Post(db.Model, HasMeta):
         return [t.lower().strip() for t in self.tags.split(',')]
 
     @staticmethod
-    def latest_event():
-        now = datetime.utcnow()
-        query = Post.query.join(Event)\
-            .filter(Post.published==True, Post.event!=None)
-        latest = query.filter(Post.event.has(Event.end >= now))\
-            .order_by(Event.start.asc()).first()
-
-        # Fallback to most recent event
-        if latest is None:
-            latest = query.order_by(Event.start.desc()).first()
-        return latest
-
-    @staticmethod
     def search(query):
         ids = search_posts(query)
         return [Post.query.get(id) for id in ids]
@@ -184,14 +171,12 @@ class Issue(db.Model, HasMeta):
     def __repr__(self):
         return self.name
 
-    @property
     def published_posts(self, include_hidden=True):
         posts = [p for p in self.posts
                 if p.published and (include_hidden or p.visible)
                 and p.event is None]
         return posts
 
-    @property
     def published_events(self, include_hidden=True):
         posts = [p for p in self.posts
                 if p.published and (include_hidden or p.visible)
@@ -241,6 +226,18 @@ class Event(db.Model):
                         delimiter,
                         self.end.strftime('%-I:%M %p'))
 
+    @staticmethod
+    def latest():
+        now = datetime.utcnow()
+        query = Post.query.join(Event)\
+            .filter(Post.published==True, Post.event!=None)
+        latest = query.filter(Post.event.has(Event.end >= now))\
+            .order_by(Event.start.asc()).first()
+
+        # Fallback to most recent event
+        if latest is None:
+            latest = query.order_by(Event.start.desc()).first()
+        return latest
 
 class Meta(db.Model):
     id                      = db.Column(db.Integer(), primary_key=True)

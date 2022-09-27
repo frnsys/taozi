@@ -87,12 +87,14 @@ Here you can add additional Flask extensions, configure Sentry, add your own blu
 ```python
 import config
 from taozi import create_app
+from taozi.models import Post
 from flask import Blueprint, render_template
 
 bp = Blueprint('myblog', __name__)
 @bp.route('/')
 def index():
-    return render_template('helloworld.html')
+    posts = Post.filter_by_tag('hello').all()
+    return render_template('helloworld.html', posts=posts)
 
 app = create_app(config, name='myblog', blueprints=[bp])
 
@@ -105,6 +107,63 @@ User-supplied blueprints take priority, so you can override default routes.
 Setup your own templates and static files in `static` and `templates` (by default).
 
 To access pre-defined routes, use the blueprint name `taozi`, e.g. `url_for('taozi.post', issue=post.issue.slug, slug=post.slug)`.
+
+#### All pre-defined routes
+
+- `taozi.posts`
+    - endpoint: `/`
+    - template: `posts.html`
+    - template data:
+        - `posts`: a list of all published and visible/listed posts
+- `taozi.issues`
+    - endpoint: `/issues`
+    - template: `issues.html`
+    - template data:
+        - `issues`: a list of all published issues
+- `taozi.issue(slug)`
+    - endpoint: `/<slug>`
+    - template: `issue.html`
+    - template data:
+        - `issue`: the issue matching `slug`
+- `taozi.post(issue, slug)`
+    - endpoint: `/<issue>/<slug>`
+    - template: `post.html`
+    - template data:
+        - `issue`: the issue matching `issue`
+        - `post`: the post matching `slug`
+            - the post may have an associated event
+- `taozi.events`
+    - endpoint: `/events`
+    - template: `events.html`
+    - template data:
+        - `events`: all published and visible/listed events
+- `taozi.search`
+    - endpoint: `/search`
+    - template: `search.html`
+    - template data:
+        - `query`: the current search query, if any
+        - `posts`: posts matching the search query
+
+#### Querying tips
+
+When creating your own routes, you will mostly be querying data to send to your templates.
+
+`taozi` uses `flask-sqlalchemy` so [brush up on how their querying works](https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/#querying-records).
+
+That being said there are some helper methods to make certain queries easier:
+
+- `Post`
+    - `Post.search(query)`: gives posts where any of the title, subtitle, description, body, tags, or authors include the query.
+    - `Post.filter_by_tag(tag)`: returns a query object that will filter posts that have the provided tag
+        - Since this returns a query object, you have to finish it to actually get results, e.g. `Post.filter_by_tag('foo').all()`
+- `Meta`
+    - `Meta.get_by_slug(slug)`: returns the meta object for the provided slug, if any
+- `Event`
+    - `Event.latest()`: returns the latest event in the future, if any
+
+#### Creating arbitrary (non-post) pages
+
+TODO
 
 ### Create an admin
 
@@ -119,6 +178,14 @@ To create a user and make them an admin:
     flask roles add <EMAIL> admin
 
 Then login at `/login` and access the admin backend at `/admin`.
+
+### Before your first post
+
+Before your first post you need to do a bit of preparation:
+
+- Create an "Issue"
+- Create an "Author"
+- Upload an image ("Media")
 
 ## Demo
 
