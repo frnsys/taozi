@@ -6,8 +6,8 @@
     <h1>Post</h1>
     <div>
         {% if post %}
-            <div><a href="{{ url_for('taozi.post', slug=post.slug, issue=post.issue.slug) }}">
-                {% if post.published %}View{% else %}Preview{% endif %}
+            <div><a href="{{ url_for('taozi.post', slug=post.slug, issue=post.issue.slug) }}" target="_blank">
+                {{ 'View' if post.published else 'Preview' }}
             </a></div>
         {% endif %}
     </div>
@@ -16,31 +16,29 @@
   {% include "_messages.html" %}
   {{ form.hidden_tag() }}
   {{ render_field_with_errors(form.title) }}
-  {{ render_field_with_errors(form.subtitle, "Optional dek/subhead.") }}
   {{ render_field_with_errors(form.slug, extras={'regenerate-slug': '🗘'}) }}
+  {{ render_field_with_errors(form.subtitle, "Optional dek/subhead.") }}
   {{ render_field_with_errors(form.desc, "Displayed in embeds and in search results.") }}
-  <div class="column-2">
-      {{ render_field_with_errors(form.authors) }}
-      <div>
-        {{ render_field_with_errors(form.issue) }}
-        {{ render_field_with_errors(form.tags) }}
-      </div>
+  <div class="inline">
+    {{ render_field_with_errors(form.issue) }}
+    {{ render_field_with_errors(form.authors) }}
+    {{ render_field_with_errors(form.tags) }}
   </div>
-  <div class="textarea">
-      {{ render_field_with_errors(form.body, "You can use markdown. To preview, save and view the post.") }}
+  <div class="textarea" style="display:{{ 'none' if form.redirect.data }}">
+      {{ render_field_with_errors(form.body, "You can use markdown. To preview, save and view the post.", extras={'set-redirect': 'Change to redirect'}) }}
+  </div>
+  <div id="redirect" style="display:{{ 'none' if not form.redirect.data }}">
+      {{ render_field_with_errors(form.redirect, "If specified this post will redirect to this url.", extras={'set-text': 'Change to text'}) }}
   </div>
   {% if post %}
       {{ media_gallery(post.media, post.image, form.image) }}
   {% else %}
       {{ media_gallery([], None, form.image) }}
   {% endif %}
-  {{ render_field_with_errors(form.redirect, "Optional; if specified this post will redirect to this url.") }}
-  <div class="column-2 published-fields">
+  <div class="inline">
       {{ render_field_with_errors(form.published_at) }}
-      <div>
-          {{ render_field_with_errors(form.published) }}
-          {{ render_field_with_errors(form.visible) }}
-      </div>
+      {{ render_field_with_errors(form.published) }}
+      {{ render_field_with_errors(form.visible) }}
     </div>
   {{ form.media }}
   <div class="actions">
@@ -51,6 +49,8 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.css" rel="stylesheet"></link>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.js"></script>
 <script>
     $('#js-delete-post').addEventListener('click', () => {
         if (confirm('Are you sure you want to delete this post?')) {
@@ -67,6 +67,13 @@
         dateFormat: "Y-m-d H:i"
     };
     flatpickr('#published_at', conf);
+
+    new SlimSelect({
+      select: '#authors'
+    });
+    new SlimSelect({
+      select: '#issue'
+    });
 
     $('#published').addEventListener('change', (ev) => {
         let pub_at = $('#published_at');
@@ -101,12 +108,20 @@
     function generateSlug() {
         if (title.value.length > 0) {
             slug.value = slugify(title.value);
-        };
+        }
     }
     title.addEventListener('change', (ev) => {
         if (slug.value == '') generateSlug();
     });
     $('#regenerate-slug').addEventListener('click', generateSlug);
 
+    $('#set-redirect').addEventListener('click', () => {
+        $('.textarea').style.display = 'none';
+        $('#redirect').style.display = 'block';
+    });
+    $('#set-text').addEventListener('click', () => {
+        $('.textarea').style.display = 'block';
+        $('#redirect').style.display = 'none';
+    });
 </script>
 {% endblock %}

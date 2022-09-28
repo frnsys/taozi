@@ -6,8 +6,8 @@
     <h1>Event</h1>
     <div>
         {% if post %}
-            <div><a href="{{ url_for('taozi.post', slug=post.slug, issue=post.issue.slug) }}">
-                {% if post.published %}View{% else %}Preview{% endif %}
+            <div><a href="{{ url_for('taozi.post', slug=post.slug, issue=post.issue.slug) }}" target="_blank">
+                {{ 'View' if post.published else 'Preview' }}
             </a></div>
         {% endif %}
     </div>
@@ -44,6 +44,8 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.css" rel="stylesheet"></link>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.js"></script>
 <script>
     const conf = {
         enableTime: true,
@@ -51,5 +53,9 @@
     };
     flatpickr('#start', conf);
     flatpickr('#end', conf);
+
+    new SlimSelect({
+      select: '#post-issue'
+    });
 </script>
 {% endblock %}

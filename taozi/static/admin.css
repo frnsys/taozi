@@ -152,8 +152,8 @@ input[type=url],
 input[type=password] {
   display: block;
   width: 100%;
-  padding: 0.2em 0.5em;
-  font-size: 1.2em;
+  padding: 4px 5px 3px;
+  font-size: 1em;
   border: 2px solid #fa6879;
   border-radius: 0 0.2em 0.2em 0.2em;
 }
@@ -168,22 +168,42 @@ textarea {
   display: block;
   width: 100%;
   max-width: 100%;
-  min-height: 420px;
+  min-width: 100%;
+  min-height: 320px;
   padding: 0.5em;
   border: 2px solid #fa6879;
   border-radius: 0 0.2em 0.2em 0.2em;
 }
-select {
+.ss-main {
   display: block;
   border: 2px solid #fa6879;
   border-radius: 0 0.2em 0.2em 0.2em;
   width: 100%;
+  font-size: 0.8em;
+  color: #000 !important;
 }
-select:not([multiple]) {
-  padding: 0.15em;
+.ss-main .ss-multi-selected,
+.ss-main .ss-single-selected {
+  border-radius: 0 !important;
+  border: none !important;
+  height: auto !important;
+  min-height: 0 !important;
 }
-select option:checked {
-  background: #fa6879;
+.ss-main .ss-single-selected {
+  padding: 5px 6px 4px !important;
+}
+.ss-main .ss-multi-selected .ss-values .ss-value,
+.ss-main .ss-multi-selected .ss-values .ss-disabled {
+  padding: 2px 5px !important;
+  margin: 2px 5px 2px 0 !important;
+}
+.ss-main .ss-multi-selected .ss-values .ss-value {
+  color: #000 !important;
+  background-color: #f49c9c !important;
+  animation-name: none !important;
+}
+.ss-main .ss-multi-selected .ss-add {
+  margin: 6px 12px 0 5px !important;
 }
 label {
   background: #fa6879;
@@ -198,6 +218,7 @@ input[type=checkbox] + label {
   border-radius: 0.2em;
   cursor: pointer;
   background: #999;
+  line-height: 1.2;
 }
 input[type=checkbox]:checked + label {
   background: #fa6879;
@@ -210,9 +231,30 @@ form .column-2 {
 form .column-2 > div {
   flex: 0 0 48%;
 }
+form .inline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+form .inline .form-field {
+  flex: 1;
+  margin-right: 0.5em;
+}
+form .inline .form-field:last-child {
+  margin-right: 0;
+}
+form .inline .form-field-BooleanField {
+  flex: none;
+  margin: 0 0.5em;
+}
+
 .form-field {
   position: relative;
   margin-bottom: 1em;
+}
+.form-field-BooleanField {
+  display: flex;
+  align-items: center;
 }
 .form-field-hint {
   font-size: 0.7em;
@@ -228,29 +270,12 @@ form .column-2 > div {
   background: #585ACF;
   color: #fff;
   padding: 0.35em 0.4em 0.15em;
-  font-size: 0.8em;
+  font-size: 0.7em;
   line-height: 1;
   border-radius: 2px;
 }
 .form-field--extras > div:hover {
   background: #5254ba;
-}
-
-.published-fields {
-  margin-bottom: 2em;
-}
-.published-fields div:last-child {
-  max-width: 90px;
-  margin-top: 0.5em;
-}
-.published-fields div:last-child .form-field {
-  margin-bottom: 0.5em;
-  align-items: center;
-  display: flex;
-}
-.published-fields > .form-field:first-child {
-  flex: 1 0 auto;
-  margin-right: 1em;
 }
 
 img.thumb {
@@ -494,6 +519,9 @@ img.thumb {
 #tags, #post-tags {
   font-size: 0.8em;
 }
+#published_at, #slug {
+  font-size: 0.8em;
+}
 
 #js-delete-post {
   cursor: pointer;
@@ -523,6 +551,15 @@ img.thumb {
   }
   form .column-2 {
     display: block;
+  }
+  form .inline {
+    display: block;
+  }
+  form .inline .form-field {
+    margin-right: 0;
+  }
+  form .inline .form-field-BooleanField {
+    margin: 0 0 1em 0;
   }
 }
 

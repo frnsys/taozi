@@ -1,5 +1,5 @@
 {% macro render_field_with_errors(field, hint, label=True, extras=None) %}
-  <div class="form-field">
+    <div class="form-field form-field-{{field.type}}">
     {% if extras %}
         <div class="form-field--extras">
             {% for k, v in extras.items() %}
@@ -69,7 +69,7 @@
       </h3>
       <div class="gallery">
         {% for m in media %}
-            <div class="gallery-item {% if m == selected_image %}selected{% endif %}"
+            <div class="gallery-item {{ 'selected' if m == selected_image }}"
                  id="{{ m.id }}"
                  data-desc="{{ m.desc }}"
                  data-url="{{ m.path }}">
