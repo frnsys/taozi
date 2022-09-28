@@ -525,3 +525,46 @@ img.thumb {
     display: block;
   }
 }
+
+@media only screen and (min-width: 1120px) {
+  .media-gallery {
+    position: fixed;
+    right: 1em;
+    top: 1em;
+    bottom: 1em;
+    width: 200px;
+    overflow-x: hidden;
+    border: 1px solid #C2ADA3;
+    border-radius: 4px;
+    background: #F2D8CC;
+  }
+  .media-gallery h3 {
+    margin: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #F2D8CC;
+    padding: 0.5em;
+    font-size: 0.9em;
+    border-bottom: 1px solid #C2ADA3;
+  }
+  .media-gallery .gallery {
+    background: none;
+    border: none;
+    padding: 0.5em;
+  }
+  .media-gallery .gallery-item {
+    width: 100%;
+    height: auto;
+  }
+  .media-gallery .gallery .gallery-item > img {
+    height: auto;
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+  }
+  .gallery-item textarea {
+    height: auto;
+    max-height: none;
+  }
+}
