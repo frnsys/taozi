@@ -39,6 +39,11 @@ function formatDate(d) {
 }
 
 const api = {
+  get: async (endpoint) => {
+    let res = await fetch(endpoint);
+    return await res.json();
+  },
+
   post: async (endpoint, formData, csrfToken) => {
     let data = new FormData();
     Object.keys(formData).forEach((k) => {
@@ -100,4 +105,10 @@ function el(spec) {
     pa.appendChild(e);
   });
   return pa;
+}
+
+async function checkSlug(slug, id) {
+  if (slug.length == 0) return true;
+  let json = await api.get(`/admin/posts/${slug}`);
+  return json.id === null || json.id === id;
 }

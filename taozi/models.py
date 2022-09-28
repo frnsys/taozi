@@ -126,6 +126,10 @@ class Post(db.Model, HasMeta):
         return Post.query.filter(
                 func.regex(Post.tags, tag_regex))
 
+    @staticmethod
+    def get_by_slug(slug):
+        return Post.query.filter_by(slug=slug).first()
+
 class Media(db.Model):
     extensions = ['png', 'jpg', 'jpeg', 'gif', 'pdf', 'svg']
 

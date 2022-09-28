@@ -16,7 +16,8 @@
   {% include "_messages.html" %}
   {{ form.hidden_tag() }}
   {{ render_field_with_errors(form.title) }}
-  {{ render_field_with_errors(form.slug, extras={'regenerate-slug': '🗘'}) }}
+  {{ render_field_with_errors(form.slug, 'Current slug: ' + post.slug if post else '', extras={'regenerate-slug': '🗘'}) }}
+  <div id="slug-error"></div>
   {{ render_field_with_errors(form.subtitle, "Optional dek/subhead.") }}
   {{ render_field_with_errors(form.desc, "Displayed in embeds and in search results.") }}
   <div class="inline">
@@ -52,6 +53,8 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.css" rel="stylesheet"></link>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.js"></script>
 <script>
+    const id = {{ post.id if post else 'null' }};
+
     $('#js-delete-post').addEventListener('click', () => {
         if (confirm('Are you sure you want to delete this post?')) {
             api.del('').then(res => {
@@ -122,6 +125,17 @@
     $('#set-text').addEventListener('click', () => {
         $('.textarea').style.display = 'block';
         $('#redirect').style.display = 'none';
+    });
+
+    const slugErr = $('#form-field-slug .form-field-errors');
+    slug.addEventListener('keyup', () => {
+        checkSlug(slug.value, id).then((ok) => {
+            if (ok) {
+                slugErr.innerText = '';
+            } else {
+                slugErr.innerText = 'This slug is already in use, please choose a different one.';
+            }
+        });
     });
 </script>
 {% endblock %}

@@ -261,6 +261,11 @@ form .inline .form-field-BooleanField {
   padding: 2px;
   color: #8e7366;
 }
+.form-field-errors {
+  font-size: 0.7em;
+  padding: 2px;
+  color: red;
+}
 .form-field--extras {
   position: absolute;
   right: 0;
@@ -516,9 +521,7 @@ img.thumb {
   background: #FA6879;
 }
 
-#tags, #post-tags {
-  font-size: 0.8em;
-}
+#tags, #post-tags, #desc,
 #published_at, #slug {
   font-size: 0.8em;
 }

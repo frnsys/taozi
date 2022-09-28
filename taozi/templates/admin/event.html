@@ -22,7 +22,7 @@
   </div>
   {{ render_field_with_errors(form.ignore_time) }}
   {{ render_field_with_errors(form.post.title) }}
-  {{ render_field_with_errors(form.post.slug) }}
+  {{ render_field_with_errors(form.post.slug, 'Current slug: ' + post.slug if post else '', extras={'regenerate-slug': '🗘'}) }}
   {{ render_field_with_errors(form.post.desc, "Displayed in embeds and in search results.") }}
   <div class="column-2">
     {{ render_field_with_errors(form.post.issue) }}
@@ -47,6 +47,8 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.css" rel="stylesheet"></link>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.js"></script>
 <script>
+    const id = {{ post.id if post else 'null' }};
+
     const conf = {
         enableTime: true,
         dateFormat: "Y-m-d H:i"
@@ -56,6 +58,29 @@
 
     new SlimSelect({
       select: '#post-issue'
+    });
+
+    const title = $('#post-title');
+    const slug = $('#post-slug');
+    function generateSlug() {
+        if (title.value.length > 0) {
+            slug.value = slugify(title.value);
+        }
+    }
+    title.addEventListener('change', (ev) => {
+        if (slug.value == '') generateSlug();
+    });
+    $('#regenerate-slug').addEventListener('click', generateSlug);
+
+    const slugErr = $('#form-field-post-slug .form-field-errors');
+    slug.addEventListener('keyup', () => {
+        checkSlug(slug.value, id).then((ok) => {
+            if (ok) {
+                slugErr.innerText = '';
+            } else {
+                slugErr.innerText = 'This slug is already in use, please choose a different one.';
+            }
+        });
     });
 </script>
 {% endblock %}

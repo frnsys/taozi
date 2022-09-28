@@ -106,6 +106,13 @@ def post(id):
         return render_template('admin/post.html', post=post, form=form,
                             action=url_for('admin.post', id=post.id))
 
+@bp.route('/posts/<slug>')
+def post_by_slug(slug):
+    post = Post.get_by_slug(slug)
+    if post:
+        return jsonify(id=post.id)
+    else:
+        return jsonify(id=None)
 
 @bp.route('/events', methods=['GET', 'POST'])
 @roles_required('admin')
