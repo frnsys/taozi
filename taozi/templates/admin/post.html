@@ -17,22 +17,37 @@
   {{ form.hidden_tag() }}
   {{ render_field_with_errors(form.title) }}
   {{ render_field_with_errors(form.subtitle, "Optional dek/subhead.") }}
-  {{ render_field_with_errors(form.slug, extras={'regenerate-slug': '🔄'}) }}
+  {{ render_field_with_errors(form.slug, extras={'regenerate-slug': '🗘'}) }}
   {{ render_field_with_errors(form.desc, "Displayed in embeds and in search results.") }}
+  <div class="column-2">
+      {{ render_field_with_errors(form.authors) }}
+      <div>
+        {{ render_field_with_errors(form.issue) }}
+        {{ render_field_with_errors(form.tags) }}
+      </div>
+  </div>
   <div class="textarea">
       {{ render_field_with_errors(form.body, "You can use markdown.") }}
   </div>
-  {{ render_field_with_errors(form.redirect, "Optional; if specified this post will redirect to this url.") }}
-  <div class="column-2">
-      <div>
-        {{ render_field_with_errors(form.authors) }}
+  <div class="post-media">
+      <h3>
+          <div>Media</div>
+          <button id="js-start-media-upload">Upload</button>
+          <input id="media-upload-file" type="file" multiple />
+      </h3>
+      <div class="gallery">
+        {% for m in post.media %}
+            <div class="gallery-item {% if m == post.image %}selected{% endif %}"
+                 id="{{ m.id }}"
+                 data-desc="{{ m.desc }}"
+                 data-url="{{ m.path }}">
+                <img src="{{ m.thumburl }}" />
+            </div>
+        {% endfor %}
       </div>
-      <div>
-        {{ render_field_with_errors(form.issue) }}
-        {{ render_field_with_errors(form.image, "Used for social media embeds.") }}
-      </div>
+    {{ form.image }}
   </div>
-  {{ render_field_with_errors(form.tags) }}
+  {{ render_field_with_errors(form.redirect, "Optional; if specified this post will redirect to this url.") }}
   <div class="column-2 published-fields">
       {{ render_field_with_errors(form.published_at) }}
       <div>
@@ -40,85 +55,154 @@
           {{ render_field_with_errors(form.visible) }}
       </div>
     </div>
+  {{ form.media }}
   <div class="actions">
     <input type="submit" value="Save">
     <div id="js-delete-post">Delete</div>
   </div>
 </form>
 
+<template id="gallery-item">
+    <textarea placeholder="Describe this image"></textarea>
+    <div class="gallery-item-actions">
+        <div class="set-image" title="Set as the social media image."><img src="/admin/static/star.png" /></div>
+        <div class="copy-image" title="Copy markdown for this image to clipboard."><img src="/admin/static/copy.png" /></div>
+    </div>
+</template>
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-    document.getElementById('js-delete-post').addEventListener('click', () => {
+    $('#js-delete-post').addEventListener('click', () => {
         if (confirm('Are you sure you want to delete this post?')) {
-            fetch('', {
-                method: 'DELETE',
-                headers: {'content-type': 'application/json'}
-            })
-            .then(res => res.json())
-            .then(res => {
+            api.del('').then(res => {
                 if (res.success) {
                     alert('Successfully deleted.');
                 }
             });
         }
     });
+
     const conf = {
         enableTime: true,
         dateFormat: "Y-m-d H:i"
     };
     flatpickr('#published_at', conf);
 
-    document.getElementById('published').addEventListener('change', (ev) => {
-        let pub_at = document.getElementById('published_at');
+    $('#published').addEventListener('change', (ev) => {
+        let pub_at = $('#published_at');
         if (ev.target.checked && pub_at.value == '') {
             let d = new Date();
-            let month = (d.getMonth() + 1).toString().padStart(2, '0');
-            let day = d.getDate().toString().padStart(2, '0');
-            let hours = d.getHours().toString().padStart(2, '0');
-            let mins = d.getMinutes().toString().padStart(2, '0');
-            pub_at.value = `${d.getFullYear()}-${month}-${day} ${hours}:${mins}`;
+            pub_at.value = formatDate(d);
         }
         toggleListed();
     });
 
     function toggleListed() {
-        let published = document.getElementById('published').checked;
-        let parent = document.getElementById('visible').parentElement;
+        let published = $('#published').checked;
+        let parent = $('#visible').parentElement;
         if (published) {
-            parent.style.opacity = 1.0;
-            parent.style.filter = '';
-            parent.style.pointerEvents = 'default';
+            setStyle(parent, {
+                opacity: 1.0,
+                filter: '',
+                pointerEvents: 'default',
+            });
         } else {
-            parent.style.opacity = 0.5;
-            parent.style.filter = 'grayscale(1)';
-            parent.style.pointerEvents = 'none';
+            setStyle(parent, {
+                opacity: 0.5,
+                filter: 'grayscale(1)',
+                pointerEvents: 'none',
+            });
         }
     }
     toggleListed();
 
-    // https://gist.github.com/codeguy/6684588#gistcomment-3243980
-    function slugify(text) {
-      return text
-        .toString()                     // Cast to string
-        .toLowerCase()                  // Convert the string to lowercase letters
-        .normalize('NFD')               // The normalize() method returns the Unicode Normalization Form of a given string.
-        .trim()                         // Remove whitespace from both sides of a string
-        .replace(/\s+/g, '-')           // Replace spaces with -
-        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-        .replace(/\-\-+/g, '-');        // Replace multiple - with single -
-    }
-
-    const title = document.getElementById('title');
-    const slug = document.getElementById('slug');
+    const title = $('#title');
+    const slug = $('#slug');
     function generateSlug() {
         if (title.value.length > 0) {
             slug.value = slugify(title.value);
         };
     }
-    document.getElementById('title').addEventListener('change', (ev) => {
+    title.addEventListener('change', (ev) => {
         if (slug.value == '') generateSlug();
     });
-    document.getElementById('regenerate-slug').addEventListener('click', generateSlug);
+    $('#regenerate-slug').addEventListener('click', generateSlug);
+
+    // Media-related functionality;
+    // i.e. uploading, editing descriptions, selecting, etc.
+    function bindMediaItem(el) {
+        let desc = el.dataset.desc || '';
+
+        const template = $('#gallery-item');
+        const clone = template.content.cloneNode(true);
+        el.appendChild(clone);
+
+        const textarea = el.querySelector('textarea');
+        textarea.value = desc;
+        textarea.addEventListener('blur', (ev) => {
+            desc = ev.target.value;
+            api.post(`/admin/media/${el.id}`, {
+                desc: desc,
+            }, csrfToken);
+        });
+
+        el.querySelector('.copy-image').addEventListener('click', () => {
+            let text = `![${desc}](${el.dataset.url})`;
+            navigator.clipboard.writeText(text);
+            toast('Copied!', 1000);
+        });
+        el.querySelector('.set-image').addEventListener('click', () => {
+            let current = $('.gallery-item.selected');
+            if (current) current.classList.remove('selected');
+            el.classList.add('selected');
+            $('#image').value = el.id;;
+            toast('Set as social media image!', 1000);
+        });
+    }
+    document.querySelectorAll('.gallery-item').forEach(bindMediaItem);
+
+    const csrfToken = '{{ csrf_token() }}';
+    const uploadInput = $('#media-upload-file');
+    const gallery = $('.gallery');
+    const mediaIdsInput = $('#media');
+    $('#js-start-media-upload').addEventListener('click', (ev) => {
+        ev.preventDefault();
+        uploadInput.value = null;
+        uploadInput.click();
+        return false;
+    });
+    uploadInput.addEventListener('change', (ev) => {
+        Array.from(ev.target.files).forEach((file) => {
+            api.post('/admin/media', {
+                file: file,
+                desc: '',
+            }, csrfToken)
+                .then((json) => {
+                    if (json.success) {
+                        let div = el({
+                            tag: 'div',
+                            id: json.id,
+                            className: 'gallery-item',
+                            dataset: {
+                                url: json.url,
+                            },
+                            children: [{
+                                tag: 'img',
+                                src: json.thumb
+                            }]
+                        });
+                        bindMediaItem(div);
+
+                        gallery.insertBefore(div, gallery.firstChild);
+                        mediaIdsInput.value = mediaIdsInput.value
+                            .split(',')
+                            .filter((id) => id.length > 0)
+                            .concat([json.id])
+                            .join(',');
+                    }
+                });
+        });
+    });
 </script>
 {% endblock %}

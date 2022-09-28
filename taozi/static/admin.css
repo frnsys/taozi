@@ -135,6 +135,18 @@ figure img {
 input, textarea, select, button {
   font-family: 'Arimo', sans-serif;
 }
+button {
+  background: #585ACF;
+  color: #fff;
+  font-size: 0.8em;
+  line-height: 1;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+}
+button:hover {
+  background: #5254ba;
+}
 input[type=text],
 input[type=url],
 input[type=password] {
@@ -142,13 +154,13 @@ input[type=password] {
   width: 100%;
   padding: 0.2em 0.5em;
   font-size: 1.2em;
-  border: 2px solid #ff5959;
+  border: 2px solid #fa6879;
   border-radius: 0 0.2em 0.2em 0.2em;
 }
 input[type=file] {
   display: block;
-  border: 2px solid #ff5959;
-  background: #ff5959;
+  border: 2px solid #fa6879;
+  background: #fa6879;
   border-radius: 0 0.2em 0.2em 0.2em;
   color: #fff;
 }
@@ -158,20 +170,20 @@ textarea {
   max-width: 100%;
   min-height: 420px;
   padding: 0.5em;
-  border: 2px solid #ff5959;
+  border: 2px solid #fa6879;
   border-radius: 0 0.2em 0.2em 0.2em;
 }
 select {
   display: block;
-  border: 2px solid #ff5959;
+  border: 2px solid #fa6879;
   border-radius: 0 0.2em 0.2em 0.2em;
   width: 100%;
 }
 select option:checked {
-  background: #ff5959;
+  background: #fa6879;
 }
 label {
-  background: #ff5959;
+  background: #fa6879;
   border-radius: 0.2em 0.2em 0 0;
   padding: 0.1em 0.3em;
   display: inline-block;
@@ -185,7 +197,7 @@ input[type=checkbox] + label {
   background: #999;
 }
 input[type=checkbox]:checked + label {
-  background: #ff5959;
+  background: #fa6879;
 }
 
 form .column-2 {
@@ -220,6 +232,8 @@ form .column-2 > div {
 }
 .published-fields div:last-child .form-field {
   margin-bottom: 0.5em;
+  align-items: center;
+  display: flex;
 }
 .published-fields > .form-field:first-child {
   flex: 1 0 auto;
@@ -314,7 +328,7 @@ img.thumb {
   text-decoration: underline;
 }
 .tag {
-  background: #ff5959;
+  background: #fa6879;
   border-radius: 0.2em;
   padding: 0.1em 0.3em;
   display: inline-block;
@@ -369,9 +383,118 @@ img.thumb {
   justify-content: space-between;
 }
 
+#toasts {
+  position: fixed;
+  right: 1em;
+  bottom: 1em;
+}
+.toast {
+  background: #43cc70;
+  padding: 0.2em 0.4em;
+  border-radius: 0.2em;
+  margin-top: 0.5em;
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.post-media h3 {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5em;
+  font-size: 1em;
+}
+.post-media button {
+  font-size: 0.8em;
+}
+.post-media .gallery {
+  margin-bottom: 1em;
+  border-radius: 2px;
+  border: 1px solid rgba(0,0,0,0.15);
+  background: rgba(0,0,0,0.05);
+}
+.post-media .gallery img {
+  height: 128px;
+}
+#media-upload-file {
+  display: none;
+}
+.gallery-item {
+  position: relative;
+  display: inline-block;
+  min-width: 128px;
+  height: calc(128px + 1em);
+  border: 0.5em solid transparent;
+}
+.gallery-item.selected {
+  border: 0.5em solid #569ff7;
+}
+.gallery-item:hover textarea,
+.gallery-item textarea:focus {
+  display: block;
+}
+.gallery-item textarea {
+  position: absolute;
+  background: rgba(0,0,0,0.75);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: none;
+  border-radius: 0;
+  height: 128px;
+  max-height: 128px;
+  color: #fff;
+  resize: none;
+  min-height: 0;
+  display: none;
+}
+.gallery-item-actions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1em;
+  font-size: 0.8em;
+  display: none;
+}
+.gallery-item:hover .gallery-item-actions {
+  display: flex;
+  justify-content: center;
+}
+.gallery-item-actions > div {
+  cursor: pointer;
+  text-align: center;
+  color: #fff;
+  background: #585ACF;
+  border-radius: 100em;
+  width: 28px;
+  height: 28px;
+  padding-top: 0.35em;
+  margin: 0 0.5em;
+}
+.gallery-item-actions img {
+  height: 18px !important;
+}
+.gallery-item-actions > div:hover {
+  background: #FA6879;
+}
+
+#tags {
+  font-size: 0.8em;
+}
+
 #js-delete-post {
   cursor: pointer;
   text-decoration: underline;
+}
+#regenerate-slug {
+  background: #585ACF;
+  color: #fff;
+  padding: 0.35em 0.4em 0.15em;
+  font-size: 0.8em;
+  line-height: 1;
+  border-radius: 2px;
+}
+#regenerate-slug:hover {
+  background: #5254ba;
 }
 
 @media only screen and (max-width: 1000px) {

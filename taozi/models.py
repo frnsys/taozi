@@ -17,6 +17,11 @@ posts_authors = db.Table('posts_authors',
     db.Column('author_id', db.Integer(), db.ForeignKey('author.id'), nullable=False),
                        db.PrimaryKeyConstraint('post_id', 'author_id'))
 
+posts_media = db.Table('posts_media',
+    db.Column('post_id', db.Integer(), db.ForeignKey('post.id'), nullable=False),
+    db.Column('media_id', db.Integer(), db.ForeignKey('media.id'), nullable=False),
+                       db.PrimaryKeyConstraint('post_id', 'media_id'))
+
 
 class Role(db.Model, RoleMixin):
     id          = db.Column(db.Integer(), primary_key=True)
@@ -63,7 +68,7 @@ class Post(db.Model, HasMeta):
         db.UniqueConstraint('slug', 'issue_id', name='_slug_issue_uc'),
     )
     id                      = db.Column(db.Integer(), primary_key=True)
-    slug                    = db.Column(db.Unicode())
+    slug                    = db.Column(db.Unicode(), unique=True)
     body                    = db.Column(db.Unicode())
     desc                    = db.Column(db.Unicode())
     html                    = db.Column(db.Unicode())
@@ -87,6 +92,8 @@ class Post(db.Model, HasMeta):
                                               backref=db.backref('posts',
                                                                  lazy='dynamic',
                                                                  order_by='desc(Post.created_at)'))
+    media                   = db.relationship('Media',
+                                              secondary=posts_media)
 
     event_id                = db.Column(db.Integer, db.ForeignKey('event.id'))
     event                   = db.relationship('Event', uselist=False, back_populates='post')
@@ -147,12 +154,30 @@ class Media(db.Model):
             return self.filename.rsplit('.', 1)[1].lower()
 
     @property
+    def thumb(self):
+        return '.{}.thumb.jpg'.format(self.filename)
+
+    @property
+    def thumburl(self):
+        return url_for('taozi.uploads', filename=self.thumb, _external=True)
+
+    @property
     def is_image(self):
-        return self.ext in ['png', 'jpg', 'jpeg', 'gif', 'svg']
+        return self.ext in ['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp']
 
     @staticmethod
     def get_by_slug(slug):
         return Meta.query.filter_by(slug=slug).first()
+
+    @staticmethod
+    def images():
+        regex = '\.(jpg|jpeg|png|gif|webp|svg)$'
+        return Media.query.filter(
+                func.regex(Media.filename, regex)).all()
+
+    @staticmethod
+    def exists(filename):
+        return Media.query.filter_by(filename=filename).count() > 0
 
 class Author(db.Model, HasMeta):
     id                      = db.Column(db.Integer(), primary_key=True)

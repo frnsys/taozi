@@ -2,13 +2,42 @@ from flask import current_app
 from .models import Issue, Media, Author
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
+from wtforms.widgets import HiddenInput
 from wtforms.fields.html5 import URLField
 from wtforms.validators import InputRequired
-from wtforms.fields import TextField, TextAreaField, BooleanField, DateTimeField, FormField
+from wtforms.fields import Field, TextField, TextAreaField, \
+    BooleanField, DateTimeField, IntegerField, FormField
 from wtforms.ext.sqlalchemy.fields import QuerySelectMultipleField, QuerySelectField
 
 ALLOWED_EXTENSIONS = set(Media.extensions)
 
+class MediaField(Field):
+    widget = HiddenInput()
+
+    def _value(self):
+        return ','.join([str(m.id) for m in self.data or []])
+
+    def process_formdata(self, valuelist):
+        if valuelist:
+            self.data = [Media.query.get(int(x)) for x in valuelist[0].split(',')]
+        else:
+            self.data = []
+
+class ImageField(Field):
+    widget = HiddenInput()
+
+    def _value(self):
+        if self.data:
+            return str(self.data.id)
+        else:
+            return ''
+
+    def process_formdata(self, valuelist):
+        if valuelist:
+            id = int(valuelist[0])
+            self.data = Media.query.get(id)
+        else:
+            self.data = None
 
 class AuthorForm(FlaskForm):
     name = TextField('Name', [InputRequired()])
@@ -42,8 +71,8 @@ class PostForm(FlaskForm):
                                        get_label='name')
     issue = QuerySelectField('Issue', query_factory=lambda: Issue.query.all(),
                              get_label='name')
-    image = QuerySelectField('Image', query_factory=lambda: Media.query.all(),
-                             get_label='desc')
+    image = ImageField('Image')
+    media = MediaField('Media')
 
 
 class EventPostForm(FlaskForm):
@@ -55,8 +84,7 @@ class EventPostForm(FlaskForm):
     published = BooleanField('Published')
     issue = QuerySelectField('Issue', query_factory=lambda: Issue.query.all(),
                              get_label='name')
-    image = QuerySelectField('Image', query_factory=lambda: Media.query.all(),
-                             get_label='desc')
+    image = ImageField('Image')
 
 
 class EventForm(FlaskForm):
@@ -78,4 +106,3 @@ def append_fields(form_cls, spec):
         elif typ == bool:
             field = BooleanField(name.title())
         setattr(form_cls, name, field)
-

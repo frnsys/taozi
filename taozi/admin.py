@@ -231,6 +231,7 @@ def author(id):
 def media():
     data = request.args
     page = int(data.get('page', 1))
+    is_json = request.headers.get('Accept') == 'application/json'
 
     form = forms.UploadMediaForm()
     if form.validate_on_submit():
@@ -239,6 +240,8 @@ def media():
             flash('No selected file.', 'error')
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
+            if Media.exists(filename):
+                filename = '{}_{}'.format(datetime.utcnow().timestamp(), filename)
             savepath = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
             file.save(savepath)
             media = Media(filename=filename)
@@ -247,6 +250,11 @@ def media():
             try:
                 img = Image.open(savepath)
                 media.width, media.height = img.size
+
+                # Create a thumbnail
+                thumbpath = os.path.join(current_app.config['UPLOAD_FOLDER'], media.thumb)
+                img.thumbnail((192, 192))
+                img.convert('RGB').save(thumbpath)
             except OSError:
                 # Not an image, ignore
                 pass
@@ -255,10 +263,17 @@ def media():
 
             try:
                 db.session.commit()
-                flash('Media created.')
+                if is_json:
+                    return jsonify(success=True, id=media.id, thumb=media.thumburl, url=media.path)
+                else:
+                    flash('Media created.')
             except IntegrityError:
                 db.session.rollback()
-                flash('There\'s already a file with this name. Please rename it and try again.', 'error')
+                err = 'Something went wrong while saving.'
+                if is_json:
+                    return jsonify(success=False, error=err)
+                else:
+                    flash(err, 'error')
 
     paginator = Media.query.paginate(page, per_page=20)
     return render_template('admin/media.html',
@@ -283,12 +298,17 @@ def medium(id):
         flash('Media deleted.')
         return jsonify(success=True, url=url_for('admin.media'))
     else:
+        is_json = request.headers.get('Accept') == 'application/json'
         form = forms.MediaForm(obj=media)
         if form.validate_on_submit():
             form.populate_obj(media)
             db.session.add(media)
             db.session.commit()
-            flash('Media updated.')
+
+            if is_json:
+                return jsonify(success=True)
+            else:
+                flash('Media updated.')
 
         return render_template('admin/medium.html', media=media,
                             form=form, action=url_for('admin.medium', id=media.id))
