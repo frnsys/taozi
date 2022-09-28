@@ -27,7 +27,7 @@
       </div>
   </div>
   <div class="textarea">
-      {{ render_field_with_errors(form.body, "You can use markdown.") }}
+      {{ render_field_with_errors(form.body, "You can use markdown. To preview, save and view the post.") }}
   </div>
   {% if post %}
       {{ media_gallery(post.media, post.image, form.image) }}
