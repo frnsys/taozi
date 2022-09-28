@@ -7,6 +7,9 @@
   <title>admin</title>
   <link rel="stylesheet" href="{{ url_for('admin.static', filename='admin.css') }}">
   <script src="/admin/static/lib.js"></script>
+  <script>
+    const csrfToken = '{{ csrf_token() }}';
+  </script>
 </head>
 
 <body>

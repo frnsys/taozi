@@ -225,6 +225,15 @@ form .column-2 > div {
 }
 .form-field--extras > div {
   cursor: pointer;
+  background: #585ACF;
+  color: #fff;
+  padding: 0.35em 0.4em 0.15em;
+  font-size: 0.8em;
+  line-height: 1;
+  border-radius: 2px;
+}
+.form-field--extras > div:hover {
+  background: #5254ba;
 }
 
 .published-fields {
@@ -489,17 +498,6 @@ img.thumb {
 #js-delete-post {
   cursor: pointer;
   text-decoration: underline;
-}
-#regenerate-slug {
-  background: #585ACF;
-  color: #fff;
-  padding: 0.35em 0.4em 0.15em;
-  font-size: 0.8em;
-  line-height: 1;
-  border-radius: 2px;
-}
-#regenerate-slug:hover {
-  background: #5254ba;
 }
 
 @media only screen and (max-width: 1000px) {
