@@ -51,3 +51,109 @@
   </div>
   {% endif %}
 {%- endmacro %}
+
+{% macro media_gallery(media, selected_image, image_field) -%}
+  <template id="gallery-item">
+      <textarea placeholder="Describe this image"></textarea>
+      <div class="gallery-item-actions">
+          <div class="set-image" title="Set as the social media image."><img src="/admin/static/star.png" /></div>
+          <div class="copy-image" title="Copy markdown for this image to clipboard."><img src="/admin/static/copy.png" /></div>
+      </div>
+  </template>
+
+  <div class="media-gallery">
+      <h3>
+          <div>Media</div>
+          <button id="js-start-media-upload">Upload</button>
+          <input id="media-upload-file" type="file" multiple />
+      </h3>
+      <div class="gallery">
+        {% for m in media %}
+            <div class="gallery-item {% if m == selected_image %}selected{% endif %}"
+                 id="{{ m.id }}"
+                 data-desc="{{ m.desc }}"
+                 data-url="{{ m.path }}">
+                <img src="{{ m.thumburl }}" />
+            </div>
+        {% endfor %}
+      </div>
+    {{ image_field }}
+  </div>
+  <script>
+    // Media-related functionality;
+    // i.e. uploading, editing descriptions, selecting, etc.
+    function bindMediaItem(el) {
+        let desc = el.dataset.desc || '';
+
+        const template = $('#gallery-item');
+        const clone = template.content.cloneNode(true);
+        el.appendChild(clone);
+
+        const textarea = el.querySelector('textarea');
+        textarea.value = desc;
+        textarea.addEventListener('blur', (ev) => {
+            desc = ev.target.value;
+            api.post(`/admin/media/${el.id}`, {
+                desc: desc,
+            }, csrfToken);
+        });
+
+        el.querySelector('.copy-image').addEventListener('click', () => {
+            let text = `![${desc}](${el.dataset.url})`;
+            navigator.clipboard.writeText(text);
+            toast('Copied!', 1000);
+        });
+        el.querySelector('.set-image').addEventListener('click', () => {
+            let current = $('.gallery-item.selected');
+            if (current) current.classList.remove('selected');
+            el.classList.add('selected');
+            $('#image').value = el.id;;
+            toast('Set as social media image!', 1000);
+        });
+    }
+    document.querySelectorAll('.gallery-item').forEach(bindMediaItem);
+
+    const csrfToken = '{{ csrf_token() }}';
+    const uploadInput = $('#media-upload-file');
+    const gallery = $('.gallery');
+    const mediaIdsInput = $('#media');
+    $('#js-start-media-upload').addEventListener('click', (ev) => {
+        ev.preventDefault();
+        uploadInput.value = null;
+        uploadInput.click();
+        return false;
+    });
+    uploadInput.addEventListener('change', (ev) => {
+        Array.from(ev.target.files).forEach((file) => {
+            api.post('/admin/media', {
+                file: file,
+                desc: '',
+            }, csrfToken)
+                .then((json) => {
+                    if (json.success) {
+                        let div = el({
+                            tag: 'div',
+                            id: json.id,
+                            className: 'gallery-item',
+                            dataset: {
+                                url: json.url,
+                            },
+                            children: [{
+                                tag: 'img',
+                                src: json.thumb
+                            }]
+                        });
+                        bindMediaItem(div);
+
+                        gallery.insertBefore(div, gallery.firstChild);
+                        mediaIdsInput.value = mediaIdsInput.value
+                            .split(',')
+                            .filter((id) => id.length > 0)
+                            .concat([json.id])
+                            .join(',');
+                    }
+                });
+        });
+    });
+  </script>
+{%- endmacro %}

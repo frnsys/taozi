@@ -179,6 +179,9 @@ select {
   border-radius: 0 0.2em 0.2em 0.2em;
   width: 100%;
 }
+select:not([multiple]) {
+  padding: 0.15em;
+}
 select option:checked {
   background: #fa6879;
 }
@@ -223,6 +226,7 @@ form .column-2 > div {
 .form-field--extras > div {
   cursor: pointer;
 }
+
 .published-fields {
   margin-bottom: 2em;
 }
@@ -396,22 +400,23 @@ img.thumb {
   box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
 
-.post-media h3 {
+.media-gallery h3 {
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.5em;
   font-size: 1em;
 }
-.post-media button {
+.media-gallery button {
   font-size: 0.8em;
 }
-.post-media .gallery {
+.media-gallery .gallery {
+  min-height: 24px;
   margin-bottom: 1em;
   border-radius: 2px;
   border: 1px solid rgba(0,0,0,0.15);
   background: rgba(0,0,0,0.05);
 }
-.post-media .gallery img {
+.media-gallery .gallery img {
   height: 128px;
 }
 #media-upload-file {
@@ -477,7 +482,7 @@ img.thumb {
   background: #FA6879;
 }
 
-#tags {
+#tags, #post-tags {
   font-size: 0.8em;
 }
 
