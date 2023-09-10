@@ -273,6 +273,10 @@ class Meta(db.Model):
     slug                    = db.Column(db.Unicode(), unique=True)
     text                    = db.Column(db.Unicode())
     html                    = db.Column(db.Unicode())
+        
+    @staticmethod
+    def get_by_slug(slug):
+        return Meta.query.filter_by(slug=slug).first()
 
 
 @db.event.listens_for(Post, 'before_insert')
