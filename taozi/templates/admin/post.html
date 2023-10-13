@@ -37,7 +37,7 @@
       {{ media_gallery([], None, form.image) }}
   {% endif %}
   {% for field in form %}
-    {% if field.name in post.meta %}
+    {% if post.is_meta_field(field) %}
         {{ render_field_with_errors(field) }}
     {% endif %}
   {% endfor %}
