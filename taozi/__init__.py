@@ -5,7 +5,7 @@ from flask_security import SQLAlchemyUserDatastore, Security
 from flask_wtf.csrf import CSRFProtect
 from .forms import PostForm, IssueForm, AuthorForm, append_fields
 from .datastore import db, init_db
-from .models import User, Role, Issue
+from .models import User, Role, Issue, Post
 from .admin import bp as admin_bp
 from .routes import bp as front_bp
 
@@ -43,5 +43,8 @@ def create_app(config, blueprints=None, name=__name__, static_folder='static', t
     append_fields(PostForm, app.config.get('POST_META', {}))
     append_fields(IssueForm, app.config.get('ISSUE_META', {}))
     append_fields(AuthorForm, app.config.get('AUTHOR_META', {}))
+
+    # Expose additional data to templates
+    app.add_template_global(name='Post', f=Post)
 
     return app
