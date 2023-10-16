@@ -108,7 +108,7 @@
             let current = $('.gallery-item.selected');
             if (current) current.classList.remove('selected');
             el.classList.add('selected');
-            $('#image').value = el.id;;
+            $('#image, #post-image').value = el.id;;
             toast('Set as social media image!', 1000);
         });
     }
@@ -116,7 +116,7 @@
 
     const uploadInput = $('#media-upload-file');
     const gallery = $('.gallery');
-    const mediaIdsInput = $('#media');
+    const mediaIdsInput = $('#media, #post-media');
     $('#js-start-media-upload').addEventListener('click', (ev) => {
         ev.preventDefault();
         uploadInput.value = null;
