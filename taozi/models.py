@@ -49,8 +49,9 @@ class HasMeta:
     def get_meta(self):
         return json.loads(self.meta) if self.meta else {}
 
-    def is_meta_field(self, field):
-        cols = self.__table__.columns.keys()
+    @classmethod
+    def is_meta_field(cls, field):
+        cols = cls.__table__.columns.keys()
         return field.name not in cols and field.name != 'csrf_token' and type(field.data) in [bool, int, str]
 
     def set_meta_from_form(self, form):
