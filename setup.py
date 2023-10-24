@@ -22,7 +22,7 @@ setup(
         'bcrypt==3.1.6',
         'Flask==2.0.3',
         'Flask-Mail==0.9.1',
-        'Pillow==9.0.1',
+        'Pillow==9.3.0',
         'SQLAlchemy==1.3.3',
         'python-slugify==2.0.1',
         'Whoosh==2.7.4',
