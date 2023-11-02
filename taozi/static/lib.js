@@ -60,9 +60,13 @@ const api = {
     return await res.json();
   },
 
-  del: async (endpoint) => {
+  del: async (endpoint, csrfToken) => {
     let res = await fetch(endpoint, {
         method: 'DELETE',
+        headers: {
+          'X-CSRF-Token': csrfToken,
+          'Accept': 'application/json',
+        }
     });
     return await res.json();
   }
