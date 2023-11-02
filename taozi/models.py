@@ -58,7 +58,7 @@ class HasMeta:
         cols = self.__table__.columns.keys()
         meta = self.get_meta()
         for field in form:
-            if is_meta_field(field):
+            if self.is_meta_field(field):
                 meta[field.name] = field.data
         self.set_meta(meta)
 
