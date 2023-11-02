@@ -18,6 +18,7 @@ class MediaField(Field):
         return ','.join([str(m.id) for m in self.data or []])
 
     def process_formdata(self, valuelist):
+        valuelist = list(filter(len, valuelist))
         if valuelist:
             self.data = [Media.query.get(int(x)) for x in valuelist[0].split(',')]
         else:
@@ -33,6 +34,7 @@ class ImageField(Field):
             return ''
 
     def process_formdata(self, valuelist):
+        valuelist = list(filter(len, valuelist))
         if valuelist:
             id = int(valuelist[0])
             self.data = Media.query.get(id)
