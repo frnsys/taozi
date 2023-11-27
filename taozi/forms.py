@@ -4,7 +4,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms.widgets import HiddenInput
 from wtforms.validators import InputRequired
-from wtforms.fields import Field, TextField, TextAreaField, \
+from wtforms.fields import Field, StringField, TextAreaField, \
     BooleanField, DateTimeField, IntegerField, FormField, URLField
 from wtforms.ext.sqlalchemy.fields import QuerySelectMultipleField, QuerySelectField
 
@@ -41,10 +41,10 @@ class ImageField(Field):
             self.data = None
 
 class AuthorForm(FlaskForm):
-    name = TextField('Name', [InputRequired()])
+    name = StringField('Name', [InputRequired()])
 
 class IssueForm(FlaskForm):
-    name = TextField('Name', [InputRequired()])
+    name = StringField('Name', [InputRequired()])
     published = BooleanField('Published')
 
 class UploadMediaForm(FlaskForm):
@@ -52,18 +52,18 @@ class UploadMediaForm(FlaskForm):
         FileRequired(),
         FileAllowed(ALLOWED_EXTENSIONS,
             'Supported filetypes: {}'.format(','.join(ALLOWED_EXTENSIONS)))])
-    desc = TextField('Description')
+    desc = StringField('Description')
 
 class MediaForm(FlaskForm):
-    desc = TextField('Description', [InputRequired()])
+    desc = StringField('Description', [InputRequired()])
 
 class PostForm(FlaskForm):
-    slug = TextField('Slug')
-    title = TextField('Title', [InputRequired()])
-    subtitle = TextField('Subtitle')
-    desc = TextField('Description', [InputRequired()])
+    slug = StringField('Slug')
+    title = StringField('Title', [InputRequired()])
+    subtitle = StringField('Subtitle')
+    desc = StringField('Description', [InputRequired()])
     body = TextAreaField('Body')
-    tags = TextField('Tags')
+    tags = StringField('Tags')
     redirect = URLField('Redirect URL')
     visible = BooleanField('Listed', default=True)
     published = BooleanField('Published')
@@ -77,11 +77,11 @@ class PostForm(FlaskForm):
 
 
 class EventPostForm(FlaskForm):
-    title = TextField('Title', [InputRequired()])
-    slug = TextField('Slug')
-    desc = TextField('Description', [InputRequired()])
+    title = StringField('Title', [InputRequired()])
+    slug = StringField('Slug')
+    desc = StringField('Description', [InputRequired()])
     body = TextAreaField('Body', [InputRequired()])
-    tags = TextField('Tags')
+    tags = StringField('Tags')
     published = BooleanField('Published')
     issue = QuerySelectField('Issue', query_factory=lambda: Issue.query.all(),
                              get_label='name')
@@ -96,14 +96,14 @@ class EventForm(FlaskForm):
 
 
 class MetaForm(FlaskForm):
-    slug = TextField('Slug', [InputRequired()])
+    slug = StringField('Slug', [InputRequired()])
     text = TextAreaField('Text', [InputRequired()])
 
 
 def append_fields(form_cls, spec):
     for name, typ in spec.items():
         if typ == str:
-            field = TextField(name.title())
+            field = StringField(name.title())
         elif typ == bool:
             field = BooleanField(name.title())
         setattr(form_cls, name, field)
