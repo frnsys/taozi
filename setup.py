@@ -27,7 +27,8 @@ setup(
         'python-slugify==2.0.1',
         'Whoosh==2.7.4',
         'Werkzeug==2.2.0',
-        'WTForms==3.1.1'
+        'WTForms==3.1.1',
+        'WTForms-SQLAlchemy==0.3'
     ]
 )
 
