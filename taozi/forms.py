@@ -6,7 +6,7 @@ from wtforms.widgets import HiddenInput
 from wtforms.validators import InputRequired
 from wtforms.fields import Field, StringField, TextAreaField, \
     BooleanField, DateTimeField, IntegerField, FormField, URLField
-from wtforms.ext.sqlalchemy.fields import QuerySelectMultipleField, QuerySelectField
+from wtforms_sqlalchemy.fields import QuerySelectMultipleField, QuerySelectField
 
 ALLOWED_EXTENSIONS = set(Media.extensions)
 
