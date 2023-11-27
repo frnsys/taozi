@@ -3,10 +3,9 @@ from .models import Issue, Media, Author
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms.widgets import HiddenInput
-from wtforms.fields.html5 import URLField
 from wtforms.validators import InputRequired
 from wtforms.fields import Field, TextField, TextAreaField, \
-    BooleanField, DateTimeField, IntegerField, FormField
+    BooleanField, DateTimeField, IntegerField, FormField, URLField
 from wtforms.ext.sqlalchemy.fields import QuerySelectMultipleField, QuerySelectField
 
 ALLOWED_EXTENSIONS = set(Media.extensions)
