@@ -12,7 +12,7 @@ setup(
     packages=['taozi'],
     install_requires=[
         'Flask-Login==0.6.2',
-        'Flask-Security-Too==4.1.4',
+        'Flask-Security-Too==4.1.6',
         'Flask-SQLAlchemy==2.5.1',
         'Flask-Migrate==2.3.1',
         'Flask-WTF==1.2.1 ',
