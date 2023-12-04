@@ -26,7 +26,7 @@ def create_app(config, blueprints=None, name=__name__, static_folder='static', t
     Security(app, app.user_db)
     Mail(app)
     app.csrf_protect = CSRFProtect()
-    app.csrf_protect.init(app)
+    app.csrf_protect.init_app(app)
 
     # Create the database tables.
     # Flask-SQLAlchemy needs to know which
