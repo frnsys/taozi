@@ -25,7 +25,8 @@ def create_app(config, blueprints=None, name=__name__, static_folder='static', t
     app.user_db = SQLAlchemyUserDatastore(db, User, Role)
     Security(app, app.user_db)
     Mail(app)
-    CSRFProtect(app)
+    app.csrf_protect = CSRFProtect()
+    app.csrf_protect.init(app)
 
     # Create the database tables.
     # Flask-SQLAlchemy needs to know which
