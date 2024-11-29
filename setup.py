@@ -20,7 +20,7 @@ setup(
         'Markdown==2.6.11',
         'py-gfm==0.1.1',
         'bcrypt==3.1.6',
-        'Flask==2.0.3',
+        'Flask==2.3.2',
         'Flask-Mail==0.9.1',
         'Pillow==9.0.1',
         'SQLAlchemy==1.3.3',
