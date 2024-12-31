@@ -3,7 +3,7 @@ import markdown
 from xml.etree import ElementTree as etree
 # from markdown.util import etree
 from markdown.extensions import attr_list
-from markdown.inlinepatterns import SimpleTagPattern, ImagePattern
+from markdown.inlinepatterns import SimpleTagPattern, Pattern
 from mdx_gfm import GithubFlavoredMarkdownExtension as GFM
 
 AT = attr_list.AttrListTreeprocessor()
@@ -22,7 +22,7 @@ def compile_markdown(md):
     return markdown.markdown(md, extensions=extensions, lazy_ol=False)
 
 
-class VideoPattern(ImagePattern):
+class VideoPattern(Pattern):
     def handleMatch(self, m):
         src = m.group(3)
         fig = etree.Element('figure')
@@ -39,7 +39,7 @@ class VideoPattern(ImagePattern):
         return fig
 
 
-class IFramePattern(ImagePattern):
+class IFramePattern(Pattern):
     def handleMatch(self, m):
         src = m.group(3)
         obj = etree.Element('iframe')
