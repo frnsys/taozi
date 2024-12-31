@@ -59,7 +59,7 @@ class ExtendedMD(markdown.Extension):
     VID_RE = r'\!\[(.*)\]\(`?(?:<.*>)?([^`\(\)]+mp4)\)({:([^}]+)})?' # ![...](path/to/something.mp4){: autoplay}
     URL_RE = r'@\[(.*)\]\(`?(?:<.*>)?([^`\(\)]+)\)({:([^}]+)})?' # @[](http://web.site){: .fullscreen}
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         highlight_pattern = SimpleTagPattern(self.HIGHLIGHT_RE, 'mark')
         md.inlinePatterns.add('highlight', highlight_pattern, '_end')
 
@@ -128,7 +128,7 @@ class FigureCaptionProcessor(BlockProcessor):
 
 
 class FigureCaptionExtension(markdown.Extension):
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """ Add an instance of FigcaptionProcessor to BlockParser. """
         md.parser.blockprocessors.add('figureAltcaption',
                                       FigureCaptionProcessor(md.parser),
