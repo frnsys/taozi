@@ -18,7 +18,7 @@ setup(
         'Flask-WTF==1.2.1 ',
         'python-slugify==2.0.1',
         'Markdown==3.4.2',
-        'py-gfm==0.1.1',
+        'py-gfm==2.0.0',
         'bcrypt==3.1.6',
         'Flask==2.0.3',
         'Flask-Mail==0.9.1',
