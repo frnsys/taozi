@@ -1,6 +1,7 @@
 import re
 import markdown
-from markdown.util import etree
+from xml.etree import ElementTree as etree
+# from markdown.util import etree
 from markdown.extensions import attr_list
 from markdown.inlinepatterns import SimpleTagPattern, ImagePattern
 from mdx_gfm import GithubFlavoredMarkdownExtension as GFM
