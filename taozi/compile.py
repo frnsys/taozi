@@ -13,8 +13,8 @@ def compile_markdown(md):
     """compiles markdown to html"""
     extensions = [
         GFM(),
-        ExtendedMD(),
-        FigureCaptionExtension(),
+        # ExtendedMD(),
+        # FigureCaptionExtension(),
         'markdown.extensions.footnotes',
         'markdown.extensions.attr_list',
         'markdown.extensions.headerid',
