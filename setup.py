@@ -17,7 +17,7 @@ setup(
         'Flask-Migrate==2.3.1',
         'Flask-WTF==1.2.1 ',
         'python-slugify==2.0.1',
-        'Markdown==2.6.11',
+        'Markdown==3.4.2',
         'py-gfm==0.1.1',
         'bcrypt==3.1.6',
         'Flask==2.0.3',
