@@ -17,7 +17,7 @@ def compile_markdown(md):
         # FigureCaptionExtension(),
         'markdown.extensions.footnotes',
         'markdown.extensions.attr_list',
-        'markdown.extensions.headerid',
+        # 'markdown.extensions.headerid',
     ]
     return markdown.markdown(md, extensions=extensions, lazy_ol=False)
 
